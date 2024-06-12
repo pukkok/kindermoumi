@@ -1,0 +1,114 @@
+
+.kinder-page{
+    width: 100vw;
+    min-height: 80vh;
+}
+
+.kinder-page .header{
+    height: 70px;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+}
+
+.kinder-page .nav-bar{
+    height: 100%;
+    display: flex;
+    gap: 40px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.kinder-page .nav-bar .logo img{
+    width: 100%;
+    height: 100%;
+}
+.kinder-page .navigation{
+    min-width: 400px;
+    height: 100%;
+}
+
+.kinder-page nav .depth1{
+    display: flex;
+    justify-content: space-between;
+    height: 100%;
+}
+.kinder-page nav .depth1 li{
+    position: relative;
+}
+
+.kinder-page nav ul,
+.kinder-page nav ul li,
+.kinder-page nav ul li a{
+    height: 100%;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.kinder-page nav ul li a{
+    display: flex;
+    align-items: center;
+}
+
+.kinder-page nav .depth1 > li:hover > a{
+    font-weight: bold;
+    color: #5172df;
+}
+
+.kinder-page nav .depth1 > li .depth2{
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: -20px;
+    min-width: 130px;
+    background-color: #fff;
+    height: fit-content;
+    border: solid 1px grey;
+    box-sizing: content-box;
+}
+
+.kinder-page nav .depth1 > li:hover .depth2{
+    display: block;
+}
+
+.kinder-page nav .depth1 > li:hover .depth2 li{
+    padding: 10px 20px 10px 20px;
+    background-color: #fff;
+}
+
+.kinder-page nav .depth1 > li:hover .depth2 li:hover{
+    background-color: #5172df;
+    color: #fff;
+}
+
+
+.kinder-page .bg{
+    width: 100%;
+    margin-bottom: 60px;
+    box-shadow: 1px 1px 2px rgba(0,0,0,.2);
+}
+.kinder-page .bg .img-box img{
+    width: 100%;
+    max-height: 450px;
+}
+
+/* 컨텐츠 */
+.kinder-page .content{
+    display: grid;
+    column-gap: 100px;
+    row-gap: 80px;
+    justify-content: space-between;
+
+}
+.kinder-page .content .content-item{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+.kinder-page .content .content-item section{
+    min-width: 450px;
+    min-height: 350px;
+    flex: 1;
+}

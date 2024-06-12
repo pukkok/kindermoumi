@@ -1,0 +1,149 @@
+.main-page{
+    min-height: 100vh;
+}
+
+/* bg 컨텐츠 */
+.main-page .main-bg .content{
+    position: relative;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 800px;
+    height: 350px;
+    z-index: 10;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+}
+.main-page .main-bg .content .main-text h1{
+    color: #fff;
+    font-size: 26px;
+    font-weight: 400;
+}
+.main-page .main-bg .content h1 span{
+    font-size: 36px;
+    font-weight: bold;
+}
+
+.main-page .main-bg .main-chart{
+    margin-top: auto;
+    display: flex;
+    border: solid 1px #004898;
+    background-color: #004898;
+    background-color: #edf1fe;
+    box-shadow: 0px 0px 5px #004898;
+    padding: 12px 40px;
+    min-height: 200px;
+    align-items: center;
+    justify-content: space-between;
+}
+.main-page .main-bg .main-chart h1{
+    font-size: 55px;
+    color: #004898;
+}
+.main-page .main-bg .main-chart p{
+    font-size: 20px;
+    color: #5172df;
+    padding-top: 10px;
+    font-weight: bold;
+}
+
+
+/* main-go 파트 */
+.main-page .content-go{
+    margin-bottom: 120px;
+}
+
+.main-page .main-go{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin-bottom: 40px;
+    border: solid 1px #e5e5e5;
+}
+.main-page .main-go .img-box{
+    width: 720px;
+    /* border: solid 1px #e5e5e5; */
+}
+
+.main-page .main-go .img-box img{
+    width: 100%;
+    height: 100%;
+}
+
+.main-page .main-go .text-box{
+    display: flex;
+    flex-direction: column;
+    padding: 40px;
+}
+
+.main-page .main-go .text-box h2{
+    padding-bottom: 40px;
+}
+
+.main-page .main-go .text-box a{
+    margin-top: auto;
+    border: solid 1px #004898;
+    padding: 5px 10px;
+    width: 150px;
+}
+
+/* notice */
+.notice-box{
+    margin-bottom: 120px;
+}
+.notice-box .title{
+    text-align: center;
+    margin-bottom: 80px;
+}
+.notice-box .title h1{
+    font-size: 28px;
+    padding-bottom: 10px;
+}
+.notice-box .title h2{
+    font-size: 18px;
+}
+
+.notice-box .pick{
+    display: flex;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.notice-box .pick h3{
+    border-bottom: 2px solid transparent;
+}
+
+.notice-box .pick .active{
+    border-bottom: 2px solid #3f526e;
+}
+
+.notice-box .notice{
+    margin-bottom: 40px;
+}
+
+
+.notice-box .content-box{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.notice-box .content-box .content{
+    border: solid 1px #e5e5e5;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.notice-box .content-box .content h4{
+    
+}
+.notice-box .content-box .content p{
+    
+}
+.notice-box .content-box .content span{
+    color: #a3a3a3;
+    font-size: 14px;
+    margin-top: auto;
+}

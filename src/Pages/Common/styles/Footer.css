@@ -1,0 +1,51 @@
+footer{
+    margin-top: 120px;
+    padding: 50px 20px 40px;
+    width: 100vw;
+    border: 1px solid #3f526e;
+    background-color: #293e5d;
+    font-size: 14px;
+}
+
+footer .w{
+    color: #fff;
+}
+
+footer div{
+    color: #7e9dcc;
+}
+
+footer .header ul{
+    display: flex;
+    gap: 20px;
+}
+
+footer .header ul li:not(:last-child)::after{
+    content: '';
+    padding-right: 20px;
+    border-right: 2px solid #3f526e;
+}
+
+
+footer .footer{
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #3f526e;
+    display: flex;
+
+}
+
+footer .banner{
+    margin-left: auto;
+    display: flex;
+    gap: 30px;
+}
+footer .banner .banner-box{
+    width: 80px;
+    height: 35px;
+}
+
+footer .banner .banner-box img{
+    width: 100%;
+    height: 100%;
+}

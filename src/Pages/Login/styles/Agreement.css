@@ -1,0 +1,38 @@
+/* 체크박스 옵션 */
+.agreement .agree-all{
+    padding-top: 60px;
+    font-weight: bold;
+    border-bottom: 1px dashed #c4c4c4;
+    padding-bottom: 15px;
+}
+.agreement .agree-input{
+    padding: 20px 0 10px;
+}
+.agreement label{
+    display: flex;
+    gap: 8px;
+    user-select: none;
+}
+.agreement label span{
+    padding-left: 5px;
+    color: #ff0000;
+}
+
+/* 약관동의 */
+.agreement .agree-box{
+    background-color: #fcfcfc;
+    border: solid 1px #ddd;
+    padding: 35px 30px;
+    height: 250px; 
+    overflow: scroll;
+}
+.agreement .agree-box h3,
+.agreement .agree-box h4{
+    padding-top: 10px;
+    font-weight: 400;
+}
+.agreement .agree-box h5{
+    font-weight: 400;
+    line-height: 22px;
+    white-space: pre-wrap;
+}

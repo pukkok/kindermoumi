@@ -1,0 +1,208 @@
+.admin-page{
+    width: 100vw;
+    height: 100vh;
+    display: grid;
+    grid-template-areas:
+    'l h h h h'
+    'l c c c c';
+    grid-template-rows: 50px 1fr;
+    transition: .4s;
+}
+.admin-page .l{
+    grid-area: l;
+    background-color: #edf1fe;
+}
+.admin-page .h{
+    grid-area: h;
+    width: 100%;
+}
+.admin-page .c{
+    grid-area: c;
+}
+
+/* 헤더바 파트 */
+.admin-page .header-bar{
+    display: flex;
+    padding: 10px 20px;
+    align-items: center;
+    background-color: #fff;
+}
+.admin-page .header-bar > button{
+    display: flex;
+    margin-right: 25px;
+}
+.admin-page .header-bar > button span{
+    font-size: 32px;
+    color: #5172df;
+}
+.admin-page .header-bar .logo{
+    width: 100px;
+}
+.admin-page .header-bar .logo img{
+    width: 100%;
+}
+.admin-page .header-bar ul{
+    margin-left: auto;
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+.admin-page .header-bar ul button{
+    background-color: #5172df;
+    /* border: 1px solid #004898; */
+    padding: 5px 15px;
+    border-radius: 8px;
+    color: white;
+}
+.admin-page .header-bar ul button:hover{
+    background-color: #004898;
+}
+.admin-page .header-bar ul button.out{
+    background-color: #bbb;
+    border: 1px solid #ddd;
+}
+.admin-page .header-bar ul button.out:hover{
+    background-color: #696969;
+}
+
+/* 옵션 수정 부분 */
+.admin-page .option-part{
+    height: calc(100vh - 50px);
+    border: solid 1px #ddd;
+    background-color: #f0f0f0;
+    padding: 5px;
+    display: grid;
+    gap: 5px;
+    grid-template-columns: 50% 50%;
+    grid-template-rows: 100%;
+}
+
+.admin-page .option-part .part{
+    background-color: #fff;
+    display: grid;
+    grid-template-rows: 30px 1fr;
+    padding: 5px 10px;
+    gap: 10px;
+}
+
+.admin-page .option-part .preview-page,
+.admin-page .option-part .menu-table{
+    overflow: scroll;
+}
+
+.admin-page .option-part .option-window{
+    overflow: scroll;
+}
+
+.admin-page .option-part .left-part{
+    grid-column: 1 / 2;
+}
+.admin-page .option-part.wide{
+    grid-template-columns: 60% 40%;
+}
+
+.admin-page .option-part .left-part .option-name{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #ddd;
+}
+
+/* 버튼부분 */
+.admin-page .option-part .option-btn-box{
+    display: flex;
+    border-bottom: 1px solid #ddd;
+    overflow: scroll;
+}
+
+/* ( 크롬, 사파리, 오페라, 엣지 ) 동작 */
+.option-btn-box::-webkit-scrollbar {
+    display: none;
+}
+.option-btn-box{
+    -ms-overflow-style: none; /* 인터넷 익스플로러 */
+    scrollbar-width: none; /* 파이어폭스 */
+}
+
+.admin-page .option-part .option-btn-box .option-btn{
+    background-color: #fff;
+    min-width: 130px;
+    border: 1px solid #ddd;
+    display: flex;
+    justify-content: flex-start;
+}
+.admin-page .option-part .option-btn .tab-btn{
+    font-size: 14px;
+    width: 90%;
+    padding: 5px;
+}
+.admin-page .option-part .option-btn .close-btn{
+    padding: 5px;
+    margin-left: auto;
+}
+.admin-page .option-part .option-btn span{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 15px;
+    height: 15px;
+    padding: 5px;
+    font-size: 13px;
+}
+.admin-page .option-part .option-btn .close-btn:hover span{
+    background-color: #9f9f9f;
+    border: 1px solid #bbb;
+    color: #fff;
+}
+.admin-page .option-part .option-btn.active{
+    color: #004898;
+    border: 1px solid #004898;
+    font-weight: 600;
+}
+
+/* 공통 요약 */
+.admin-page div.summary{
+    margin-bottom: 20px;
+}
+.admin-page .summary h2{
+    padding-bottom: 10px;
+}
+
+.admin-page .summary span{
+    padding-bottom: 5px;
+    font-size: 14px;
+    color: #696969;
+}
+.admin-page span.summary{
+    padding-bottom: 5px;
+    font-size: 14px;
+    color: #696969;
+}
+.admin-page p.summary{
+    font-size: 16px;
+    padding-bottom: 5px;
+}
+
+
+/* 공통 버튼 */
+.admin-page .remote-btns{
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    padding-bottom: 5px;
+    align-items: center;
+}
+.admin-page .remote-btns p{
+    padding-left: 15px;
+}
+.admin-page .remote-btns span{
+    height: 12px;
+    border-right: 2px solid #004898;
+}
+.admin-page .remote-btns button{
+    font-size: 14px;
+}
+.admin-page .remote-btns button:hover{
+    color: #004898;
+    font-weight: bold;
+}

@@ -1,0 +1,68 @@
+.join-type .select-type{
+    padding-top: 50px;
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+    height: max-content;
+    height: 400px;
+}
+
+.join-type .select-type .type{
+    border: solid 1px #c9c9c9;
+    padding: 30px;
+    width: 400px;
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    top: 50px;
+}
+
+.join-type .select-type .img-box{
+    border: solid 1px #c9c9c9;
+    background-color: #fff;
+    border-radius: 50%;
+    position: absolute;
+    top: -70px;
+}
+.join-type .select-type .type h2,
+.join-type .select-type .type p{
+    padding-top: 20px;
+}
+
+.join-type .select-type .type button{
+    margin-top: 20px;
+    width: 150px;
+    padding: 10px 20px;
+    border: 1px solid #00377b;
+    background-color: #044ca4;
+    color: #fff;
+    display: block;
+    text-align: center;
+    transition: .2s;
+    position: relative;
+}
+.join-type .select-type .type button:hover{
+    background-color: #00377b;
+}
+
+.join-type .select-type .type button::after{
+    content: '';
+    background-image: url(./btn_join_arr.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 20px;
+    height: 20px;
+    transition: .2s;
+    position: absolute;
+    top: 50%;
+    transform: translate(0, -50%);
+    right: 15px;
+}
+
+.join-type .select-type .type button:hover::after{
+    right: 25px;
+}

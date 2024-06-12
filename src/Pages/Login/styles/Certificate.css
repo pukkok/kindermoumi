@@ -1,0 +1,40 @@
+.certificate .certificate-btn-box{
+    margin-top: 40px;
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+}
+
+.certificate .certificate-btn-box button{
+    all: unset;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 25px;
+    width: 230px;
+    border-radius: 12px;
+    cursor: pointer;
+}
+.certificate .certificate-btn-box button.blue{
+    color: #004898;
+    border: 2px solid #004898;
+}
+.certificate .certificate-btn-box button.grey{
+    color: #aaaaaa;
+    border: 2px solid #aaaaaa;
+}
+.certificate .certificate-btn-box button:hover{
+    scale: 1.02;
+}
+
+.certificate .modal{
+    position:fixed;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    background-color: rgba(0,0, 0, .2);
+    border: solid 1px #aaaaaa;
+}
+

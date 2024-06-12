@@ -1,0 +1,128 @@
+.join{
+    background-color: #004898;
+    height: max-content;
+    padding: 5vh;
+}
+
+/* 회원가입 */
+.join h1{
+    padding: 60px 0 45px;
+    text-align: center;
+    font-size: 35px;
+    color: #fff;
+}
+
+.join .join-wrap{
+    padding: 50px 100px;
+    border-radius: 60px;
+    height: fit-content;
+    background-color: #fff;
+}
+
+/* 상단, 스텝박스 */
+.join-wrap .step-box{
+    margin: 0 auto;
+    width: 90%;
+    border-radius: 30px;
+    padding: 20px;
+    border: 1px dashed #c4c4c4;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    text-align: center;
+}
+.join-wrap .step-box .arrow{
+    background-image: url('./arr_joinG.png');
+    background-repeat: no-repeat;
+    width: 13px;
+    height: 22px;
+}
+.join-wrap .step-box .img-box{
+    position: relative;
+    width: 125px;
+    height: 125px;
+    padding: 10px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+    border: 1px solid #cccccc;
+}
+.join-wrap .step-box .img-box.active{
+    border : 2px solid #004898;
+    box-shadow: 2px 6px 2px #d4e4f6;
+}
+.join-wrap .step-box .img-box img{
+    position: absolute;
+    background-color: #f7f7f7;
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100px;
+    height: 100px;
+}
+.join-wrap .step-box strong{
+    color: #004898;
+}
+
+/* 이전 다음 버튼 */
+.join-wrap .btn-box{
+    padding-top: 30px;
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+}
+.join-wrap .btn-box button{
+    width: 230px;
+    height: 50px;
+    border-radius: 10px;
+    color: #fff;
+    text-align: center;
+    border: 1px solid #9098a4;
+    background-color: #a5aab1;
+}
+.join-wrap .btn-box button:hover{
+    background-color: #9098a4;
+}
+.join-wrap .btn-box button.active{
+    border: 1px solid #00377b;
+    background-color: #004898;
+}
+.join-wrap .btn-box button.active:hover{
+    background-color: #00377b;
+}
+
+/* 공통으로 쓸 부분 1 */
+.join .text-box{
+    text-align: center;
+}
+.join .text-box h2{
+    padding: 32px;
+    color: #004898;
+}
+.join .text-box h4{
+    font-weight: 400;
+}
+.join .text-box.dashed{
+    padding-bottom: 20px;
+    border-bottom: 1px dashed #c9c9c9;
+}
+/* 공통으로 쓸 부분 2 */
+.join .description{
+    padding: 30px 0;
+}
+.join .description p{
+    padding-top: 10px;
+}
+
+.step-1-form,
+.step-2-form{
+    display: flex;
+    flex-direction: column;
+}
+
+.step-2-form label{
+    width: 300px;
+    display: flex;
+    justify-content: space-between;
+
+}

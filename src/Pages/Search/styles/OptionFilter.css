@@ -1,0 +1,94 @@
+.option-filter{
+    border: solid 1px #e4e6ec;
+    width: 250px;
+    font-size: 14px;
+    position:sticky;
+    top: 0;
+    scroll-behavior: smooth;
+}
+
+.option-filter > div{
+    border-bottom: solid 1px #e4e6ec;
+}
+
+
+.option-filter .option-title{
+    background-color: #f2f4fa;
+    padding: 12px 15px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.option-filter .option-title p {
+    display: flex;
+}
+
+.option-filter .option-title p::after{
+    content: '';
+    width: 30px;
+    height: 20px;
+    margin-left: auto;
+    background-image: url(./icon-filter-close.png);
+    background-position: center;
+    transition: .5s;
+}
+.option-filter .option-title.close p::after{
+    background-image: url(./icon-filter-close.png);
+    background-position: center;
+    rotate: -180deg;
+}
+
+.option-filter .option-label{
+    padding: 12px;
+}
+.option-filter .option-label.off{
+    display: none;
+}
+
+.option-filter label{
+    padding: 5px 0;
+    display: flex;
+    gap: 5px;
+}
+
+.option-filter .main-label{
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.option-filter .label-input-box{
+    width: fit-content;
+    user-select:none
+}
+
+.option-filter .main-label .icon{
+    content: '';
+    background-image: url(./icon-filter-detail-open.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 8px;
+    height: 8px;
+    padding: 4px;
+    border: solid 1px #5172df;
+    display: block;
+    cursor: pointer;
+}
+
+.option-filter .sub-label{
+    padding-left: 20px;
+    display: none;
+}
+.option-filter .sub-label.on{
+    display: flex;
+}
+
+.option-filter .result-btn{
+    box-sizing: border-box;
+    width: 100%;
+    background-color: #4b5985;
+    color: #fff;
+    text-align: center;
+    margin-top: 10px;
+    padding: 10px;
+}

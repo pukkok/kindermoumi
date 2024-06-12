@@ -1,0 +1,108 @@
+.input-info .join-table{
+    margin-top: 20px;
+    /* border: solid 1px red; */
+}
+.input-info .join-table table{
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #e4e6ea;
+    border-top: 2px solid #005fd4;
+}
+.input-info .join-table table tr th{
+    background-color: #f5f6f9;
+    border-right: 1px solid #e4e6ea;
+    border-bottom: 1px solid #e4e6ea;
+    padding: 15px 0 ;
+}
+.input-info .join-table table td{
+    border-right: 1px solid #e4e6ea;
+    border-bottom: 1px solid #e4e6ea;
+    padding: 15px 0;
+}
+
+.input-info .join-table table input{
+    height: 40px;
+    padding: 10px;
+    max-width: 160px;
+    border: 1px solid #ccc;
+}
+
+.input-info .join-table table span{
+    color: #ff0000;
+    display: flex;
+    font-size: 13px;
+}
+
+.input-info .join-table table .essential{
+    display: inline;
+    font-size: 16px;
+    padding-right: 5px;
+}
+
+.input-info .join-table table td div{
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    padding: 0 10px;
+}
+.input-info .join-table table form{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.input-info .join-table table .table-list{
+    width: 120px;
+    height: 40px;
+    cursor: pointer;
+}
+
+.input-info .join-table table .table-list li:nth-child(1)::after{
+    content: "";
+    width: 0;
+    height: 0;
+    border: 4px solid transparent;
+    border-color: black transparent transparent transparent;
+    position: absolute;
+    top: 50%;
+    right: 10px;
+}
+
+.input-info .join-table table .table-list li{
+    position: relative;
+    width: 100%;
+    height: 40px;
+    padding: 10px 10px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    display: none;
+    z-index: 10;
+}
+.input-info .join-table table .table-list li.active{
+    display: block;
+}
+.input-info .join-table table .table-list.on li{
+    display: block;
+}
+.input-info .join-table table .table-list.on li.active,
+.input-info .join-table table .table-list.on li:hover{
+    background-color: #004898;
+    color: #fff;
+}
+
+.input-info .join-table table button{
+    border: 2px solid #005fd4;
+    color: #005fd4;
+    padding: 6px 12px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.input-info .join-table table button:hover{
+    background-color: #005fd4;
+    color: #fff;
+}
+
+.input-info .description{
+    padding-bottom: 0;
+}

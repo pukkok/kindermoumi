@@ -1,0 +1,71 @@
+.pages-btns{
+    display: flex;
+    width: 100%;
+    margin-top: 10px;
+    height: 40px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 20px;
+}
+.pages-btns button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.pages-btns .first-btn,
+.pages-btns .prev-btn,
+.pages-btns .next-btn,
+.pages-btns .last-btn{
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 20px;
+    height: 20px;
+    position: relative;
+}
+
+.pages-btns .page-btn{
+    position: relative;
+    width: 20px;
+    height: 20px;
+}
+
+.pages-btns .first-btn::after,
+.pages-btns .prev-btn::after,
+.pages-btns .next-btn::after,
+.pages-btns .last-btn::after,
+.pages-btns .page-btn::after{
+    content: '';
+    background-color: rgba(0, 0, 0, 0.3);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 20px;
+    height: 20px;
+    padding: 2px;
+    border-radius: 50%;
+    display: none;
+}
+
+.pages-btns .first-btn:hover:after,
+.pages-btns .prev-btn:hover:after,
+.pages-btns .next-btn:hover:after,
+.pages-btns .last-btn:hover:after,
+.pages-btns .page-btn:hover:after{
+    display: flex;
+}
+
+.pages-btns .first-btn{
+    background-image: url('./btn-icon-paging-first.png');
+}
+.pages-btns .prev-btn{
+    background-image: url('./btn-icon-paging-prev.png');
+}
+.pages-btns .next-btn{
+    background-image: url('./btn-icon-paging-next.png');
+}
+.pages-btns .last-btn{
+    background-image: url('./btn-icon-paging-last.png');
+}
+

@@ -1,0 +1,136 @@
+.service-info .container > h4{
+    padding-top: 40px;
+    padding-bottom: 10px;
+}
+
+.service-info .title{
+    display: flex;
+    gap: 20px;
+}
+
+.service-info .title h2{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.service-info .title .print{
+    background-color: #f2f4fa;
+    border-radius: 50%;
+    display: flex;
+    box-sizing: content-box;
+    padding: 6px;
+    width: 15px;
+    height: 15px;
+    cursor: pointer;
+}
+
+.service-info .title h5{
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+}
+
+.service-info .title h5 .material-symbols-outlined{
+    font-size: 10px;
+    padding: 3px 5px 0;
+}
+
+.service-info .info-box{
+    border: solid 1px #ddd;
+    padding: 20px;
+}
+
+.service-info .info-box .info{
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.service-info .text-box h4{
+    color: #1b3fb3;
+}
+
+.service-info .info-box .img-box{
+    background-color: #f2f4fa;
+    box-sizing: content-box;
+    display: flex;
+    justify-content: center;
+    border-radius: 50%;
+    padding: 25px;
+    width: 50px;
+    height: 50px;
+    position: relative;
+}
+
+.service-info .info-box .info .text-box{
+    width: calc(100% - 130px);
+}
+
+.service-info .info-box h5{
+    padding-top: 5px;
+    display: flex;
+    align-items: center;
+}
+.service-info .info-box h5::before{
+    content: '';
+    background-image: url('./list-dd-comment.png');
+    width: 8px;
+    height: 8px;
+    margin-right: 8px;
+}
+
+.service-info .info-table{
+    width: 100%;
+    margin-top: 15px;
+    border-top: 2px solid #58656e;
+}
+
+.service-info .info-table table{
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+.service-info .info-table .introduce thead{
+    background-color: #f5f6f9;
+    height: 50px;
+}
+
+.service-info .info-table .introduce tbody th{
+    padding-left: 20px;
+    background-color: #fbfcfe;
+    text-align: left;
+}
+
+.service-info .info-table .introduce tbody .inner{
+    padding-left: 20px;
+}
+
+.service-info .info-table tr th{
+    background-color: #f5f6f9;
+    text-align: center;
+    border-right: 1px solid #e4e6ea;
+    border-bottom: 1px solid #e4e6ea;
+}
+
+.service-info .info-table tr td{
+    padding: 14px 12px;
+    border-right: 1px solid #e4e6ea;
+    border-bottom: 1px solid #e4e6ea;
+}
+
+.service-info .info-table tr td li{
+    padding-left: 8px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.service-info .info-table tr td li::before{
+    content: '';
+    background-image: url('./list-dl-comment.jpg');
+    background-position: center;
+    width: 2px;
+    height: 2px;
+    margin-right: 8px;
+}

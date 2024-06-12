@@ -1,0 +1,55 @@
+.Demo{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    width: 450px;
+    height: 250px;
+    padding: 20px;
+}
+.Demo > div {
+    padding-bottom: 40px;
+}
+
+.Demo .type-a{
+    display: grid;
+    grid-template-areas: 
+    'a a a b b'
+    'c c c b b';
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    border: solid 1px grey;
+    padding: 10px;
+}
+
+.Demo .type-a label{
+    display: flex;
+    align-items: center;
+}
+.Demo .type-a label:nth-child(1){
+    grid-area: a;
+}
+.Demo .type-a label:nth-child(2){
+    grid-area: c;
+}
+
+.Demo .type-a label span{
+    display: inline-block;
+    width: 30%;
+    padding-right: 10px;
+}
+
+.Demo .type-a label input{
+    padding: 10px 10px;
+}
+
+.Demo .type-a button{
+    grid-area: b;
+    background-color:#004898;
+    color: #fff;
+    text-align: center;
+    width: 90px;
+    height: 100%;
+}

@@ -1,0 +1,102 @@
+.login-box {
+    box-sizing: border-box;
+    color:#777;
+    font-size:13px;
+    width: 580px;
+    height: 550px;
+    padding: 40px 35px 20px;
+}
+
+.login-box .header {
+    text-align: center;
+    height: fit-content;
+    margin-bottom: 10px;
+}
+
+.login-box .header h1{
+    color: #004898;
+    font-size: 40px;
+    font-weight: 900;
+    padding-bottom: 20px;
+}
+
+.login-box .header p{
+    color: #666;
+    font-size: 13px;
+}
+
+.login-box .login-type{
+    font-size: 15px;
+    padding: 20px 0;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.login-box .login-type label{
+    padding: 2px 1px;
+}
+
+.login-box form {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 30px;
+}
+
+.login-box form div{
+    width: 250px;
+}
+
+.login-box form input {
+    width: 100%;
+    height: 49px;
+    padding: 12px 1px 12px 9px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+}
+
+.login-box form button{
+    width: 100px;
+    height: 108px;
+    background-color: #004898;
+    color: white;
+    padding-left: 20px;
+    text-align: left;
+    border: 0;
+    cursor: pointer;
+}
+
+.login-box .small-box{
+    display: flex;
+    padding-top: 30px;
+    border-top: 1px solid #e1e1e1;
+    /* text-align: center; */
+}
+
+.login-box .small-box div{
+    width: 50%;
+}
+
+.login-box .small-box h2{
+    padding-bottom: 20px;
+    color: #000;
+    font-size: 16px;
+}
+
+.login-box .small-box h3{
+    padding-bottom: 20px;
+    font-size: 13px;
+}
+
+.login-box .small-box button{
+    font-size: 13px;
+    border : 0;
+    padding : 8px 20px;
+    background-color: #004898;
+    color: #eee;
+    cursor: pointer;
+}

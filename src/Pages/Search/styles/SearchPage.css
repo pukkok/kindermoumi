@@ -1,0 +1,293 @@
+.Search{
+    position: relative;
+    display: grid;
+    padding: 5vh 0;
+    column-gap: 10px;
+    grid-template-areas: 
+    "a a a a a a a"
+    "b c c c c c c"
+    "b c c c c c c";
+    grid-template-columns: 250px repeat(6, 1fr);
+    grid-template-rows: 100px 200px 1fr;
+}
+.search-local{
+    grid-area: a;
+}
+.search-filter{
+    grid-area: b;
+}
+.search-viewer{
+    grid-area: c;
+}
+
+.search-local{
+    border: solid 1px #e4e6ec;
+    display: flex;
+    
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    text-align: center;
+    font-size: 14px;
+}
+.search-local .local-select{
+    position: relative;
+    height: 44px;
+}
+
+.search-local .local-select > button{
+    box-sizing: border-box;
+    min-width: 170px;
+    text-align: left;
+    padding: 10px;
+    height: 100%;
+    background-color: #f5f6f8;
+    cursor: pointer;
+}
+
+.search-local .local-select > button::after{
+    content: "";
+    width: 0;
+    height: 0;
+    border: 5px solid transparent;
+    border-color: black transparent transparent transparent;
+    position: absolute;
+    top: 20px;
+    right: 10px;
+}
+
+.search-local .local-option{
+    display: none;
+    position: absolute;
+    top: 50px;
+    left: 50%;
+    transform: translate(-50%, 0);
+    border: solid 1px #5172df;
+    z-index: 5;
+}
+.search-local .local-option.on{
+    display: block;
+}
+
+.search-local .local-option nav{
+    display: flex;
+}
+
+.search-local .local-option nav p{
+    position: sticky;
+    top: 0;
+    width: 100%;
+    padding: 10px 0;
+    font-weight: bold;
+    color: #5172df;
+    background-color: #fff;
+}
+
+.search-local .local-option nav ul{
+    position: relative;
+    width: 180px;
+    height: 300px;
+    overflow: scroll;
+    border: solid 1px #cddaee;
+    background-color: #fff;
+}
+
+.search-local .local-option nav ul li{
+    cursor: pointer;
+    padding-bottom: 10px;
+    
+}
+
+.search-local .local-option nav ul li:hover,
+.search-local .local-option nav ul li.on{
+    font-weight: bold;
+    color: #5172df;
+}
+
+.search-local .btn-box{
+    width: 100%;
+    height: 60px;
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+    align-items: center;
+    background-color: #f2f4fa;
+    border: solid 1px #cddaee;
+}
+
+.search-local .btn-box button{
+    min-width: 70px;
+    border: solid 1px #5172df;
+    padding: 10px 15px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.search-local .btn-box button:nth-child(1){
+    background-color: #fff;
+    color: #5172df;
+}
+.search-local .btn-box button:nth-child(2){
+    background-color: #5172df;
+    color: #fff;
+}
+
+/* 검색 창 */
+.search-local .search-kinder{
+    display: flex;
+    justify-content: flex-start;
+    height: 44px;
+}
+
+.search-local .search-kinder input{
+    width: 350px;
+    padding: 10px;
+    margin-right: 10px;
+    background-color: #f5f6f8;
+    border: none;
+}
+
+.search-local .search-kinder button{
+    width: 100px;
+    padding: 5px;
+    background-color: #5172df;
+    color: #fff;
+    /* border: solid 1px #5172df; */
+    cursor: pointer;
+}
+
+/* 뷰어 */
+.search-viewer {
+    width: 100%;
+    height: fit-content;
+}
+
+.search-viewer .search-result {
+    display: flex;
+    height: 44px;
+    align-items: center;
+    justify-content: flex-start;
+    position: relative;
+}
+.search-viewer .search-result .list{
+    font-weight: 700;
+}
+
+.search-viewer .search-result .list span{
+    color: #e9525a;
+}
+
+/* 페이지 보여주는 개수 옵션 */
+.search-viewer .search-result .option{
+    margin-left: auto;
+    width: 140px;
+    height: 30px;
+    padding: 0 10px;
+    border: solid 1px #cddaee;
+    position: relative;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+.search-viewer .search-result .option.on{
+    border: 1px solid #5172df;
+}
+.search-viewer .search-result .option::after{
+    content: "";
+    width: 0;
+    height: 0;
+    border: 4px solid transparent;
+    border-color: black transparent transparent transparent;
+    position: absolute;
+    top: 50%;
+    right: 10px;
+}
+.search-viewer .search-result .option ul{
+    width: 100%;
+    cursor: pointer;
+    position: absolute;
+    top: 30px;
+    right: 0;
+    height: 0;
+    overflow: hidden;
+    transition: .2s;
+    background-color: #fff;
+}
+.search-viewer .search-result .option.on ul{
+    display: block;
+    height: 100px;
+    padding: 5px 0;
+    border: solid 1px #cddaee;
+}
+.search-viewer .search-result ul li{
+    top: 0;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 30px;
+    padding: 0 10px;
+}
+.search-viewer .search-result ul li:hover{
+    background-color: #5172df;
+    color: #fff;
+}
+
+/* 검색된 데이터 */
+.search-datas{
+    position: relative;
+    min-width: 100%;
+    min-height: 600px;
+}
+.search-viewer .search-data:nth-child(1){
+    border-top: solid 1px #e5e5e5;
+}
+.search-viewer .search-data{
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    border-bottom: solid 1px #e5e5e5;
+    cursor: pointer;
+}
+.search-viewer .search-data p{
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    font-weight: 700;
+}
+.search-viewer .search-data p span{
+    color: #5172df;
+    font-size: 13px;
+    border: solid 1px #5172df;
+    padding: 3px;
+}
+.search-viewer .search-data h5{
+    font-weight: 400;
+}
+.search-viewer .search-data h5 span{
+    padding: 0 2px;
+}
+
+.search-datas .search-data:nth-child(10n){
+    border-bottom: 2px solid #ddd;
+}
+
+
+
+/* 페이지 버튼 추가 옵션 */
+.pages-btns .page-btn{
+    display: none;
+}
+.pages-btns .page-btn.on{
+    display: flex;
+}
+.pages-btns .page-btn.active{
+    font-weight: bold;
+}
+.pages-btns .page-btn.active{
+    background-color: #5172df;
+    color: #fff;
+    border-radius: 50%;
+    padding: 2px;
+}
