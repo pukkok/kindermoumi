@@ -4,22 +4,12 @@ import ImgBox from "../../../Components/ImgBox";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-function HeaderBar ({ area, setGridSize, token }) {
+function HeaderBar ({ area, setSideOpen, token }) {
     const navigate = useNavigate()
 
-    const [sideOpen, setSideOpen] = useState(true)
-
-    const foldSideBar = (e) => { // 사이드바 접기 펼치기
-        setSideOpen(!sideOpen)
+    const foldSideBar = (e) => { // 사이드바 접기
+        setSideOpen(true)
     }
-
-    useEffect(()=>{
-        if(sideOpen){
-            setGridSize(250)
-        }else{
-            setGridSize(0)
-        }
-    },[sideOpen])
 
     const letsStartPage = async () => {
         const {data} = await axios.post('platform/startpage', {},{

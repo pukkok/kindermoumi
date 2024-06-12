@@ -1,16 +1,13 @@
 .admin-page{
     width: 100vw;
     height: 100vh;
+    position: relative;
     display: grid;
     grid-template-areas:
-    'l h h h h'
-    'l c c c c';
+    'h'
+    'c';
     grid-template-rows: 50px 1fr;
     transition: .4s;
-}
-.admin-page .l{
-    grid-area: l;
-    background-color: #edf1fe;
 }
 .admin-page .h{
     grid-area: h;
@@ -71,18 +68,12 @@
     border: solid 1px #ddd;
     background-color: #f0f0f0;
     padding: 5px;
-    display: grid;
-    gap: 5px;
-    grid-template-columns: 50% 50%;
-    grid-template-rows: 100%;
 }
 
 .admin-page .option-part .part{
     background-color: #fff;
-    display: grid;
-    grid-template-rows: 30px 1fr;
-    padding: 5px 10px;
-    gap: 10px;
+    width: 100%;
+    height: 100%;
 }
 
 .admin-page .option-part .preview-page,
@@ -94,9 +85,6 @@
     overflow: scroll;
 }
 
-.admin-page .option-part .left-part{
-    grid-column: 1 / 2;
-}
 .admin-page .option-part.wide{
     grid-template-columns: 60% 40%;
 }

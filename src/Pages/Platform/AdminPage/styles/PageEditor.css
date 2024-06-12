@@ -1,0 +1,10 @@
+.page-edit{
+    width: 100%;
+    height: 100%;
+}
+
+.page-edit header{
+    width: 100%;
+    border: solid 1px red;
+    text-align: center;
+}

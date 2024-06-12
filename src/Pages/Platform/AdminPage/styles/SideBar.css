@@ -1,7 +1,18 @@
 /* 사이드바 파트 */
 .admin-page .side-bar{
     padding: 0 20px;
+    height: 100%;
+    background-color: #edf1fe;
+    position: absolute;
+    left: -250px;
+    transition: .5s;
+    z-index: 5;
 }
+
+.admin-page .side-bar.on{
+    left: 0px;
+}
+
 .admin-page .side-bar .title{
     width: 200px;
     height: 50px;

@@ -6,16 +6,8 @@ import SideBar from "./SideBar";
 import HeaderBar from "./HeaderBar";
 import Preview from "./Preview";
 
-import LogoEditor from "./Editor/LogoEditor";
-import BackgroundEditor from "./Editor/BackgroundEditor";
-import NavigationEditor from "./Editor/NavigationEditor";
-import ContainerEditor from "./Editor/ContainerEditor";
-import ContentEditor from "./Editor/ContentsEditor";
 import axios from "axios";
-import MenuTable from "./Menus/MenuTable";
-import MenuEditor from "./Menus/MenuEditor";
-import AllergyEditor from "./Menus/AllergyEditor";
-
+import PageEditor from "./PageEditor";
 function AdminPage () {
 
     const token = JSON.parse(localStorage.getItem('token'))
@@ -69,10 +61,7 @@ function AdminPage () {
 
 
     // 그리드 사이즈 지정 (사이드바 접고 펼칠때 사용)
-    const [gridSize, setGridSize] = useState(250)
-    const gridTemplate = {
-        gridTemplateColumns : `${gridSize}px 1fr`
-    }
+    const [sideOpen, setSideOpen] = useState(false)
 
     // 테마 선택
     const [theme, setTheme] = useState('page')
@@ -130,59 +119,23 @@ function AdminPage () {
     const [allergyList, setAllergyList] = useState([...defaultAllergies])
 
     return(
-        <section className="admin-page open" style={gridTemplate}>
-            <SideBar area='l'
+        <section className="admin-page open">
+            <SideBar 
+            sideOpen={sideOpen} setSideOpen={setSideOpen}
             setTheme={setTheme}
             tabs={tabs} setTabs={setTabs} setSelectedTab={setSelectedTab}
             hideContainer={hideContainer} setHideContainer={setHideContainer}
             />
-            <HeaderBar area='h' setGridSize={setGridSize} token={token}/>
+
+            <HeaderBar area='h' token={token} setSideOpen={setSideOpen}/>
+
             <div className={classNames("option-part", "c", {wide: theme==='menus'})}>
-                <div className="left-part part" ref={sizeRef}>
+                <div className="part" ref={sizeRef}>
                     {theme === 'page' &&
-                    <>
-                        <p className="option-name">레이아웃
-                            <span className="red"></span>
-                            <span className="yellow"></span>
-                            <span className="green"></span>
-                        </p>
-                        <Preview active={selectedTab} hideContainer={hideContainer}
-                        logo={logo} mainMenu={mainMenu} bg={bg} containerSize={containerSize} previewSize={previewSize}
-                        xyCount={xyCount} gridZone={gridZone}/>
-                    </>}
-                    {theme === 'menus' &&
-                    <>
-                        <p className="option-name">식단표
-                            <span className="red"></span>
-                            <span className="yellow"></span>
-                            <span className="green"></span>
-                        </p>
-                        <MenuTable deleteYOIL={deleteYOIL} sideOptions={sideOptions} allergyList={allergyList}/>
-                    </>}
+                    <PageEditor/>
+                    }
                 </div>
-                <div className="part">
-                    <div className="option-btn-box">
-                        {tabs.map((list, idx)=>{
-                            const {value, text} = list
-                            return <div key={idx} 
-                            className={classNames('option-btn',{active : selectedTab === value})}> 
-                                <button className="tab-btn" onClick={()=>setSelectedTab(value)}>{text}</button>
-                                <button className="close-btn" onClick={(e)=>closeTab(e, value)}>
-                                    <span className="material-symbols-outlined">close</span>
-                                </button>
-                            </div>
-                        })}
-                    </div>
-                    <div className="option-window">
-                        {selectedTab === 'logo' && <LogoEditor token={token} setLogo={setLogo} logo={logo} logoSize={logoSize} setLogoSize={setLogoSize}/>}
-                        {selectedTab === 'bg' && <BackgroundEditor token={token} bg={bg} setBg={setBg} loadBgs={loadBgs}/>}
-                        {selectedTab === 'navigation' && <NavigationEditor token={token} mainMenu={mainMenu} setMainMenu={setMainMenu} subMenu={subMenu} setSubMenu={setSubMenu}/>}
-                        {selectedTab === 'container' && <ContainerEditor token={token} setSizeValues={setContainerSize}/>}
-                        {selectedTab === 'content' && <ContentEditor token={token} xyCount={xyCount} setXyCount={setXyCount} gridZone={gridZone} setGridZone={setGridZone}/>}
-                        {selectedTab === 'menu-table' && <MenuEditor token={token} deleteYOIL={deleteYOIL} setDeleteYoil={setDelteYoil} sideOptions={sideOptions} setSideOptions={setSideOptions}/>}
-                        {selectedTab === 'allergy' && <AllergyEditor defaultAllergies={defaultAllergies} allergyList={allergyList} setAllergyList={setAllergyList}/>}
-                    </div>
-                </div>
+                
             </div>
         </section>
     )

@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import './styles/SideBar.css'
 import { Link } from "react-router-dom";
 
-function SideBar ({area, setTheme, tabs, setTabs, setSelectedTab, hideContainer, setHideContainer }) {
+function SideBar ({ sideOpen, setSideOpen, setTheme, tabs, setTabs, setSelectedTab, hideContainer, setHideContainer }) {
 
     const sendTabInfo = (e, title) => {
 
@@ -38,9 +38,9 @@ function SideBar ({area, setTheme, tabs, setTabs, setSelectedTab, hideContainer,
     ]
 
     return (
-        <section className={classNames("side-bar", area)}>
+        <section className={classNames("side-bar", {on : sideOpen})}>
             <div className="title">
-                <h1>관리자 페이지 </h1>
+                <h1>관리자 페이지 <span onClick={()=>setSideOpen(false)}>닫기</span></h1>
             </div>
             <div className="page-management ctrl">
                 <h3>페이지 관리</h3>

@@ -22,7 +22,7 @@ function Preview ({ active='', logo, mainMenu, bg, hideContainer, containerSize,
 
     },[containerSize.width, previewSize])
     console.log(containerSize.unit)
-console.log(gridSize)
+    console.log(gridSize)
 
     const [count, setCount] = useState(0) // 컨텐츠 그리드 개수
     useEffect(()=>{
@@ -51,8 +51,6 @@ console.log(gridSize)
         gridTemplateColumns: xyCount.col ? `repeat(${xyCount.col}, ${(gridSize / xyCount.col) + containerSize.unit})` : '1fr',
         gridTemplateRows: xyCount.row ? `repeat(${xyCount.row}, 1fr)` : '1fr'
     }
-
-    console.log(mainMenu)
 
     return(
         <section className={"preview-page"} style={{}}>
