@@ -26,21 +26,17 @@ function SideBar ({ sideOpen, setSideOpen, setTheme, tabs, setTabs, setSelectedT
     }
 
     const tabList = [
-        {className: 'logo', text: '로고'},
+        {className: 'logo', text: '로고 제작'},
         {className: 'navigation', text: '네비게이션'},
         {className: 'bg', text: '배경'},
         {className: 'container', text: '컨테이너'},
-        {className: 'content', text: '컨텐츠'},
-        {className: 'content', text: '행사일정'},
-        {className: 'content', text: '오늘의 식단'},
-        {className: 'content', text: '포토박스'},
-        {className: 'content', text: '공지사항'},
+        {className: 'content', text: '컨텐츠'}
     ]
 
     return (
         <section className={classNames("side-bar", {on : sideOpen})}>
             <div className="title">
-                <h1>관리자 페이지 <span onClick={()=>setSideOpen(false)}>닫기</span></h1>
+                <h1>관리자 페이지 <button onClick={()=>setSideOpen(false)}>닫기</button></h1>
             </div>
             <div className="page-management ctrl">
                 <h3>페이지 관리</h3>

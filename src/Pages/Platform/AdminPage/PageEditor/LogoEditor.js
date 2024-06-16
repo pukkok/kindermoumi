@@ -2,8 +2,13 @@ import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import ImgBox from "../../../../Components/ImgBox";
 import './styles/LogoEditor.css'
+import { useRecoilState } from "recoil";
+import { LogoAtom, LogoSizeAtom } from "../../../../Recoil/AdminAtom";
 
-function LogoEditor ({logo, setLogo, logoSize, setLogoSize, token}) {
+function LogoEditor ({ token }) {
+
+    const [logo, setLogo] = useRecoilState(LogoAtom)
+    const [logoSize, setLogoSize] = useRecoilState(LogoSizeAtom)
 
     //로고 부분
     const uploadLogo = async () => {
@@ -49,7 +54,7 @@ function LogoEditor ({logo, setLogo, logoSize, setLogoSize, token}) {
             setLogoSize({width, height})
             setPrevSize({width, height})
         }else{
-            setLogoSize({width:'', height:''})
+            setLogoSize({width : '', height : ''})
         }
     },[logo])
 

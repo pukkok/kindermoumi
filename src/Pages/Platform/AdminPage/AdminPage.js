@@ -4,14 +4,18 @@ import classNames from "classnames";
 
 import SideBar from "./SideBar";
 import HeaderBar from "./HeaderBar";
-import Preview from "./Preview";
 
 import axios from "axios";
-import PageEditor from "./PageEditor";
+import EditorPage from "./EditorPage";
+import SmartModal from "./SmartModal";
+import { useRecoilState } from "recoil";
+import { AdminAtom } from "../../../Recoil/AdminAtom";
 function AdminPage () {
 
     const token = JSON.parse(localStorage.getItem('token'))
     
+    const [pageData, setPageItem] = useRecoilState(AdminAtom)
+
     const [loadData, setLoadData] = useState({})
 
     useEffect(()=>{
@@ -29,35 +33,37 @@ function AdminPage () {
     },[])
 
     useEffect(()=>{
-        if(loadData.logoPath){
-            setLogo('http://localhost:5000/'+loadData.logoPath)
-        }
-        if(loadData.addBgList){
-            const addBgList = loadData.addBgList.map(bg => {
-                return 'http://localhost:5000/'+bg
-            })
-            setLoadBgs([...addBgList])
-        }
-        if(loadData.selectBgSrc){
-            setBg(loadData.selectBgSrc)
-        }
-        if(loadData.containerSize){
-            setContainerSize({...containerSize, width : loadData.containerSize, unit : loadData.containerUnit})
-        }
-        if(loadData.navDepth1){
-            setMainMenu(loadData.navDepth1)
-        }
-        if(loadData.navDepth2){
-            setSubMenu(loadData.navDepth2)
-        }
-        if(loadData.zoneData){
-            setGridZone({...loadData.zoneData})
-        }
-        if(loadData.gridCoord){
-            setXyCount({row: loadData.gridCoord.row, col: loadData.gridCoord.col})
-        }
+        // if(loadData.logoPath){
+        //     setPageItem(process.env.REACT_APP_RESTAPI_URL+'/'+loadData.logoPath)
+        // }
+        // if(loadData.addBgList){
+        //     const addBgList = loadData.addBgList.map(bg => {
+        //         return process.env.REACT_APP_RESTAPI_URL + '/' + bg
+        //     })
+        //     setLoadBgs([...addBgList])
+        // }
+        // if(loadData.selectBgSrc){
+        //     setBg(loadData.selectBgSrc)
+        // }
+        // if(loadData.containerSize){
+        //     setContainerSize({...containerSize, width : loadData.containerSize, unit : loadData.containerUnit})
+        // }
+        // if(loadData.navDepth1){
+        //     setMainMenu(loadData.navDepth1)
+        // }
+        // if(loadData.navDepth2){
+        //     setSubMenu(loadData.navDepth2)
+        // }
+        // if(loadData.zoneData){
+        //     setGridZone({...loadData.zoneData})
+        // }
+        // if(loadData.gridCoord){
+        //     setXyCount({row: loadData.gridCoord.row, col: loadData.gridCoord.col})
+        // }
 
     },[loadData])
+
+    
 
 
     // 그리드 사이즈 지정 (사이드바 접고 펼칠때 사용)
@@ -82,9 +88,6 @@ function AdminPage () {
             return tab.value !== checkValue
         }))
     }
-
-    const [logo, setLogo] = useState() // 로고값
-    const [logoSize, setLogoSize] = useState({width:'', height:''})
 
     // 메인메뉴 옵션(상위)
     const [mainMenu, setMainMenu] = useState([ //0:{id:1} 1:{id:2}
@@ -129,14 +132,15 @@ function AdminPage () {
 
             <HeaderBar area='h' token={token} setSideOpen={setSideOpen}/>
 
-            <div className={classNames("option-part", "c", {wide: theme==='menus'})}>
+            <div className={classNames("option-part", "c")}>
                 <div className="part" ref={sizeRef}>
                     {theme === 'page' &&
-                    <PageEditor/>
+                    <EditorPage />
                     }
                 </div>
-                
             </div>
+
+            <SmartModal selectedTab={selectedTab}/>
         </section>
     )
 }

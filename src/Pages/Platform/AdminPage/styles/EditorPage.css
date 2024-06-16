@@ -1,0 +1,49 @@
+.page-edit header,
+.page-edit main,
+.page-edit footer{
+    all: unset;
+}
+
+.page-edit{
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-rows: 100px 1fr 200px;
+    text-align: center;
+}
+
+.page-edit header,
+.page-edit main,
+.page-edit footer{
+    border-bottom: 1px dotted #5172df;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.page-edit .add-btn{
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    width: 100%;
+    height: 100%;
+}
+
+.page-edit header:hover .add-btn,
+.page-edit main:hover .add-btn,
+.page-edit footer:hover .add-btn{
+    font-weight: bold;
+    display: block;
+}
+
+.page-edit header:hover,
+.page-edit main:hover,
+.page-edit footer:hover{
+    border: solid 2px #5172df;
+}
+.page-edit header.active,
+.page-edit main.active,
+.page-edit footer.active{
+    border: solid 2px #004898;
+}
