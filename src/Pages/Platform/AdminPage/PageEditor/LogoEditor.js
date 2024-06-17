@@ -4,6 +4,7 @@ import ImgBox from "../../../../Components/ImgBox";
 import './styles/LogoEditor.css'
 import { useRecoilState } from "recoil";
 import { LogoAtom, LogoSizeAtom } from "../../../../Recoil/AdminAtom";
+import classNames from "classnames";
 
 function LogoEditor ({ token }) {
 
@@ -57,19 +58,21 @@ function LogoEditor ({ token }) {
             if(value > 250){
                 return alert('이미지 크기가 너무 큽니다.')
             }
-    
             setLogoSize({...logoSize, [name] : value})
         }else{
             alert('이미지를 먼저 추가해 주세요')
         }
-        
-        
+    }
+
+    const [openDetail, setOpenDetail] = useState(false)
+    const detailViewOpen = () => {
+        setOpenDetail(!openDetail)
     }
 
     return(
         <section className="logo-edit">
-            <div className="summary">
-                <h2>로고</h2> 
+            <div className={classNames("summary", {skip : openDetail})}>
+                <h2>로고 <button onClick={detailViewOpen}><span>{openDetail ? '설명보기' : '설명접기'}</span></button></h2>
                 <p>일반적으로 기업이나 제품 혹은 서비스 등의 이름을 특징이 드러나도록 디자인하여,
                 상표처럼 사용할 수 있도록 제작되어진 글자들의 조합입니다.    
                 </p> 
@@ -109,10 +112,10 @@ function LogoEditor ({ token }) {
                     <p>클릭시 옵션</p>
                     <div className="inner">
                         <label>
-                            <input type="checkbox" />링크 연결
+                            <input type="checkbox" className="checkbox"/>링크 연결
                         </label>
                         <label>
-                            <input type="checkbox" />모달창 열기
+                            <input type="checkbox" className="checkbox"/>모달창 열기
                         </label>
                     </div>
                 </div>

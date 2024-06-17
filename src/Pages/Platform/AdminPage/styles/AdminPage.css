@@ -150,8 +150,13 @@
 
 /* 공통 요약 */
 .admin-page div.summary{
-    margin-bottom: 20px;
+    margin-bottom: 15px;
 }
+
+.admin-page div.summary.skip > :not(h2){
+    display: none;
+}
+
 .admin-page .summary h2{
     padding-bottom: 10px;
 }
@@ -200,6 +205,12 @@
 .admin-page .upload{
     border: solid 1px #f1f1f1;
 }
+.admin-page .upload p{
+    padding-bottom: 10px;
+}
+.admin-page .upload p span{
+    font-size: 13px;
+}
 
 .admin-page .option-box{
     padding: 10px 20px;
@@ -208,5 +219,9 @@
 
 .admin-page .option-box .inner{
     padding-left: 10px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
+}
+
+.admin-page .mb{
+    margin-bottom: 30px;
 }

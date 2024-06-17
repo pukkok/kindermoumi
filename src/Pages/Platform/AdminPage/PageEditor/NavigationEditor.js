@@ -3,6 +3,7 @@ import './styles/NavigationEditor.css'
 import axios from "axios";
 import { useRecoilState } from "recoil";
 import { mainMenuAtom, subMenuAtom } from "../../../../Recoil/AdminAtom";
+import classNames from "classnames";
 
 function NavigationEditor ({token}) {
     
@@ -104,17 +105,20 @@ function NavigationEditor ({token}) {
         }
     }
 
+    const [openDetail1, setOpenDetail1] = useState(false)
+    const [openDetail2, setOpenDetail2] = useState(false)
+
     // 유치원 안내, 교육마당, 알림마당, 학부모 마당, 홍보 마당, 정보공개
     // 교육 방향, 연혁
     return(
         <section className="navi-edit">
-            <div className="summary">
-                <h2>네비게이션 바</h2>
+            <div className={classNames("summary", {skip : openDetail1})}>
+                <h2>네비게이션 바 <button onClick={()=>setOpenDetail1(!openDetail1)}><span>{openDetail1 ? '설명보기' : '설명접기'}</span></button></h2>
                 <p>현재 사용자가 어떤 위치에 있는지 확인할 수 있으며, 다른 메뉴로 이동을 돕는 기능을 말합니다.</p>
                 <span>* 홈페이지간 페이지를 이동할 수 있는 있는 버튼의 모임입니다.</span>
             </div>
-            <div className="summary">
-                <h2>경로(URL)</h2>
+            <div className={classNames("summary", {skip : openDetail2})}>
+                <h2>경로(URL) <button onClick={()=>setOpenDetail2(!openDetail2)}><span>{openDetail1 ? '설명보기' : '설명접기'}</span></button></h2>
                 <p>현재 사용자의 위치에 대한 이름입니다.</p>
                 <span>* http://www.kindermoumi.com / [경로] </span> <br/>
                 <span>* 하위 메뉴의 경로는 "주소 / [상위 경로] / [하위 경로]" 입니다.</span>

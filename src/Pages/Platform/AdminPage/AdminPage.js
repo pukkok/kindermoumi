@@ -77,23 +77,6 @@ function AdminPage () {
 
     // 테마 선택
     const [theme, setTheme] = useState('page')
-    // 탭 이동
-    const [tabs, setTabs] = useState([])
-    const [selectedTab, setSelectedTab] = useState('')
-    const closeTab = (e, checkValue) => {
-        e.stopPropagation()
-        if(tabs[tabs.length-1].value === checkValue){
-            if(tabs.length===1){ // 탭이 1개 열려 있을때
-                setSelectedTab('')
-            }else{ // 마지막탭 하나 전 탭으로 액티브 이동
-                setSelectedTab(tabs[tabs.length-2].value)
-            }
-        }
-        
-        setTabs(tabs.filter(tab=>{
-            return tab.value !== checkValue
-        }))
-    }
 
     const [bg, setBg] = useState() // 미리보기 배경
     const [loadBgs, setLoadBgs] = useState([])
@@ -103,9 +86,7 @@ function AdminPage () {
     }) // 컨테이너 사이즈 변수
 
     const [previewSize, setPreviewSize] = useState()
-    const [xyCount, setXyCount] = useState({})
 
-    const [gridZone, setGridZone] = useState({}) // 컨텐츠 그리드 구역
     const sizeRef = useRef()
     useEffect(()=>{
         setPreviewSize(sizeRef.current.offsetWidth)
@@ -125,7 +106,6 @@ function AdminPage () {
             <SideBar 
             sideOpen={sideOpen} setSideOpen={setSideOpen}
             setTheme={setTheme}
-            tabs={tabs} setTabs={setTabs} setSelectedTab={setSelectedTab}
             hideContainer={hideContainer} setHideContainer={setHideContainer}
             />
 
@@ -139,7 +119,7 @@ function AdminPage () {
                 </div>
             </div>
 
-            <SmartModal selectedTab={selectedTab} token={token}/>
+            <SmartModal token={token}/>
         </section>
     )
 }

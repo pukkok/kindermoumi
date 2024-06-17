@@ -5,8 +5,11 @@ import classNames from "classnames";
 import LogoEditor from './PageEditor/LogoEditor'
 import NavigationEditor from './PageEditor/NavigationEditor'
 import BackgroundEditor from './PageEditor/BackgroundEditor'
+import ContentsEditor from './PageEditor/ContentsEditor'
 import { useRecoilState } from "recoil";
 import { SmartModalOpenAtom } from "../../../Recoil/AdminAtom";
+import HeaderEditor from "./PageEditor/HeaderEditor";
+
 
 
 function SmartModal ({ selectedTab, token }) {
@@ -64,6 +67,8 @@ function SmartModal ({ selectedTab, token }) {
         }
     }
 
+    
+
     return (
         <section className={classNames("smart-modal", {on : SmartModalOpen.isOpen})}
         ref={containerRef}>
@@ -80,9 +85,9 @@ function SmartModal ({ selectedTab, token }) {
                         <p>상단 설정 <span className="material-symbols-outlined">arrow_forward_ios</span></p>
                         <div className="tab-box">
                             <ul className={classNames("tabs", {open: openOption})} onClick={valueCheck}>
-                                <li className={classNames({active : active==0})} value={0}>선택</li>
-                                <li className={classNames({active : active==1})} value={1}>로고</li>
-                                <li className={classNames({active : active==2})} value={2}>네비게이션</li>
+                                <li className={classNames({active : active===0})} value={0}>선택</li>
+                                <li className={classNames({active : active===1})} value={1}>로고</li>
+                                <li className={classNames({active : active===2})} value={2}>네비게이션</li>
                             </ul>
                         </div>
                     </>}
@@ -92,9 +97,9 @@ function SmartModal ({ selectedTab, token }) {
                         <p>컨텐츠 설정 <span className="material-symbols-outlined">arrow_forward_ios</span></p>
                         <div className="tab-box">
                             <ul className={classNames("tabs", {open: openOption})} onClick={valueCheck}>
-                                <li className={classNames({active : active==0})} value={0}>선택</li>
-                                <li className={classNames({active : active==1})} value={1}>로고</li>
-                                <li className={classNames({active : active==2})} value={2}>네비게이션</li>
+                                <li className={classNames({active : active===0})} value={0}>선택</li>
+                                <li className={classNames({active : active===1})} value={1}>컨텐츠 추가</li>
+                                <li className={classNames({active : active===2})} value={2}>이미지 추가</li>
                             </ul>
                         </div>
                     </>}
@@ -104,9 +109,9 @@ function SmartModal ({ selectedTab, token }) {
                         <p>하단 설정 <span className="material-symbols-outlined">arrow_forward_ios</span></p>
                         <div className="tab-box">
                             <ul className={classNames("tabs", {open: openOption})} onClick={valueCheck}>
-                                <li className={classNames({active : active==0})} value={0}>선택</li>
-                                <li className={classNames({active : active==1})} value={1}>로고</li>
-                                <li className={classNames({active : active==2})} value={2}>네비게이션</li>
+                                <li className={classNames({active : active===0})} value={0}>선택</li>
+                                <li className={classNames({active : active===1})} value={1}>로고</li>
+                                <li className={classNames({active : active===2})} value={2}>네비게이션</li>
                             </ul>
                         </div>
                     </>}
@@ -115,29 +120,22 @@ function SmartModal ({ selectedTab, token }) {
                 </div>
 
                 <div className="remote-option">
-                    상단 설정
-                    <div>컨테이너 설정</div>
-                    <div>수직 정렬</div>
-                    <span class="material-symbols-outlined border-box">align_center</span>
-                    <span class="material-symbols-outlined border-box">align_start</span>
-                    <span class="material-symbols-outlined border-box">align_end</span>
-                    <span class="material-symbols-outlined border-box">align_space_around</span>
-                    <span class="material-symbols-outlined border-box">align_space_between</span>
-                    <span class="material-symbols-outlined">align_stretch</span>
-
-                    <div>수평 정렬</div>
-                    <span className="material-symbols-outlined border-box">align_justify_center</span>
-                    <span className="material-symbols-outlined border-box">align_justify_flex_start</span>
-                    <span className="material-symbols-outlined border-box">align_justify_flex_end</span>
-                    <span className="material-symbols-outlined border-box">align_justify_space_between</span>
-                    <span className="material-symbols-outlined border-box">align_justify_space_even</span>
-                    <span className="material-symbols-outlined border-box">align_justify_space_around</span>
-                {active == 1 && <LogoEditor token={token}/>}
-                {active == 2 && <NavigationEditor token={token}/>}
+                {SmartModalOpen.selection === 'h' && 
+                    <>
+                        <HeaderEditor/>
+                        {active === 1 && <LogoEditor token={token}/>}
+                        {active === 2 && <NavigationEditor token={token}/>}
+                    </>
+                }
+                {SmartModalOpen.selection === 'm' && 
+                    <>
+                        {/* <HeaderEditor/> */}
+                        {active === 1 && <ContentsEditor token={token}/>}
+                        {active === 2 && <BackgroundEditor token={token}/>}
+                    </>
+                }
                 </div>
             </div>
-            
-            {selectedTab === 'bg' && <BackgroundEditor/>}
         </section>
     )
 }

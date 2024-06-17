@@ -1,15 +1,17 @@
 import React, { useState } from "react";
 import './styles/EditorPage.css'
-import { LogoAtom, LogoSizeAtom, SmartModalOpenAtom, mainMenuAtom, subMenuAtom } from "../../../Recoil/AdminAtom";
+import { LogoAtom, LogoSizeAtom, SmartModalOpenAtom, bgAtom, mainMenuAtom, subMenuAtom } from "../../../Recoil/AdminAtom";
 import { useRecoilState, useRecoilValue } from "recoil";
 import classNames from "classnames";
 import {Link} from 'react-router-dom';
 import Container from "../../../Components/Container";
+import ImgBox from "../../../Components/ImgBox";
 
 function EditorPage () {
 
     const [SmartModalOpen, setSmartModalOpen] = useRecoilState(SmartModalOpenAtom)
 
+    const bg = useRecoilValue(bgAtom)
     const logo = useRecoilValue(LogoAtom)
     const logoSize = useRecoilValue(LogoSizeAtom)
     const mainMenu = useRecoilValue(mainMenuAtom)
@@ -52,12 +54,16 @@ function EditorPage () {
                     })}
                     </ul>
                     </nav>}
+                    {!logo && !mainMenu && '상단 영역'}
                 </div>
                 </Container>
                 <button className="add-btn" onClick={openSmartModal}>설정</button>
             </header>
             <main id="m" className={classNames({active : SmartModalOpen.selection === 'm'})}>
-                컨텐츠 영역
+                <div>
+                    {bg && <ImgBox addClass={'bg-img'} src={bg}/>}
+                </div>
+                {!bg && '컨텐츠 영역'}
                 <button className="add-btn" onClick={openSmartModal}>설정</button>
             </main>
             <footer id="f" className={classNames({active : SmartModalOpen.selection === 'f'})}>

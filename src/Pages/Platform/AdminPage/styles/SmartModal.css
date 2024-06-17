@@ -113,3 +113,30 @@
     color: #535353;
     font-size: 24px;
 }
+
+/* extra */
+.header-edit .upload input{
+    width: 40px;
+    margin-left: 5px;
+    margin-right: 3px;
+    border: none;
+    border-bottom: 1px solid #696969;
+    outline: none;
+    text-align: right;
+}
+
+.header-edit .option-box .inner{
+    margin-bottom: 0;
+}
+.header-edit .option-box.diff .inner{
+    padding-top: 10px;
+}
+.header-edit .option-box.diff .inner input{
+    width: 60px;
+}
+
+.smart-modal .upload .checkbox{
+    width: 30px;
+    margin: 0;
+    padding: 0;
+}

@@ -5,9 +5,13 @@ import NoticeEditor from "./NoticeEditor";
 import EventDateEditor from "./EventDateEditor";
 import './styles/ContentsEditor.css'
 import axios from "axios";
+import { useRecoilState } from "recoil";
+import { gridZoneAtom, xyCountAtom } from "../../../../Recoil/AdminAtom";
 
-function ContentEditor ({token, xyCount, setXyCount, gridZone, setGridZone}) {
+function ContentEditor ({ token }) {
 
+    const [xyCount, setXyCount] = useRecoilState(xyCountAtom)
+    const [gridZone, setGridZone] = useRecoilState(gridZoneAtom)
     const xyCounter = (e, xy) => {
         setXyCount({...xyCount, [xy] : e.target.value})
     }
