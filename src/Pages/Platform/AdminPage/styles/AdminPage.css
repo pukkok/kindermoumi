@@ -179,6 +179,7 @@
     gap: 8px;
     padding-bottom: 5px;
     align-items: center;
+    border-bottom: solid 1px #004898;
 }
 .admin-page .remote-btns p{
     padding-left: 15px;
@@ -193,4 +194,19 @@
 .admin-page .remote-btns button:hover{
     color: #004898;
     font-weight: bold;
+}
+
+/* 모달의 옵션 부분 */
+.admin-page .upload{
+    border: solid 1px #f1f1f1;
+}
+
+.admin-page .option-box{
+    padding: 10px 20px;
+    font-size: 14px;
+}
+
+.admin-page .option-box .inner{
+    padding-left: 10px;
+    margin-bottom: 20px;
 }

@@ -1,9 +1,14 @@
 import React, { useEffect, useState } from "react";
 import './styles/NavigationEditor.css'
 import axios from "axios";
+import { useRecoilState } from "recoil";
+import { mainMenuAtom, subMenuAtom } from "../../../../Recoil/AdminAtom";
 
-function NavigationEditor ({token, mainMenu, setMainMenu, subMenu, setSubMenu}) {
+function NavigationEditor ({token}) {
     
+    const [mainMenu, setMainMenu] = useRecoilState(mainMenuAtom)
+    const [subMenu, setSubMenu] = useRecoilState(subMenuAtom)
+
     const addMainMenu = () => {
         setMainMenu([...mainMenu, {
             mainIdx: mainMenu[mainMenu.length-1].mainIdx+1,
@@ -23,12 +28,11 @@ function NavigationEditor ({token, mainMenu, setMainMenu, subMenu, setSubMenu}) 
         
         const newMain = filteredMain.map((list, i) => {
             if(idx < list.mainIdx){
-                list.mainIdx = list.mainIdx-1
+                list = {...list, mainIdx : list.mainIdx - 1}
             }
             return list
         })
-        setMainMenu([...newMain])
-
+        setMainMenu(newMain)
     }
 
     
@@ -54,7 +58,7 @@ function NavigationEditor ({token, mainMenu, setMainMenu, subMenu, setSubMenu}) 
         const {name, value} = e.target
 
         if(name.includes('Path') && value.includes('/')){
-            return alert('"/"는 입력이불가능 합니다.')
+            return alert('"/"는 입력이 불가능 합니다.')
         }
 
         const mappingMenu = mainMenu.map((check, i)=>{
@@ -71,7 +75,7 @@ function NavigationEditor ({token, mainMenu, setMainMenu, subMenu, setSubMenu}) 
         const {name, value} = e.target
 
         if(name.includes('Path') && value.includes('/')){
-            return alert('"/"는 입력이불가능 합니다.')
+            return alert('"/"는 입력이 불가능 합니다.')
         }
 
         const mappingMenu = subMenu[mainIdx].map(check => {
@@ -90,6 +94,16 @@ function NavigationEditor ({token, mainMenu, setMainMenu, subMenu, setSubMenu}) 
         alert(data.msg)
     }
 
+    const resetNavData = () => {
+        let answer = prompt('초기화 하시겠습니까?')
+        if(answer === '초기화'){
+            setMainMenu([{mainIdx : 0, mainName: '', mainPath: ''}])
+            setSubMenu({})
+        }else{
+            alert('초기화가 취소되었습니다.')
+        }
+    }
+
     // 유치원 안내, 교육마당, 알림마당, 학부모 마당, 홍보 마당, 정보공개
     // 교육 방향, 연혁
     return(
@@ -97,51 +111,57 @@ function NavigationEditor ({token, mainMenu, setMainMenu, subMenu, setSubMenu}) 
             <div className="summary">
                 <h2>네비게이션 바</h2>
                 <p>현재 사용자가 어떤 위치에 있는지 확인할 수 있으며, 다른 메뉴로 이동을 돕는 기능을 말합니다.</p>
-                <span>*홈페이지간 페이지를 이동할 수 있는 있는 버튼의 모임입니다.</span>
+                <span>* 홈페이지간 페이지를 이동할 수 있는 있는 버튼의 모임입니다.</span>
             </div>
             <div className="summary">
                 <h2>경로(URL)</h2>
                 <p>현재 사용자의 위치에 대한 이름입니다.</p>
-                <span>http://www.kindermoumi.com / [경로] </span>
+                <span>* http://www.kindermoumi.com / [경로] </span> <br/>
+                <span>* 하위 메뉴의 경로는 "주소 / [상위 경로] / [하위 경로]" 입니다.</span>
             </div>
             <div className="remote-btns">
                 <p>메뉴</p><span></span>
                 <button onClick={addMainMenu}>추가</button>
                 <button onClick={saveNavData}>저장</button>
-                <button onClick={()=>setMainMenu([{num : 0, mainName: '', mainPath: ''}])}>초기화</button>
+                <button onClick={resetNavData}>초기화</button>
             </div>
-            <div className="input-box">
+            <div className="input-box upload">
                 {mainMenu.map((_, idx1)=>{
                     return(
                         <div className="main-menu" key={idx1}>
-                            <div className="main-btns">
-                                <h4>상위 메뉴 {idx1+1}</h4>
-                                <button onClick={(e)=>deleteMainMenu(e, idx1)}>삭제</button>
+                            <div className="half option-box">
+                                <div className="btns">
+                                    <p>대메뉴{idx1+1}</p>
+                                    <button onClick={(e)=>deleteMainMenu(e, idx1)}>삭제</button>
+                                </div>
+                                <label>
+                                    <p>메뉴명 <span>:</span></p><input placeholder="상위 메뉴명" name="mainName" onChange={(e)=>inputMainValue(e, idx1)} value={mainMenu[idx1].mainName}/>
+                                </label>
+                                <label>
+                                    <p>경로 <span>:</span></p><input placeholder='"/" 없이 작성해주세요' name="mainPath" onChange={(e)=>inputMainValue(e, idx1)} value={mainMenu[idx1].mainPath}/>
+                                </label>
                             </div>
-                            <label>
-                                <p>메뉴명 <span>:</span></p><input placeholder="상위 메뉴명" name="mainName" onChange={(e)=>inputMainValue(e, idx1)} value={mainMenu[idx1].mainName}/>
-                            </label>
-                            <label>
-                                <p>경로 지정 <span>:</span></p><input placeholder='"/" 없이 작성해주세요' name="mainPath" onChange={(e)=>inputMainValue(e, idx1)} value={mainMenu[idx1].mainPath}/>
-                            </label>
-                            <div className="sub-btns">
-                                <h4>하위 메뉴</h4>
-                                <button onClick={(e)=>addSubMenu(e, idx1)}>추가</button>
-                                <button onClick={(e)=>deleteSubMenu(e, idx1)}>삭제</button>
+                            <div className="half option-box">
+                                <div className="btns">
+                                    <p>대메뉴{idx1+1} 
+                                    <span className="material-symbols-outlined">arrow_forward_ios</span>
+                                    소메뉴</p>
+                                    <button onClick={(e)=>addSubMenu(e, idx1)}>추가</button>
+                                    <button onClick={(e)=>deleteSubMenu(e, idx1)}>삭제</button>
+                                </div>
+                                    {subMenu && subMenu[idx1] && subMenu[idx1].map((check, idx2)=>{
+                                        return(
+                                            <div className="sub-menu" key={idx2}>
+                                                <label>
+                                                    <p>메뉴명{idx2+1} <span>:</span></p> <input placeholder="하위 메뉴명" name="subName" onChange={(e)=>inputSubValue(e, idx1, idx2)} value={subMenu[idx1][idx2].subName}/>
+                                                </label>
+                                                <label>
+                                                    <p>경로 <span>:</span></p> <input placeholder='"/" 없이 작성해주세요' name="subPath" onChange={(e)=>inputSubValue(e, idx1, idx2)} value={subMenu[idx1][idx2].subPath}/>
+                                                </label>
+                                            </div>
+                                        )
+                                    })}
                             </div>
-                            {subMenu && subMenu[idx1] && subMenu[idx1].map((check, idx2)=>{
-                                return(
-                                    <div className="sub-menu" key={idx2}>
-                                        {idx2===0 && <span className="sub-detail">하위 메뉴의 경로는 <br/> "주소 / [상위 경로] / [하위 경로]" 입니다.</span>}
-                                        <label>
-                                            <p>메뉴명 <span>:</span></p> <input placeholder="하위 메뉴명" name="subName" onChange={(e)=>inputSubValue(e, idx1, idx2)} value={subMenu[idx1][idx2].subName}/>
-                                        </label>
-                                        <label>
-                                            <p>경로 지정 <span>:</span></p> <input placeholder='"/" 없이 작성해주세요' name="subPath" onChange={(e)=>inputSubValue(e, idx1, idx2)} value={subMenu[idx1][idx2].subPath}/>
-                                        </label>
-                                    </div>
-                                )
-                            })}
                         </div>
                     )
                 })} 
@@ -157,17 +177,24 @@ function NavigationEditor ({token, mainMenu, setMainMenu, subMenu, setSubMenu}) 
                 <button >초기화</button>
             </div>
             <div className="input-box">
-                <div className="main-menu font-option">
-                    
-                    <label>
-                        <p>상위 폰트 크기</p><input /><span>(px)</span>
-                    </label>
-                    <label>
-                        <p>하위 폰트 크기</p><input/><span>(px)</span>
-                    </label>
-                    <label>
-                        <p>마우스 오버시 색상</p><input />
-                    </label>
+                <div className="main-menu">
+                    <div className="option-box">
+                        <p>폰트 크기</p>
+                        <div className="inner">
+                            <label>
+                                <p>대메뉴</p><input /><span>(px)</span>
+                            </label>
+                            <label>
+                                <p>소메뉴</p><input/><span>(px)</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div className="option-box">
+                    <p>마우스 오버시 색상</p>
+                        <label>
+                            <input />
+                        </label>
+                    </div>
                 </div>
             </div>
         </section>

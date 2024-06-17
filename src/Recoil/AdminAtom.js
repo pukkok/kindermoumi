@@ -18,9 +18,18 @@ export const LogoSizeAtom = atom({
     default : { width: '', height : ''}
 })
 
+export const mainMenuAtom = atom({
+    key: 'mainMenu',
+    default: [{mainIdx : 0, mainName: '', mainPath: ''}]
+})
+
+export const subMenuAtom = atom({
+    key: 'subMenu',
+    default: {}
+})
 
 /** SmartModal */
 export const SmartModalOpenAtom = atom({
     key: 'SMOPEN',
-    default : false
+    default : {isOpen : false, selection: ''}
 })

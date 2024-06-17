@@ -1,16 +1,115 @@
 .smart-modal{
     position: fixed;
-    width: 800px;
-    height: 800px;
-    border: solid 1px red;
+    width: 100vw;
+    height: 100vh;
     display: none;
-    background-color: #fff;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    transition: .2s;
+    background-image: linear-gradient(rgba(0,0,0,.1), rgba(0,0,0,.1));
+    /* transform: translate(-50%, -50%); */
+    /* transition: .2s; */
+    z-index: 1000;
 }
 
 .smart-modal.on{
     display: block;
+}
+
+.smart-modal .control-box{
+    width: 680px;
+    min-height: 600px;
+    position: absolute;
+    background-color: #fff;
+    border-radius: 4px;
+    
+}
+
+.smart-modal .remote{
+    width: 50px;
+    color: #5172df;
+    font-weight: bold;
+    border-bottom: solid 1px #efefef;
+    width: 100%;
+    padding: 16px;
+    gap: 10px;
+    display: flex;
+    
+}
+
+.smart-modal .remote p{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.smart-modal .remote p span{
+    font-size: 12px;
+}
+
+.smart-modal .remote button{
+    margin-left: auto;
+    color: black;
+}
+
+.smart-modal .tab-box{
+    position: relative;
+
+}
+
+.smart-modal .tabs{
+    min-width: 120px;
+    position: absolute;
+    border: solid 1px #5172df;
+    background-color: #fff;
+    top: 0;
+    cursor: pointer;
+}
+
+.smart-modal .tabs::after{
+    content: "";
+    width: 0;
+    height: 0;
+    border: 4px solid transparent;
+    border-color: #5172df transparent transparent transparent;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}
+
+.smart-modal .tabs.open::after{
+    display: none;
+}
+
+.smart-modal .tabs li{
+    display: none;
+    padding-left: 5px;
+}
+
+.smart-modal .tabs.open li{
+    display: block;
+    
+    padding-bottom: 5px;
+    cursor: pointer;
+}
+
+.smart-modal .tabs.open li:hover{
+    background-color: #02269e;
+    color: #fff;
+}
+
+.smart-modal .tabs li.active{
+    display: block;
+}
+
+.smart-modal .remote-option{
+    box-sizing: border-box;
+    padding: 20px;
+    max-height: 800px;
+    overflow: scroll;
+}
+
+.smart-modal .remote-option .border-box{
+    border: solid 1px grey;
+    cursor: pointer;
+    padding: 2px;
+    color: #535353;
+    font-size: 24px;
 }

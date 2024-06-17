@@ -1,37 +1,68 @@
 import React, { useState } from "react";
 import './styles/EditorPage.css'
-import { SmartModalOpenAtom } from "../../../Recoil/AdminAtom";
-import { useRecoilState } from "recoil";
+import { LogoAtom, LogoSizeAtom, SmartModalOpenAtom, mainMenuAtom, subMenuAtom } from "../../../Recoil/AdminAtom";
+import { useRecoilState, useRecoilValue } from "recoil";
 import classNames from "classnames";
+import {Link} from 'react-router-dom';
+import Container from "../../../Components/Container";
 
 function EditorPage () {
 
     const [SmartModalOpen, setSmartModalOpen] = useRecoilState(SmartModalOpenAtom)
-    const [active, setActive] = useState()
+
+    const logo = useRecoilValue(LogoAtom)
+    const logoSize = useRecoilValue(LogoSizeAtom)
+    const mainMenu = useRecoilValue(mainMenuAtom)
+    const subMenu = useRecoilValue(subMenuAtom)
 
     const activeSelector = (e) => {
-        setActive(e.target.parentElement.id)
+
     }
     
-    const openSmartModal = () => {
-        setSmartModalOpen(true)
+    const openSmartModal = (e) => {
+        setSmartModalOpen({isOpen: true, selection: e.target.parentElement.id})
     }
 
-
     return (
-        <section className="page-edit" onClick={activeSelector}>
-            {/* <button onClick={buildPageStarter}>작업 시작하기</button> */}
-            <header id="h" className={classNames({active : active === 'h'})}>
-                상단 영역
-                <button className="add-btn" onClick={openSmartModal}>추가</button>
+        <section className="page-edit kinder-page" onClick={activeSelector}>
+            <header id="h" className={classNames({active : SmartModalOpen.selection === 'h'})}>
+                <Container>
+                <div className="nav-bar">
+                    {logo && 
+                    <div className="logo" style={{width : logoSize.width+'px', height: logoSize.height+'px'}}>
+                        <Link to={`/kinder/`}>
+                            <img src={`${logo}`}/>
+                        </Link>
+                    </div>}
+                    {mainMenu && <nav className="navigation">
+                    <ul className="depth1">
+                    {mainMenu.map((mainData, mainIdx)=>{
+                        return (
+                            <li key={mainIdx}><Link>{mainData.mainName}</Link>
+                                {subMenu &&  
+                                    subMenu[mainIdx] && 
+                                    <ul className="depth2">    
+                                    {subMenu[mainIdx].map((data, subIdx) => {
+                                        return <li key={subIdx}><Link to={`${mainData.mainPath}/${data.subPath}`}>{data.subName}</Link></li>
+                                    })}
+                                    </ul>
+                                }
+                            </li>
+                        )
+                    })}
+                    </ul>
+                    </nav>}
+                </div>
+                </Container>
+                <button className="add-btn" onClick={openSmartModal}>설정</button>
             </header>
-            <main id="m" className={classNames({active : active === 'm'})}>
+            <main id="m" className={classNames({active : SmartModalOpen.selection === 'm'})}>
                 컨텐츠 영역
-                <button className="add-btn" onClick={openSmartModal}>추가</button>
+                <button className="add-btn" onClick={openSmartModal}>설정</button>
             </main>
-            <footer id="f" className={classNames({active : active === 'f'})}>
+            <footer id="f" className={classNames({active : SmartModalOpen.selection === 'f'})}>
                 하단 영역
-                <button className="add-btn" onClick={openSmartModal}>추가</button>
+                <button className="add-btn" onClick={openSmartModal}>설정</button>
             </footer>
         </section>
     )

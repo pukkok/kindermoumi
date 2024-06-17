@@ -1,12 +1,3 @@
-.logo-edit .upload{
-    border: solid 1px #696969;
-    background-color: #f7f7f7;
-    padding: 5px 10px;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 5px;
-    justify-content: space-between;
-}
 .logo-edit .upload p{
     padding-bottom: 10px;
 }
@@ -15,16 +6,31 @@
 }
 
 .logo-edit .upload > div:nth-child(1){
-    min-width: 200px;
+    width: 100%;
+    height: 80px;
+    background-color: #f1f1f1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
+.logo-edit .upload .add-img{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.logo-edit .upload .add-img span{
+    font-size: 40px;
+    color: #696969;
+}
+
+
 .logo-edit .upload .logo-box{
-    margin-top: 10px;
     box-sizing: content-box;
-    border: solid 1px #696969;
-    padding: 2px;
-    width: 130px;
-    height: 40px;
+    width: 150px;
+    height: 60px;
 }
 .logo-edit .upload .logo-box img{
     width: 100%;
@@ -34,23 +40,8 @@
 .logo-edit .upload input{
     width: 40px;
     margin-right: 3px;
-}
-
-.logo-edit .upload .switch-box{
-    display: flex;
-    /* justify-content: space-evenly; */
-}
-
-.logo-edit .upload .switch-box > div{
-    width: 50%;
-}
-
-.logo-edit .upload button{
-    border: solid 1px #696969;
-    padding: 2px 4px;
-    font-size: 12px;
-    background-color: #fff;
-}
-.logo-edit .upload button:nth-child(1 of button){
-    margin-right: 8px;
+    border: none;
+    border-bottom: 1px solid #696969;
+    outline: none;
+    text-align: right;
 }

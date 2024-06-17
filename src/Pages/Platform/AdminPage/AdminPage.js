@@ -8,15 +8,18 @@ import HeaderBar from "./HeaderBar";
 import axios from "axios";
 import EditorPage from "./EditorPage";
 import SmartModal from "./SmartModal";
-import { useRecoilState } from "recoil";
-import { AdminAtom } from "../../../Recoil/AdminAtom";
+import { useRecoilState, useSetRecoilState } from "recoil";
+import { LogoAtom, LogoSizeAtom, mainMenuAtom, subMenuAtom } from "../../../Recoil/AdminAtom";
+import Calendar from "../../../Custom/Calendar";
 function AdminPage () {
 
     const token = JSON.parse(localStorage.getItem('token'))
-    
-    const [pageData, setPageItem] = useRecoilState(AdminAtom)
 
     const [loadData, setLoadData] = useState({})
+    const setLogo = useSetRecoilState(LogoAtom)
+    const setLogoSize = useSetRecoilState(LogoSizeAtom)
+    const setMainMenu = useSetRecoilState(mainMenuAtom)
+    const setSubMenu = useSetRecoilState(subMenuAtom)
 
     useEffect(()=>{
         const downloadData = async () => {
@@ -33,9 +36,12 @@ function AdminPage () {
     },[])
 
     useEffect(()=>{
-        // if(loadData.logoPath){
-        //     setPageItem(process.env.REACT_APP_RESTAPI_URL+'/'+loadData.logoPath)
-        // }
+        if(loadData.logoPath){
+            setLogo(process.env.REACT_APP_RESTAPI_URL+'/'+loadData.logoPath)
+        }
+        if(loadData.logoSize){
+
+        }
         // if(loadData.addBgList){
         //     const addBgList = loadData.addBgList.map(bg => {
         //         return process.env.REACT_APP_RESTAPI_URL + '/' + bg
@@ -48,12 +54,12 @@ function AdminPage () {
         // if(loadData.containerSize){
         //     setContainerSize({...containerSize, width : loadData.containerSize, unit : loadData.containerUnit})
         // }
-        // if(loadData.navDepth1){
-        //     setMainMenu(loadData.navDepth1)
-        // }
-        // if(loadData.navDepth2){
-        //     setSubMenu(loadData.navDepth2)
-        // }
+        if(loadData.navDepth1){
+            setMainMenu(loadData.navDepth1)
+        }
+        if(loadData.navDepth2){
+            setSubMenu(loadData.navDepth2)
+        }
         // if(loadData.zoneData){
         //     setGridZone({...loadData.zoneData})
         // }
@@ -88,13 +94,6 @@ function AdminPage () {
             return tab.value !== checkValue
         }))
     }
-
-    // 메인메뉴 옵션(상위)
-    const [mainMenu, setMainMenu] = useState([ //0:{id:1} 1:{id:2}
-        {mainIdx : 0, mainName: '', mainPath: ''}
-    ])
-    // 서브메뉴 옵션(하위)
-    const [subMenu, setSubMenu] = useState({})
 
     const [bg, setBg] = useState() // 미리보기 배경
     const [loadBgs, setLoadBgs] = useState([])
@@ -134,13 +133,13 @@ function AdminPage () {
 
             <div className={classNames("option-part", "c")}>
                 <div className="part" ref={sizeRef}>
-                    {theme === 'page' &&
-                    <EditorPage />
-                    }
+                    {theme === 'page' && <EditorPage />}
+                    {theme === 'menus' && <Calendar />}
+                    
                 </div>
             </div>
 
-            <SmartModal selectedTab={selectedTab}/>
+            <SmartModal selectedTab={selectedTab} token={token}/>
         </section>
     )
 }

@@ -10,7 +10,8 @@ function LogoEditor ({ token }) {
     const [logo, setLogo] = useRecoilState(LogoAtom)
     const [logoSize, setLogoSize] = useRecoilState(LogoSizeAtom)
 
-    //로고 부분
+    const logoRef= useRef() // 사진 업로드 input
+
     const uploadLogo = async () => {
         //content-type: multipart/form-data 로전송
         const fd = new FormData() // multer 사용시 폼데이터형식으로 보내줘야함
@@ -33,60 +34,37 @@ function LogoEditor ({ token }) {
         alert(kinderData.data.msg)
     }
     
-    const logoRef= useRef()
     const getLogo = (e) => {
         if(e.target.files[0]){
             setLogo(URL.createObjectURL(e.target.files[0]))
         }
     }
 
-    // 초기값을 담아둔다.
-    const [prevSize, setPrevSize] = useState({
-        width:'', height:''
-    })
-
     const imgRef = useRef()
 
     useEffect(()=>{
         if(logo && logo!=='notFound'){
-            const width = imgRef.current.offsetWidth
-            const height = imgRef.current.offsetHeight
-            setLogoSize({width, height})
-            setPrevSize({width, height})
+            setLogoSize({width: imgRef.current.offsetWidth, height: imgRef.current.offsetHeight})
         }else{
             setLogoSize({width : '', height : ''})
         }
     },[logo])
 
+    const logoSizeInput = (e) => {
+        if(logo){
+            const {name, value} = e.target
     
-
-    const sizeRef = useRef({})
-
-    const changeImgSize = () => {
-        const {w, h} = sizeRef.current
-        let width = w.value
-        let height = h.value
-        if(width > 250){
-            return alert('넓이는 250px을 넘길 수 없습니다.')
+            if(value > 250){
+                return alert('이미지 크기가 너무 큽니다.')
+            }
+    
+            setLogoSize({...logoSize, [name] : value})
+        }else{
+            alert('이미지를 먼저 추가해 주세요')
         }
-        if(height > 150){
-            return alert('높이는 150px을 넘길 수 없습니다.')
-        }
-        if(w.value.length === 0) width = prevSize.width
-        if(h.value.length === 0) height = prevSize.height
-        setLogoSize({... logoSize, width, height})
-    }
-
-    const resetImgSize = () => {
-        setLogoSize({...prevSize})
-        sizeRef.current.w.value = ''
-        sizeRef.current.h.value = ''
-    }
-
-
-    useEffect(()=>{
         
-    },[changeImgSize])
+        
+    }
 
     return(
         <section className="logo-edit">
@@ -98,40 +76,45 @@ function LogoEditor ({ token }) {
                 <span>*해당 홈페이지의 사용처는 메인페이지(홈 또는 첫 페이지)로 돌아가는 기능입니다.</span>
             </div>
             <div className="remote-btns">
-                <p>로고</p><span></span>
-                <button title='이미지를 업로드합니다.' onClick={()=>logoRef.current.click()}>불러오기</button>
                 <p>업로드</p><span></span>
                 <button title="수정된 이미지 옵션을 저장합니다." onClick={()=>uploadLogo()}>저장</button>
-                <button title="전체 옵션을 초기화합니다" onClick={()=>setLogo('notFound')}>초기화</button>
+                <button title="전체 옵션을 초기화합니다" onClick={()=>setLogo()}>초기화</button>
             </div>
             <div className="upload">
                 <div>
-                    <p>로고<span>(실제 크기)</span></p>
-                    <span className="summary">최대 넓이는 250px이며, 최대 높이는 150px입니다.</span>
-                    <ImgBox addClass={'logo-box'} imgSize={logoSize} src={logo} alt="이미지"
-                    ref={imgRef}/>
+                    <button className="add-img" onClick={()=>logoRef.current.click()}>
+                        
+                    {!logo ? 
+                        <span className="material-symbols-outlined">
+                            add_photo_alternate
+                        </span>
+                    :
+                    <ImgBox addClass={'logo-box'} src={logo} alt="이미지" imgSize={logoSize} ref={imgRef}/>
+                    }
+                    </button>
+                    {/* <span className="summary">최대 넓이는 250px이며, 최대 높이는 150px입니다.</span> */}
                 </div>
-                <div className="switch-box">
-                    {logoSize.width && 
-                    <>
-                    <div>
-                        <p>현재 크기</p>  
-                        <p className="summary">넓이: {logoSize.width && logoSize.width + 'px'}</p>
-                        <p className="summary">높이: {logoSize.height && logoSize.height + 'px'}</p>
-                    </div>
-                    <div>                            
-                        <p>수정</p>
-                        <p className="summary">넓이: {logoSize.width && 
-                            <><input ref={(el)=>sizeRef.current['w'] = el}/>px</>}
+                <div className="option-box">
+                    <p>로고 옵션</p>
+                    <div className="inner">                            
+                        <p><span>가로 : </span>
+                            <input onChange={logoSizeInput} name="width" placeholder={logoSize.width} value={logoSize.width}/>
+                            px
                         </p>
-                        <p className="summary">높이: {logoSize.height && 
-                            <><input ref={(el)=>sizeRef.current['h'] = el}/>px</>}
+                        <p><span>세로 : </span>
+                            <input onChange={logoSizeInput} name="height" placeholder={logoSize.height} value={logoSize.height}/>
+                            px
                         </p>
-
-                        <button onClick={changeImgSize}>적용</button> 
-                        <button onClick={resetImgSize}>초기화</button>
                     </div>
-                    </>}
+                    <p>클릭시 옵션</p>
+                    <div className="inner">
+                        <label>
+                            <input type="checkbox" />링크 연결
+                        </label>
+                        <label>
+                            <input type="checkbox" />모달창 열기
+                        </label>
+                    </div>
                 </div>
                 
                     
