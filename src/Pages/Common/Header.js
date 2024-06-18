@@ -4,10 +4,14 @@ import './styles/Header.css'
 import Container from "../../Components/Container";
 import axios from "axios";
 import classnames from "classnames";
+import { useRecoilState } from "recoil";
+import { isLoginAtom } from "../../Recoil/LoginAtom";
 
-function Header ({userName, admin, token, kinderUrl, setKinderUrl, isLogin, setIsLogin}) {
+function Header ({userName, admin, token, kinderUrl, setKinderUrl}) {
     // 로그인 로그아웃시 이벤트처리
     // const [isLogin, setIsLogin] = useState(false) 
+
+    const [isLogin, setIsLogin] = useRecoilState(isLoginAtom)
 
     useEffect(()=>{
         userName && setIsLogin(true)

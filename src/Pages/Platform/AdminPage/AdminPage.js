@@ -9,7 +9,7 @@ import axios from "axios";
 import EditorPage from "./EditorPage";
 import SmartModal from "./SmartModal";
 import { useRecoilState, useSetRecoilState } from "recoil";
-import { LogoAtom, LogoSizeAtom, mainMenuAtom, subMenuAtom } from "../../../Recoil/AdminAtom";
+import { LogoAtom, LogoSizeAtom, gridZoneAtom, mainMenuAtom, subMenuAtom } from "../../../Recoil/AdminAtom";
 import Calendar from "../../../Custom/Calendar";
 function AdminPage () {
 
@@ -20,6 +20,7 @@ function AdminPage () {
     const setLogoSize = useSetRecoilState(LogoSizeAtom)
     const setMainMenu = useSetRecoilState(mainMenuAtom)
     const setSubMenu = useSetRecoilState(subMenuAtom)
+    const setGridZone = useSetRecoilState(gridZoneAtom)
 
     useEffect(()=>{
         const downloadData = async () => {
@@ -39,8 +40,8 @@ function AdminPage () {
         if(loadData.logoPath){
             setLogo(process.env.REACT_APP_RESTAPI_URL+'/'+loadData.logoPath)
         }
-        if(loadData.logoSize){
-
+        if(loadData.logoWidth){
+            setLogoSize({width : loadData.logoWidth, height : loadData.logoHeight})
         }
         // if(loadData.addBgList){
         //     const addBgList = loadData.addBgList.map(bg => {
@@ -60,9 +61,9 @@ function AdminPage () {
         if(loadData.navDepth2){
             setSubMenu(loadData.navDepth2)
         }
-        // if(loadData.zoneData){
-        //     setGridZone({...loadData.zoneData})
-        // }
+        if(loadData.zoneData){
+            setGridZone({...loadData.zoneData})
+        }
         // if(loadData.gridCoord){
         //     setXyCount({row: loadData.gridCoord.row, col: loadData.gridCoord.col})
         // }
@@ -78,12 +79,9 @@ function AdminPage () {
     // 테마 선택
     const [theme, setTheme] = useState('page')
 
-    const [bg, setBg] = useState() // 미리보기 배경
-    const [loadBgs, setLoadBgs] = useState([])
+    // 수정 or 미리보기
+    const [onMode, setOnMode] = useState(true)
     const [hideContainer, setHideContainer] = useState(false) // 컨테이너 보이기/숨기기
-    const [containerSize, setContainerSize] = useState({
-        maxWidth:'1240', width:'1240', minWidth:'1240', unit: 'px' // 디폴트 값
-    }) // 컨테이너 사이즈 변수
 
     const [previewSize, setPreviewSize] = useState()
 
@@ -106,16 +104,15 @@ function AdminPage () {
             <SideBar 
             sideOpen={sideOpen} setSideOpen={setSideOpen}
             setTheme={setTheme}
-            hideContainer={hideContainer} setHideContainer={setHideContainer}
+            onMode={onMode} setOnMode={setOnMode}
             />
 
-            <HeaderBar area='h' token={token} setSideOpen={setSideOpen}/>
+            <HeaderBar area='h' token={token} setSideOpen={setSideOpen} />
 
             <div className={classNames("option-part", "c")}>
                 <div className="part" ref={sizeRef}>
-                    {theme === 'page' && <EditorPage />}
+                    {theme === 'page' && <EditorPage onMode={onMode}/>}
                     {theme === 'menus' && <Calendar />}
-                    
                 </div>
             </div>
 

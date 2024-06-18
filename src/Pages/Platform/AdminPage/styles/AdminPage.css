@@ -1,6 +1,6 @@
 .admin-page{
     width: 100vw;
-    height: 100vh;
+    min-height: 100vh;
     position: relative;
     display: grid;
     grid-template-areas:
@@ -16,7 +16,6 @@
 .admin-page .c{
     grid-area: c;
 }
-
 /* 헤더바 파트 */
 .admin-page .header-bar{
     display: flex;
@@ -24,6 +23,7 @@
     align-items: center;
     background-color: #fff;
 }
+
 .admin-page .header-bar > button{
     display: flex;
     margin-right: 25px;
@@ -64,7 +64,7 @@
 
 /* 옵션 수정 부분 */
 .admin-page .option-part{
-    height: calc(100vh - 50px);
+    min-height: calc(100vh - 50px);
     border: solid 1px #ddd;
     background-color: #f0f0f0;
     padding: 5px;

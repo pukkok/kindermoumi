@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import ImgBox from "../../../Components/ImgBox";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -27,6 +27,7 @@ function HeaderBar ({ area, setSideOpen, token }) {
             <ul>
                 {/* <li><button>사용법</button></li> */}
                 {/* <li><button>저장</button></li> */}
+                
                 <li><button onClick={()=>window.location.reload()}>초기화</button></li>
                 <li><button onClick={()=>letsStartPage()}>게시</button></li>
                 <li><button className="out" onClick={()=>navigate(-1)}>나가기</button></li>

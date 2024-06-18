@@ -170,7 +170,7 @@ function NavigationEditor ({token}) {
                     )
                 })} 
             </div>
-            <div className="summary">
+            {/* <div className="summary">
                 <h2>마우스 오버 이벤트</h2>
                 <p>마우스를 해당 위치에 올렸을 때 생기는 이벤트 입니다.</p>
                 <span>(예시) 색상 변환, 하위 목록 열림 </span>
@@ -200,7 +200,7 @@ function NavigationEditor ({token}) {
                         </label>
                     </div>
                 </div>
-            </div>
+            </div> */}
         </section>
     )
 }

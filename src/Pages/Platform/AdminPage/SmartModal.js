@@ -32,16 +32,16 @@ function SmartModal ({ selectedTab, token }) {
         e.dataTransfer.setDragImage(emptyImg, 0, 0);
         // e.dataTransfer.effectAllowed = "move"; // 크롬의그린 +아이콘 제거
 
-        const clientPosTemp = { ...clientPos };
-        clientPosTemp["x"] = e.clientX;
-        clientPosTemp["y"] = e.clientY;
-        setClientPos(clientPosTemp);
     }
 
     const dragHandler = (e) => {
+
+        console.log(e.clientX)
+        console.log(e.target.scrollHeight)
+        console.log(e.target.scrollTop)
         const PosTemp = { ...pos };
-        PosTemp["left"] = e.clientX;
-        PosTemp["top"] = e.clientY;
+        PosTemp["left"] = e.clientX - 300;
+        PosTemp["top"] = e.clientY - 30;
         setPos(PosTemp);
     }
     
@@ -50,9 +50,10 @@ function SmartModal ({ selectedTab, token }) {
     }
 
     const dragEndHandler = (e) => {
+        
         const PosTemp = { ...pos };
-        PosTemp["left"] = e.clientX;
-        PosTemp["top"] = e.clientY;
+        PosTemp["left"] = e.clientX - 300;
+        PosTemp["top"] = e.clientY - 30;
         setPos(PosTemp);
     }
 
@@ -70,9 +71,8 @@ function SmartModal ({ selectedTab, token }) {
     
 
     return (
-        <section className={classNames("smart-modal", {on : SmartModalOpen.isOpen})}
-        ref={containerRef}>
-            <div className="control-box" style={{ left: pos.left, top: pos.top }}>
+        <section className={classNames("smart-modal", {on : SmartModalOpen.isOpen})}>
+            <div className="control-box" style={{ left: pos.left, top: pos.top }} ref={containerRef}>
                 <div className="remote" ref={dragComponentRef}
                 draggable
                 onDragStart={(e) => dragStartHandler(e)}
@@ -98,8 +98,8 @@ function SmartModal ({ selectedTab, token }) {
                         <div className="tab-box">
                             <ul className={classNames("tabs", {open: openOption})} onClick={valueCheck}>
                                 <li className={classNames({active : active===0})} value={0}>선택</li>
-                                <li className={classNames({active : active===1})} value={1}>컨텐츠 추가</li>
-                                <li className={classNames({active : active===2})} value={2}>이미지 추가</li>
+                                <li className={classNames({active : active===1})} value={1}>이미지 추가</li>
+                                <li className={classNames({active : active===2})} value={2}>컨텐츠 추가</li>
                             </ul>
                         </div>
                     </>}
@@ -110,8 +110,6 @@ function SmartModal ({ selectedTab, token }) {
                         <div className="tab-box">
                             <ul className={classNames("tabs", {open: openOption})} onClick={valueCheck}>
                                 <li className={classNames({active : active===0})} value={0}>선택</li>
-                                <li className={classNames({active : active===1})} value={1}>로고</li>
-                                <li className={classNames({active : active===2})} value={2}>네비게이션</li>
                             </ul>
                         </div>
                     </>}
@@ -130,8 +128,8 @@ function SmartModal ({ selectedTab, token }) {
                 {SmartModalOpen.selection === 'm' && 
                     <>
                         {/* <HeaderEditor/> */}
-                        {active === 1 && <ContentsEditor token={token}/>}
-                        {active === 2 && <BackgroundEditor token={token}/>}
+                        {active === 1 && <BackgroundEditor token={token}/>}
+                        {active === 2 && <ContentsEditor token={token}/>}
                     </>
                 }
                 </div>

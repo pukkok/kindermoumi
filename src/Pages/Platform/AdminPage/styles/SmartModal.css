@@ -23,7 +23,6 @@
 }
 
 .smart-modal .remote{
-    width: 50px;
     color: #5172df;
     font-weight: bold;
     border-bottom: solid 1px #efefef;
@@ -31,8 +30,13 @@
     padding: 16px;
     gap: 10px;
     display: flex;
-    
+    cursor: move;
 }
+
+.smart-modal .remote:active{
+    cursor: move;
+}
+
 
 .smart-modal .remote p{
     display: flex;

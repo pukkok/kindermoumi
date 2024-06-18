@@ -1,37 +1,29 @@
 import classNames from "classnames";
 import React, { useState } from "react";
 import './styles/SideBar.css'
-import { Link } from "react-router-dom";
 
-function SideBar ({ sideOpen, setSideOpen, setTheme, tabs, setTabs, setSelectedTab, hideContainer, setHideContainer }) {
+function SideBar ({ sideOpen, setSideOpen, setTheme, onMode, setOnMode }) {
 
     const sendTabInfo = (e, title) => {
 
         if(!e.target.className){ // 이상한 곳 클릭
             return
         }
-
         setTheme(title)
-
-        const {className, innerText} = e.target
-
-        const result = tabs.filter(tab =>{
-            return tab.value === className
-        })
-
-        if(result.length===0){ // 포함한 값이 없다.
-            setTabs([...tabs, {value : className, text: innerText}])
-        }
-        setSelectedTab(className)
     }
 
     const tabList = [
-        {className: 'logo', text: '로고 제작'},
+        {className: 'logo', text: '메인 페이지'},
         {className: 'navigation', text: '네비게이션'},
         {className: 'bg', text: '배경'},
         {className: 'container', text: '컨테이너'},
         {className: 'content', text: '컨텐츠'}
     ]
+
+    const changeType = () => {
+        setOnMode(!onMode)
+    }
+
 
     return (
         <section className={classNames("side-bar", {on : sideOpen})}>
@@ -39,18 +31,13 @@ function SideBar ({ sideOpen, setSideOpen, setTheme, tabs, setTabs, setSelectedT
                 <h1>관리자 페이지 <button onClick={()=>setSideOpen(false)}>닫기</button></h1>
             </div>
             <div className="page-management ctrl">
-                <h3>페이지 관리</h3>
+                <h3 className="switch-box">페이지 관리
+                <button onClick={changeType} className="switch-btn">{<span className={classNames({green : onMode})}></span>}</button>
+                </h3>
                 <ul onClick={(e)=>sendTabInfo(e, 'page')}>
                     {tabList.map((list, idx) =>{
                         return (
                             <React.Fragment key={idx}>
-                                {list.className === 'container' && <button onClick={(e)=>{
-                                e.stopPropagation()
-                                setHideContainer(!hideContainer)}
-                                }>{hideContainer ? 
-                                    <span className="material-symbols-outlined">visibility_off</span>:
-                                    <span className="material-symbols-outlined">visibility</span>
-                                }</button>}
                                 <li className={list.className}>{list.text}</li>
                             </React.Fragment>
                         )

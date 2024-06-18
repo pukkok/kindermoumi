@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import './styles/PlatformPage.css'
-import { Link, Route, Routes, useNavigate, useParams } from "react-router-dom";
+import { Link, Outlet, Route, Routes, useLocation, useNavigate, useParams } from "react-router-dom";
 import axios from 'axios'
 import ImgBox from "../../Components/ImgBox";
 import NotFoundPage from "../NotFoundPage";
@@ -35,21 +35,10 @@ function PlatformPage () {
         return(<p>{item}</p>)
     }
 
+    const location = useLocation()
+
     return(
         <section className={"platform"}>
-            <Routes>
-                {loadData && loadData.data.navDepth1 && loadData.data.navDepth1.map((mainData, mainIdx)=>{
-                    return (
-                        <Route key={mainIdx} path={`/${mainData.mainPath}/*`}>
-                            {loadData.data.navDepth2 && loadData.data.navDepth2[mainIdx] &&       
-                                loadData.data.navDepth2[mainIdx].map((data, subIdx) => {
-                                    return <Route key={subIdx} path={`${data.subPath}`} element={<Tester item={data.subName}/>}></Route>
-                                })
-                            }
-                        </Route>
-                    )
-                })}
-            </Routes>
             {!loadData && 
                 <NotFoundPage/>
             }
@@ -63,35 +52,59 @@ function PlatformPage () {
                     <div className="nav-bar">
                         <div className="logo" style={{width : loadData.data.logoWidth+'px', height: loadData.data.logoHeight+'px'}}>
                             <Link to={`/kinder/${loadData.originUrl}`}>
-                                <img src={`http://localhost:5000/${loadData.data.logoPath}`}/>
+                                <img src={`${process.env.REACT_APP_RESTAPI_URL}/${loadData.data.logoPath}`}/>
                             </Link>
                         </div>
                         <nav className="navigation" style={{width : `calc(100% - ${loadData.data.logoWidth+'px'})`}}>
                             <ul className="depth1">
                             {loadData.data.navDepth1 && loadData.data.navDepth1.map((mainData, mainIdx)=>{
-                                return (
-                                    <li key={mainIdx}><Link to={`${mainData.mainPath}`}>{mainData.mainName}</Link>
-                                        {loadData.data.navDepth2 &&  
-                                            loadData.data.navDepth2[mainIdx] && 
-                                            <ul className="depth2">    
-                                            {loadData.data.navDepth2[mainIdx].map((data, subIdx) => {
-                                                return <li key={subIdx}><Link to={`${mainData.mainPath}/${data.subPath}`}>{data.subName}</Link></li>
-                                            })}
-                                            </ul>
-                                        }
-                                    </li>
-                                )
+                                if(loadData.data.navDepth2 && !loadData.data.navDepth2[mainIdx]){
+                                    return <li key={mainIdx}><Link to={`${mainData.mainPath}`}>{mainData.mainName}</Link></li>
+                                }else{
+                                    return (
+                                        <li key={mainIdx}><Link to={`${mainData.mainPath}/${loadData.data.navDepth2[mainIdx][0].subPath}`}>{mainData.mainName}</Link>
+                                            {loadData.data.navDepth2 &&  
+                                                loadData.data.navDepth2[mainIdx] && 
+                                                <ul className="depth2">    
+                                                {loadData.data.navDepth2[mainIdx].map((data, subIdx) => {
+                                                    return <li key={subIdx}><Link to={`${mainData.mainPath}/${data.subPath}`}>{data.subName}</Link></li>
+                                                })}
+                                                </ul>
+                                            }
+                                        </li>
+                                    )
+                                }
                             })}
                             </ul>
                         </nav>
                     </div>
                     </Container>
                 </div>
+                
                 {/* 배경 파트 */}
                 <div className="bg">
                     <ImgBox src={loadData.data.selectBgSrc}/>
                 </div>
-                <Container 
+
+                <Routes>
+                {loadData && loadData.data.navDepth1 && loadData.data.navDepth1.map((mainData, mainIdx)=>{
+                    if(loadData.data.navDepth2 && !loadData.data.navDepth2[mainIdx]){
+                        return <Route key={mainIdx} path={`/${mainData.mainPath}`} element={<Tester item={mainData.mainName}></Tester>}></Route>
+                    }else{
+                        return (
+                            <Route key={mainIdx} path={`/${mainData.mainPath}/`}>
+                                {loadData.data.navDepth2 && loadData.data.navDepth2[mainIdx] &&       
+                                    loadData.data.navDepth2[mainIdx].map((data, subIdx) => {
+                                        return <Route key={subIdx} path={`${data.subPath}`} element={<Tester item={data.subName}/>}></Route>
+                                    })
+                                }
+                            </Route>
+                        )
+                    }
+                })}
+                </Routes>
+
+                {decodeURIComponent(location.pathname) === `/kinder/${kinderUrl}` && <Container
                 width={loadData.data.containerUnit === 'px' && loadData.data.containerSize}
                 perWidth={loadData.data.containerUnit === '%' && loadData.data.containerSize}>
                     <div className="content" style={contentGrid}>
@@ -108,7 +121,7 @@ function PlatformPage () {
                                 </div>
                         })}
                     </div>
-                </Container>
+                </Container>}
             </div>
             }
         </section>

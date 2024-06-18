@@ -14,8 +14,6 @@ import sggData from './Datas/sggData';
 
 function App() {
 
-    const [isLogin, setIsLogin] = useState(false)
-
     //검색 전체 데이터
     const [allData, setAllData] = useState([]) // 전체 데이터
     
@@ -40,13 +38,12 @@ function App() {
         axiosKinderAllData(sggData, setAllData) // 전체 데이터 불러오기
     },[])
 
-
     const [kinderUrl, setKinderUrl] = useState()
 
-    const UseCommon = ({userName, admin, token, kinderUrl, setKinderUrl, isLogin, setIsLogin}) => {
+    const UseCommon = ({userName, admin, token, kinderUrl, setKinderUrl}) => {
         return(
             <>
-                <Header userName={userName} admin={admin} token={token} kinderUrl={kinderUrl} setKinderUrl={setKinderUrl} isLogin={isLogin} setIsLogin={setIsLogin}/>
+                <Header userName={userName} admin={admin} token={token} kinderUrl={kinderUrl} setKinderUrl={setKinderUrl}/>
                 <Outlet/>
                 <Footer/>
             </>
@@ -56,7 +53,7 @@ function App() {
   return (
     <div className="App">
         <Routes>
-            <Route element={<UseCommon userName={userName} admin={admin} token={token} kinderUrl={kinderUrl} setKinderUrl={setKinderUrl} isLogin={isLogin} setIsLogin={setIsLogin}/>}>
+            <Route element={<UseCommon userName={userName} admin={admin} token={token} kinderUrl={kinderUrl} setKinderUrl={setKinderUrl}/>}>
                 <Route exact path='/' element={<MainPage/>}/>
                 <Route exact path='/service/:serviceName' element={<ServicePage/>}/>
                 <Route exact path='/search' element={<SearchPage allData={allData}/>}/>

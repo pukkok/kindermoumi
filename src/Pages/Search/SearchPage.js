@@ -95,6 +95,23 @@ function SearchPage ({ allData }) {
         alert('조회 결과가 없습니다.')
     }
 
+    const [flag, setFlag] = useState(true)
+    const searchKinderEnter = (e) => {
+        if(flag){
+            if(e.code === 'Enter'){
+                searchKinder()
+                setFlag(false)
+            }
+        }
+    }
+    useEffect(()=>{
+        if(!flag){
+            setTimeout(()=>{
+                setFlag(true)
+            },500)
+        }
+    },[flag])
+
     const sggFilterData = sggData // 시/도code에 맞는 시/군/구 데이터 불러오기
     .filter(data => data.sidoCode === +codeRef.current.sido) 
     .sort((a,b)=>a.sgg.localeCompare(b.sgg)) // 문자 오름차순 정렬
@@ -260,7 +277,7 @@ function SearchPage ({ allData }) {
                     </div>
                 </div>
                     
-                <label className="search-kinder">
+                <label className="search-kinder" onKeyDown={searchKinderEnter}>
                     <input ref={searchRef} placeholder="유치원명으로 검색"/>
                     <button onClick={searchKinder}>검색</button>
                 </label>

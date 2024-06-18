@@ -1,15 +1,27 @@
 import React from "react";
 import { useRecoilState } from "recoil";
-import { HeaderAtom } from '../../../../Recoil/AdminAtom'
+import { HeaderAtom, HeaderFlexAtom } from '../../../../Recoil/AdminAtom'
 
-const verticalTypes = ['align_center', 'align_start', 'align_end', 'align_space_around', 'align_space_between', 'align_stretch']
-const horizonTypes = ['align_justify_center', 'align_justify_flex_start', 'align_justify_flex_end', 'align_justify_space_between', 'align_justify_space_even', 'align_justify_space_around']
+const horizonTypes = [
+    {name : 'align_justify_center', style: 'center'},
+    {name : 'align_justify_flex_start', style: 'flex-start'},
+    {name : 'align_justify_flex_end', style: 'flex-end'},
+    {name : 'align_justify_space_between', style: 'space-between'},
+    {name : 'align_justify_space_even', style: 'space-evenly'},
+    {name : 'align_justify_space_around', style: 'space-around'},
+]
 
 function HeaderEditor () {
     const [headerHeight, setHeaderHeight] = useRecoilState(HeaderAtom)
+    const [headerFlex, setHeaderFlex] = useRecoilState(HeaderFlexAtom)
 
     const headerHeightInput = (e) => {
         setHeaderHeight(e.target.value)
+        
+    }
+
+    const flexStyler = (e) => {
+        setHeaderFlex(e.target.dataset.style)
     }
 
     return (
@@ -31,19 +43,26 @@ function HeaderEditor () {
                         </p>
                     </div>
                 </div>
+
                 <div className="option-box">
-                    <p>수직 정렬</p>
-                    {verticalTypes.map((type, idx) => {
-                        return <span key={idx} className="material-symbols-outlined border-box">{type}</span>
-                    })}
+                    <p>로고 ↔ 네비게이션</p>
+                    <div className="inner">
+                        <p>
+                            <span>간격 :</span>
+                            <input />
+                            px
+                        </p>
+                    </div>
                 </div>
 
                 <div className="option-box">
                     <p>수평 정렬</p>
                     {horizonTypes.map((type, idx) => {
-                        return <span key={idx} className="material-symbols-outlined border-box">{type}</span>
+                        return <span data-style={type.style} key={idx} className="material-symbols-outlined border-box" 
+                        onClick={flexStyler}>{type.name}</span>
                     })}
                 </div>
+
                 <div className="option-box diff">
                     <label>
                         <input type="checkbox" className="checkbox"/>

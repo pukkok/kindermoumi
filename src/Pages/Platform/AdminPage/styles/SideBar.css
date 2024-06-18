@@ -6,7 +6,7 @@
     position: absolute;
     left: -250px;
     transition: .5s;
-    z-index: 5;
+    z-index: 100;
 }
 
 .admin-page .side-bar.on{
@@ -47,4 +47,39 @@
 
 .admin-page .side-bar .ctrl ul li button:hover{
     font-weight: bold;
+}
+
+.admin-page .switch-box{
+    display: flex;
+}
+.admin-page .switch-btn{
+    all: unset;
+    margin-left: auto;
+    border: solid 1px #5172df;
+    padding: 2px;
+    width: 36px;
+    height: 18px;
+    border-radius: 30px;
+    overflow: hidden;
+    background-color: #fff;
+    cursor: pointer;
+    position: relative;
+}
+.admin-page .switch-btn:hover{
+    background-color: none;
+}
+.admin-page .switch-btn span{
+    display: block;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background-color: red;
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    transition: .2s;
+}
+.admin-page .switch-btn span.green{
+    background-color: green;
+    left: 50%;
 }
