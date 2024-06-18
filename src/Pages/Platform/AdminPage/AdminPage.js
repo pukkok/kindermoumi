@@ -9,7 +9,7 @@ import axios from "axios";
 import EditorPage from "./EditorPage";
 import SmartModal from "./SmartModal";
 import { useRecoilState, useSetRecoilState } from "recoil";
-import { LogoAtom, LogoSizeAtom, gridZoneAtom, mainMenuAtom, subMenuAtom } from "../../../Recoil/AdminAtom";
+import { LogoAtom, LogoSizeAtom, bgAtom, gridZoneAtom, loadBgsAtom, mainMenuAtom, subMenuAtom, xyCountAtom } from "../../../Recoil/AdminAtom";
 import Calendar from "../../../Custom/Calendar";
 function AdminPage () {
 
@@ -18,9 +18,12 @@ function AdminPage () {
     const [loadData, setLoadData] = useState({})
     const setLogo = useSetRecoilState(LogoAtom)
     const setLogoSize = useSetRecoilState(LogoSizeAtom)
+    const setBg = useSetRecoilState(bgAtom)
+    const setLoadBgs = useSetRecoilState(loadBgsAtom)
     const setMainMenu = useSetRecoilState(mainMenuAtom)
     const setSubMenu = useSetRecoilState(subMenuAtom)
     const setGridZone = useSetRecoilState(gridZoneAtom)
+    const setXyCount = useSetRecoilState(xyCountAtom)
 
     useEffect(()=>{
         const downloadData = async () => {
@@ -37,36 +40,42 @@ function AdminPage () {
     },[])
 
     useEffect(()=>{
+        /** 로고 데이터 */
         if(loadData.logoPath){
             setLogo(process.env.REACT_APP_RESTAPI_URL+'/'+loadData.logoPath)
         }
         if(loadData.logoWidth){
             setLogoSize({width : loadData.logoWidth, height : loadData.logoHeight})
         }
-        // if(loadData.addBgList){
-        //     const addBgList = loadData.addBgList.map(bg => {
-        //         return process.env.REACT_APP_RESTAPI_URL + '/' + bg
-        //     })
-        //     setLoadBgs([...addBgList])
-        // }
-        // if(loadData.selectBgSrc){
-        //     setBg(loadData.selectBgSrc)
-        // }
-        // if(loadData.containerSize){
-        //     setContainerSize({...containerSize, width : loadData.containerSize, unit : loadData.containerUnit})
-        // }
+        /** 네비게이션 데이터 */
         if(loadData.navDepth1){
             setMainMenu(loadData.navDepth1)
         }
         if(loadData.navDepth2){
             setSubMenu(loadData.navDepth2)
         }
+        /** 배경 데이터 */
+        if(loadData.addBgList){
+            const addBgList = loadData.addBgList.map(bg => {
+                return process.env.REACT_APP_RESTAPI_URL + '/' + bg
+            })
+            setLoadBgs([...addBgList])
+        }
+        if(loadData.selectBgSrc){
+            setBg(loadData.selectBgSrc)
+        }
+        // if(loadData.containerSize){
+        //     setContainerSize({...containerSize, width : loadData.containerSize, unit : loadData.containerUnit})
+        // }
+
+        
+        /** 컨텐츠 옵션 데이터 */
+        if(loadData.gridCoord){
+            setXyCount({row: loadData.gridCoord.row, col: loadData.gridCoord.col})
+        }
         if(loadData.zoneData){
             setGridZone({...loadData.zoneData})
         }
-        // if(loadData.gridCoord){
-        //     setXyCount({row: loadData.gridCoord.row, col: loadData.gridCoord.col})
-        // }
 
     },[loadData])
 

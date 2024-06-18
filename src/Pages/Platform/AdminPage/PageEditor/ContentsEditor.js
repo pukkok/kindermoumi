@@ -49,6 +49,7 @@ function ContentEditor ({ token }) {
 
     const [contentType, setContentType] = useState({})
 
+    console.log(gridZone)
     useEffect(()=>{
         setGridZone({...gridZone, ...contentType})
     },[contentType])
@@ -93,13 +94,13 @@ function ContentEditor ({ token }) {
             <div className="row-col-selector mb">
                 <div className="row-col">
                     <p>행 열 개수</p>
-                        <select onChange={(e)=>xyCounter(e, 'row')}>
+                        <select onChange={(e)=>xyCounter(e, 'row')} value={xyCount.row}>
                             <option value={0}>행 선택</option>
                             {Array(5).fill(0).map((_, idx) => {
                                 return <option key={idx} value={idx+1}>{idx+1}행</option>
                             })}
                         </select>
-                        <select onChange={(e)=>xyCounter(e, 'col')}>
+                        <select onChange={(e)=>xyCounter(e, 'col')} value={xyCount.col}>
                             <option value={0}>열 선택</option>
                             {Array(5).fill(0).map((_, idx) => {
                                 return <option key={idx} value={idx+1}>{idx+1}열</option>
@@ -111,7 +112,7 @@ function ContentEditor ({ token }) {
                         return (
                             <div key={idx1}>
                                 <p>구역 {idx1+1}</p>
-                                <select onChange={(e)=>getSelectValue(e, idx1)}>
+                                <select onChange={(e)=>getSelectValue(e, idx1)} value={gridZone['zone'+(idx1+1)]}>
                                     <option>선택</option>
                                     {contentOptions.map((optionItem, idx2) => {
                                         const {text, optionValue} = optionItem

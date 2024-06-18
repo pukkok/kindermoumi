@@ -63,8 +63,6 @@ function EditorPage ({onMode}) {
 
     const [headerFlex, setHeaderFlex] = useRecoilState(HeaderFlexAtom)
 
-    console.log(headerFlex)
-
     const flexStyle = {
         justifyContent : headerFlex ? headerFlex : 'flex-start'
     }

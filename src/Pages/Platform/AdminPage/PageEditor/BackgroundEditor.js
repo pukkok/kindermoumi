@@ -12,7 +12,7 @@ const sampleBgs = [
 function BackgroundEditor ({ token }) {
     
     const [bg, setBg] = useRecoilState(bgAtom)
-    const loadBgs = useRecoilValue(loadBgsAtom)
+    const [loadBgs, setLoadBgs] = useRecoilState(loadBgsAtom)
 
     const bgRef =useRef()
     const [addBgs, setAddBgs] = useState([]) // 새로 추가된 배경(브라우저)
@@ -27,6 +27,27 @@ function BackgroundEditor ({ token }) {
         setBg(src)
     }
 
+    const deleteLoadBg = async (idx) => {
+        const src = loadBgs[idx].replace(process.env.REACT_APP_RESTAPI_URL + '/', '')
+
+        const {data} = await axios.put('platform/data', {
+            bgSrc : src
+        },{headers : {'Authorization' : `Bearer ${token}`}})
+        alert(data.msg)
+        if(data.code === 200){
+            const addBgList = data.bgList.map(bg => {
+                return process.env.REACT_APP_RESTAPI_URL + '/' + bg
+            })
+            setLoadBgs([...addBgList])
+        }
+    }
+
+    const deleteSrc = (idx) => {
+        setAddBgs(prev => prev.filter((_, i)=> {
+            return i !== idx
+        }))
+    }
+    
     const saveBgs = async () => { // 배경 이미지 배열 추가
         //content-type: multipart/form-data 로전송
         const fd = new FormData() // multer 사용시 폼데이터형식으로 보내줘야함
@@ -56,6 +77,8 @@ function BackgroundEditor ({ token }) {
         setOpenDetail(!openDetail)
     }
 
+    
+
     return(
         <section className="bg-editor">
             <div className={classNames("summary", {skip: openDetail})}>
@@ -66,24 +89,48 @@ function BackgroundEditor ({ token }) {
             <div className="remote-btns">
                 <p>새로운 배경</p><span></span>
                 <button onClick={()=>bgRef.current.click()}>추가</button>
-                <button title="배경을 저장한 경우 로그인 후 언제나 사용 가능합니다." onClick={saveBgs}>저장</button>
-                <button onClick={()=>setAddBgs([])}>초기화</button>
+                <button title="배경을 저장한 경우 로그인 후 언제나 사용 가능합니다." onClick={saveBgs}>등록</button>
                 <p>업로드</p><span></span>
                 <button onClick={()=>saveSelectBg()}>저장</button>
-                <button onClick={()=>setBg('notFound')}>초기화</button>
+                <button onClick={()=>setBg('')}>초기화</button>
             </div>
             <div className="sample-container">
                 <div className="sample-box">
                     {sampleBgs.map((bg, idx)=>{
                         let src = `${origin}/platform/${bg}`
-                        return <ImgBox handleClick={()=>bgSelector(src)} addClass={'sample'} key={idx} src={src}></ImgBox>
+                        return (
+                            <div className="sample" key={idx}>
+                                <ImgBox src={src}></ImgBox>
+                                <div className="cover-btn">
+                                    <button onClick={()=>bgSelector(src)}>업로드</button>
+                                </div>
+                            </div>
+                        )
                     })}
+                    {/* 불러온 이미지 */}
                     {loadBgs && loadBgs.length > 0 && loadBgs.map((bg, idx) => {
-                        return <ImgBox handleClick={()=>bgSelector(bg)} addClass={'sample'} key={idx} src={bg}/>
+                        return (
+                            <div className="sample" key={idx}>
+                                <ImgBox src={bg}></ImgBox>
+                                <div className="cover-btn">
+                                    <button onClick={()=>bgSelector(bg)}>업로드</button>
+                                    <button onClick={()=>deleteLoadBg(idx)}>삭제</button>
+                                </div>
+                            </div>
+                        )
                     })}
+                    {/* 현재 브라우저에서 추가하는 이미지 */}
                     {addBgs.length>0 && addBgs.map((bg, idx)=>{
                         let src = URL.createObjectURL(bg)
-                        return <ImgBox key={idx} handleClick={()=>bgSelector(src)} addClass={'sample'} src={src}/>
+                        return (
+                            <div className="sample" key={idx}>
+                                <ImgBox src={src}></ImgBox>
+                                <div className="cover-btn">
+                                    <button onClick={()=>bgSelector(src)}>업로드</button>
+                                    <button onClick={()=>deleteSrc(idx)}>삭제</button>
+                                </div>
+                            </div>
+                        )
                     })}
                 </div>
             </div>
