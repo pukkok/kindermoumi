@@ -9,15 +9,20 @@ import axios from "axios";
 import EditorPage from "./EditorPage";
 import SmartModal from "./SmartModal";
 import { useRecoilState, useSetRecoilState } from "recoil";
-import { LogoAtom, LogoSizeAtom, bgAtom, gridZoneAtom, loadBgsAtom, mainMenuAtom, subMenuAtom, xyCountAtom } from "../../../Recoil/AdminAtom";
+import { HeaderAtom, HeaderContainerAtom, HeaderGapAtom, LogoAtom, LogoSizeAtom, bgAtom, gridZoneAtom, loadBgsAtom, mainMenuAtom, navFlexAtom, subMenuAtom, xyCountAtom } from "../../../Recoil/AdminAtom";
 import Calendar from "../../../Custom/Calendar";
 function AdminPage () {
 
     const token = JSON.parse(localStorage.getItem('token'))
 
     const [loadData, setLoadData] = useState({})
+    const setHeaderHeight = useSetRecoilState(HeaderAtom)
+    const setHeaderGap = useSetRecoilState(HeaderGapAtom)
+    const setHeaderContainer = useSetRecoilState(HeaderContainerAtom)
+
     const setLogo = useSetRecoilState(LogoAtom)
     const setLogoSize = useSetRecoilState(LogoSizeAtom)
+    const setNavFlex = useSetRecoilState(navFlexAtom)
     const setBg = useSetRecoilState(bgAtom)
     const setLoadBgs = useSetRecoilState(loadBgsAtom)
     const setMainMenu = useSetRecoilState(mainMenuAtom)
@@ -39,7 +44,19 @@ function AdminPage () {
         downloadData()
     },[])
 
+    console.log(loadData)
+
     useEffect(()=>{
+        /** 헤더 데이터 */
+        if(loadData.headerHeight){
+            setHeaderHeight(loadData.headerHeight)
+        }
+        if(loadData.headerGap){
+            setHeaderGap(loadData.headerGap)
+        }
+        if(loadData.headerContainer){
+            setHeaderContainer({...loadData.headerContainer})
+        }
         /** 로고 데이터 */
         if(loadData.logoPath){
             setLogo(process.env.REACT_APP_RESTAPI_URL+'/'+loadData.logoPath)
@@ -53,6 +70,9 @@ function AdminPage () {
         }
         if(loadData.navDepth2){
             setSubMenu(loadData.navDepth2)
+        }
+        if(loadData.navFlexStyle){
+            setNavFlex(loadData.navFlexStyle)
         }
         /** 배경 데이터 */
         if(loadData.addBgList){

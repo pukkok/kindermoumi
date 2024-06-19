@@ -2,12 +2,19 @@ import { atom } from "recoil";
 
 export const HeaderAtom = atom({
     key: 'header',
-    default: '60'
+    default: 60
 })
-export const HeaderFlexAtom = atom({
-    key: 'header-flex',
-    default: ''
+
+export const HeaderGapAtom = atom({
+    key: 'headerGap',
+    default: 40
 })
+
+export const HeaderContainerAtom = atom({
+    key: 'headerContainer',
+    default: {width: 1240, unit: 'px'}
+})
+
 
 /** 로고 파트 */
 export const LogoAtom = atom({
@@ -16,7 +23,7 @@ export const LogoAtom = atom({
 })
 export const LogoSizeAtom = atom({
     key: 'logoSize',
-    default : { width: '', height : ''}
+    default : { width: 150, height : 40}
 })
 
 /** 네비게이션 파트 */
@@ -28,6 +35,10 @@ export const subMenuAtom = atom({
     key: 'subMenu',
     default: {}
 })
+export const navFlexAtom = atom({
+    key: 'nav-flex',
+    default: {style : '' , gap : ''}
+})
 
 /** 배경 파트 */
 export const bgAtom = atom({
@@ -37,6 +48,10 @@ export const bgAtom = atom({
 export const loadBgsAtom = atom({
     key: 'loadBgs',
     default: []
+})
+export const bgHeightAtom = atom({
+    key: 'bgHeight',
+    default: ''
 })
 
 /** 컨텐츠 파트 */

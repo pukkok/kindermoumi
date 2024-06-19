@@ -4,7 +4,8 @@ import './styles/BackgroundEditor.css'
 import axios from 'axios'
 import classNames from "classnames";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { bgAtom, loadBgsAtom } from "../../../../Recoil/AdminAtom";
+import { bgAtom, loadBgsAtom, bgHeightAtom } from "../../../../Recoil/AdminAtom";
+import CountBtn from "../../../../Components/CountBtn";
 
 const sampleBgs = [
     'sample-bg1.png','sample-bg2.jpg','sample-bg3.png', 'sample-bg4.png','sample-bg5.png',
@@ -13,13 +14,14 @@ function BackgroundEditor ({ token }) {
     
     const [bg, setBg] = useRecoilState(bgAtom)
     const [loadBgs, setLoadBgs] = useRecoilState(loadBgsAtom)
+    const [bgHeight, setBgHeight] = useRecoilState(bgHeightAtom)
 
     const bgRef =useRef()
     const [addBgs, setAddBgs] = useState([]) // 새로 추가된 배경(브라우저)
     const getBg = (e) => {
         if(e.target.files[0]){
             setAddBgs([...addBgs, e.target.files[0]])
-            setBg(URL.createObjectURL(e.target.files[0]))
+            // setBg(URL.createObjectURL(e.target.files[0]))
         }
     }
 
@@ -27,10 +29,13 @@ function BackgroundEditor ({ token }) {
         setBg(src)
     }
 
-    const deleteLoadBg = async (idx) => {
+    const deleteLoadBg = async (idx) => { // 저장되었던 이미지 지우기
+        if(loadBgs[idx] === bg){
+            return alert('사용중인 이미지입니다.')
+        }
         const src = loadBgs[idx].replace(process.env.REACT_APP_RESTAPI_URL + '/', '')
 
-        const {data} = await axios.put('platform/data', {
+        const {data} = await axios.put('platform/bg-data', {
             bgSrc : src
         },{headers : {'Authorization' : `Bearer ${token}`}})
         alert(data.msg)
@@ -42,13 +47,16 @@ function BackgroundEditor ({ token }) {
         }
     }
 
-    const deleteSrc = (idx) => {
+    const deleteSrc = (idx) => { // 저장되지 않은 상태일 때 이미지 지우기
         setAddBgs(prev => prev.filter((_, i)=> {
             return i !== idx
         }))
     }
     
     const saveBgs = async () => { // 배경 이미지 배열 추가
+        if(addBgs.length === 0){
+            return alert('새로 추가된 배경이 없습니다.')
+        }
         //content-type: multipart/form-data 로전송
         const fd = new FormData() // multer 사용시 폼데이터형식으로 보내줘야함
         addBgs.forEach(bgFile => {
@@ -62,14 +70,34 @@ function BackgroundEditor ({ token }) {
             }
         })
         alert(data.msg)
+        if(data.code === 200){
+            const addBgList = data.addBgList.map(bg => {
+                return process.env.REACT_APP_RESTAPI_URL + '/' + bg
+            })
+
+            setLoadBgs([...addBgList])
+            setAddBgs([])
+        }
     }
 
     const saveSelectBg = async () => { // 선택한 배경 src 추가
+        if(addBgs.length>0){
+            return alert('추가한 배경을 먼저 저장해주세요.')
+        }
+
+        if(bgHeight < 400){
+            return alert('이미지의 높이는 최소 400px입니다.')
+        }
+
         const { data } = await axios.post('platform/upload/data', {
-            selectBgSrc : bg
+            selectBgSrc : bg, bgHeight: bgHeight
         },{headers : {'Authorization' : `Bearer ${token}`}})
 
         alert(data.msg)
+    }
+
+    const bgHeightInput = (e) => {
+        setBgHeight(e.target.value)
     }
 
     const [openDetail, setOpenDetail] = useState(false)
@@ -89,7 +117,7 @@ function BackgroundEditor ({ token }) {
             <div className="remote-btns">
                 <p>새로운 배경</p><span></span>
                 <button onClick={()=>bgRef.current.click()}>추가</button>
-                <button title="배경을 저장한 경우 로그인 후 언제나 사용 가능합니다." onClick={saveBgs}>등록</button>
+                <button title="배경을 저장한 경우 로그인 후 언제나 사용 가능합니다." onClick={saveBgs}>저장</button>
                 <p>업로드</p><span></span>
                 <button onClick={()=>saveSelectBg()}>저장</button>
                 <button onClick={()=>setBg('')}>초기화</button>
@@ -126,12 +154,42 @@ function BackgroundEditor ({ token }) {
                             <div className="sample" key={idx}>
                                 <ImgBox src={src}></ImgBox>
                                 <div className="cover-btn">
-                                    <button onClick={()=>bgSelector(src)}>업로드</button>
+                                    <button onClick={()=>alert('저장 후 업로드 가능합니다.')}>업로드</button>
                                     <button onClick={()=>deleteSrc(idx)}>삭제</button>
                                 </div>
                             </div>
                         )
                     })}
+                </div>
+            </div>
+
+            <div className="remote-btns">
+                {/* <p>설정</p><span></span>
+                <button onClick={()=>saveSelectBg()}>저장</button>
+                <button onClick={()=>setBg('')}>초기화</button> */}
+            </div>
+            <div className="upload">
+                <div className="option-box">
+                    <p>이미지 옵션</p>
+                    <div className="inner">                            
+                        <p className="count-box">
+                            <span>높이 : </span>
+                            <input onChange={bgHeightInput} name="height" placeholder={bgHeight} value={bgHeight}/>
+                            px 
+                            <span className="count-btn-box">
+                                <CountBtn addClass={'count-btn'} count={bgHeight} setCount={setBgHeight}/>
+                            </span>
+                        </p>
+                    </div>
+                    <p>클릭시 옵션</p>
+                    <div className="inner">
+                        <label>
+                            <input type="checkbox" className="checkbox"/>링크 연결
+                        </label>
+                        <label>
+                            <input type="checkbox" className="checkbox"/>모달창 열기
+                        </label>
+                    </div>
                 </div>
             </div>
             {/* 배경 추가 옵션 열기 */}

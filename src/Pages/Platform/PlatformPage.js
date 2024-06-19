@@ -47,8 +47,8 @@ function PlatformPage () {
                 {/* 헤더 part */}
                 <div className="header">
                     <Container 
-                    width={loadData.data.containerUnit === 'px' && loadData.data.containerSize}
-                    perWidth={loadData.data.containerUnit === '%' && loadData.data.containerSize}>
+                    width={loadData.data.headerContainer && loadData.data.headerContainer.unit === 'px' && loadData.data.headerContainer.width}
+                    perWidth={loadData.data.headerContainer ? loadData.data.headerContainer.unit === '%' && loadData.data.headerContainer.width : 100}>
                     <div className="nav-bar">
                         <div className="logo" style={{width : loadData.data.logoWidth+'px', height: loadData.data.logoHeight+'px'}}>
                             <Link to={`/kinder/${loadData.originUrl}`}>
@@ -56,7 +56,7 @@ function PlatformPage () {
                             </Link>
                         </div>
                         <nav className="navigation" style={{width : `calc(100% - ${loadData.data.logoWidth+'px'})`}}>
-                            <ul className="depth1">
+                            <ul className="depth1" style={{justifyContent : loadData.data.navFlexStyle.style, gap: loadData.data.navFlexStyle.gap + 'px'}}>
                             {loadData.data.navDepth1 && loadData.data.navDepth1.map((mainData, mainIdx)=>{
                                 if(loadData.data.navDepth2 && !loadData.data.navDepth2[mainIdx]){
                                     return <li key={mainIdx}><Link to={`${mainData.mainPath}`}>{mainData.mainName}</Link></li>
@@ -83,7 +83,7 @@ function PlatformPage () {
                 
                 {/* 배경 파트 */}
                 <div className="bg">
-                    <ImgBox src={loadData.data.selectBgSrc}/>
+                    <ImgBox src={loadData.data.selectBgSrc} imgSize={{height : loadData.data.bgHeight}}/>
                 </div>
 
                 <Routes>

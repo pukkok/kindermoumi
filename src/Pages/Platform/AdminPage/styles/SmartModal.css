@@ -124,9 +124,10 @@
     margin-left: 5px;
     margin-right: 3px;
     border: none;
-    border-bottom: 1px solid #696969;
+    border-bottom: 1px solid #e1e1e1;
     outline: none;
     text-align: right;
+    color: #004898;
 }
 
 .header-edit .option-box .inner{
@@ -138,9 +139,49 @@
 .header-edit .option-box.diff .inner input{
     width: 60px;
 }
+.header-edit .option-box.diff .inner label{
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+}
+.header-edit .option-box.diff .inner .radio{
+    width: 20px;
+}
 
+.smart-modal .upload label{
+    display: inline-flex;
+    user-select: none;
+}
 .smart-modal .upload .checkbox{
-    width: 30px;
+    width: auto;
     margin: 0;
+    margin-right: 10px;
     padding: 0;
 }
+
+.smart-modal .count-box{
+    display: flex;
+    align-items: flex-end;
+}
+
+.smart-modal .count-box .count-btn-box{
+    margin-left: 10px;
+}
+
+.smart-modal .count-btn{
+    border: solid 1px #9e9e9e;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    font-size: 20px !important;
+    cursor: pointer;
+    user-select: none;
+}
+
+.smart-modal .count-btn:nth-child(1){
+    width: 19px;
+    border-right: none;
+}
+

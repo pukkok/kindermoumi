@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import './styles/EditorPage.css'
-import { HeaderAtom, LogoAtom, LogoSizeAtom, SmartModalOpenAtom, bgAtom, containerSizeAtom, gridZoneAtom, mainMenuAtom, subMenuAtom, xyCountAtom, HeaderFlexAtom } from "../../../Recoil/AdminAtom";
+import { HeaderAtom, LogoAtom, LogoSizeAtom, SmartModalOpenAtom, bgAtom, containerSizeAtom, gridZoneAtom, mainMenuAtom, subMenuAtom, xyCountAtom, navFlexAtom, bgHeightAtom, HeaderGapAtom, HeaderContainerAtom } from "../../../Recoil/AdminAtom";
 import { useRecoilState, useRecoilValue } from "recoil";
 import classNames from "classnames";
 import {Link} from 'react-router-dom';
@@ -11,7 +11,10 @@ function EditorPage ({onMode}) {
 
     const [SmartModalOpen, setSmartModalOpen] = useRecoilState(SmartModalOpenAtom)
     const headerHeight = useRecoilValue(HeaderAtom)
+    const headerGap = useRecoilValue(HeaderGapAtom)
+    const headerContainer = useRecoilState(HeaderContainerAtom)
     const containerSize = useRecoilValue(containerSizeAtom)
+    const navFlex = useRecoilValue(navFlexAtom)
     const xyCount = useRecoilValue(xyCountAtom)
     const gridZone = useRecoilValue(gridZoneAtom)
     const bg = useRecoilValue(bgAtom)
@@ -19,6 +22,17 @@ function EditorPage ({onMode}) {
     const logoSize = useRecoilValue(LogoSizeAtom)
     const mainMenu = useRecoilValue(mainMenuAtom)
     const subMenu = useRecoilValue(subMenuAtom)
+
+    const [bgHeight, setBgHeight] = useRecoilState(bgHeightAtom)
+    const bgImgRef = useRef()
+
+    useEffect(()=>{
+        if(bgHeight){
+            bgImgRef.current.style.height = bgHeight
+        }
+    },[bgHeight])
+
+
 
     const activeSelector = (e) => {
 
@@ -57,22 +71,22 @@ function EditorPage ({onMode}) {
     }
 
     const pageGrid = {
-        gridTemplateRows: `${headerHeight > 60 ? headerHeight : 60}px 1fr 200px` 
+        gridTemplateRows: `${headerHeight > 60 ? headerHeight : 60}px 1fr 200px` ,
     }
 
-
-    const [headerFlex, setHeaderFlex] = useRecoilState(HeaderFlexAtom)
-
-    const flexStyle = {
-        justifyContent : headerFlex ? headerFlex : 'flex-start'
+    const navFlexStyle = {
+        justifyContent : navFlex.style ? navFlex.style : 'flex-start',
+        gap : navFlex.gap ? navFlex.gap + 'px' : '40px'
     }
 
 
     return (
         <section className="page-edit kinder-page" onClick={activeSelector} style={pageGrid}>
             <header id="h" className={classNames({active : SmartModalOpen.selection === 'h'})}>
-                <Container>
-                <div className="nav-bar" >
+                <Container 
+                width={headerContainer.unit === 'px' && headerContainer.width}
+                perWidth={headerContainer.unit === '%' && headerContainer.width} >
+                <div className="nav-bar" style={{gap: headerGap + 'px'}}>
                     {logo && 
                     <div className="logo" style={{width : logoSize.width+'px', height: logoSize.height+'px'}}>
                         <Link to={`/kinder/`}>
@@ -80,7 +94,7 @@ function EditorPage ({onMode}) {
                         </Link>
                     </div>}
                     {mainMenu && <nav className="navigation" >
-                    <ul className="depth1" style={flexStyle}>
+                    <ul className="depth1" style={navFlexStyle}>
                     {mainMenu.map((mainData, mainIdx)=>{
                         return (
                             <li key={mainIdx}><Link>{mainData.mainName}</Link>
@@ -103,7 +117,7 @@ function EditorPage ({onMode}) {
                 {onMode && <button className="add-btn" onClick={openSmartModal}>설정</button>}
             </header>
             <main id="m" className={classNames({active : SmartModalOpen.selection === 'm'})}>
-                {bg && <ImgBox addClass={'bg-img'} src={bg}/>}
+                {bg && <ImgBox ref={bgImgRef} addClass={'bg-img'} src={bg} imgSize={{height: bgHeight > 400 ? bgHeight : 400}}/>}
                 
                 <div className={classNames("content", "default-option")}>
                     {count && xyCount &&

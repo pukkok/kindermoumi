@@ -35,10 +35,6 @@ function SmartModal ({ selectedTab, token }) {
     }
 
     const dragHandler = (e) => {
-
-        console.log(e.clientX)
-        console.log(e.target.scrollHeight)
-        console.log(e.target.scrollTop)
         const PosTemp = { ...pos };
         PosTemp["left"] = e.clientX - 300;
         PosTemp["top"] = e.clientY - 30;
@@ -120,7 +116,7 @@ function SmartModal ({ selectedTab, token }) {
                 <div className="remote-option">
                 {SmartModalOpen.selection === 'h' && 
                     <>
-                        <HeaderEditor/>
+                        <HeaderEditor token={token}/>
                         {active === 1 && <LogoEditor token={token}/>}
                         {active === 2 && <NavigationEditor token={token}/>}
                     </>

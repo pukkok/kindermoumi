@@ -106,7 +106,7 @@ function LogoEditor ({ token }) {
                         </p>
                         <p><span>세로 : </span>
                             <input onChange={logoSizeInput} name="height" placeholder={logoSize.height} value={logoSize.height}/>
-                            px
+                            px 
                         </p>
                     </div>
                     <p>클릭시 옵션</p>

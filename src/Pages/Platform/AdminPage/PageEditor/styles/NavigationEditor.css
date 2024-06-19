@@ -67,37 +67,11 @@
     color: red;
 }
 
-/* 
-
-
-
-
-
-
-
-
-.navi-edit .main-menu .sub-btns{
-    padding-top: 25px;
-    border-bottom: dotted 1px #696969;
-    display: flex;
-    align-items: center;
-    gap: 10px;
+.logo-edit .upload input{
+    width: 40px;
+    margin-right: 3px;
+    border: none;
+    border-bottom: 1px solid #696969;
+    outline: none;
+    text-align: right;
 }
-
-
-
-.navi-edit .main-menu .sub-btns button:nth-child(2){
-    margin-left: auto;
-}
-
-.navi-edit .main-menu .sub-menu{
-    display: flex;
-    flex-direction: column;
-    padding: 10px;
-    width: 100%;
-}
-
-.navi-edit .main-menu .sub-menu .sub-detail{
-    font-size: 14px;
-    padding-bottom: 15px;
-} */

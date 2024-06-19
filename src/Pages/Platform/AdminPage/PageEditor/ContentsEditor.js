@@ -50,6 +50,7 @@ function ContentEditor ({ token }) {
     const [contentType, setContentType] = useState({})
 
     console.log(gridZone)
+
     useEffect(()=>{
         setGridZone({...gridZone, ...contentType})
     },[contentType])
