@@ -12,7 +12,7 @@ export const HeaderGapAtom = atom({
 
 export const HeaderContainerAtom = atom({
     key: 'headerContainer',
-    default: {width: 1240, unit: 'px'}
+    default: { width: 1240, unit: 'px' }
 })
 
 
@@ -51,7 +51,7 @@ export const loadBgsAtom = atom({
 })
 export const bgHeightAtom = atom({
     key: 'bgHeight',
-    default: ''
+    default: 400
 })
 
 /** 컨텐츠 파트 */
@@ -64,9 +64,9 @@ export const gridZoneAtom = atom({ // 컨텐츠 그리드 구역
     default: {}
 })
 
-export const containerSizeAtom = atom({
-    key: 'containerSize',
-    default : { maxWidth:'1240', width:'1240', minWidth:'1240', unit: 'px' }// 디폴트 값
+export const contentsContainerAtom = atom({
+    key: 'contentsContainer',
+    default : { width:'1240', unit: 'px' }// 디폴트 값
 })
 
 /** SmartModal */

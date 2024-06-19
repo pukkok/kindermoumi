@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import './styles/EditorPage.css'
-import { HeaderAtom, LogoAtom, LogoSizeAtom, SmartModalOpenAtom, bgAtom, containerSizeAtom, gridZoneAtom, mainMenuAtom, subMenuAtom, xyCountAtom, navFlexAtom, bgHeightAtom, HeaderGapAtom, HeaderContainerAtom } from "../../../Recoil/AdminAtom";
+import { HeaderAtom, LogoAtom, LogoSizeAtom, SmartModalOpenAtom, bgAtom, gridZoneAtom, mainMenuAtom, subMenuAtom, xyCountAtom, navFlexAtom, bgHeightAtom, HeaderGapAtom, HeaderContainerAtom, contentsContainerAtom } from "../../../Recoil/AdminAtom";
 import { useRecoilState, useRecoilValue } from "recoil";
 import classNames from "classnames";
 import {Link} from 'react-router-dom';
@@ -10,29 +10,40 @@ import ImgBox from "../../../Components/ImgBox";
 function EditorPage ({onMode}) {
 
     const [SmartModalOpen, setSmartModalOpen] = useRecoilState(SmartModalOpenAtom)
+    
     const headerHeight = useRecoilValue(HeaderAtom)
     const headerGap = useRecoilValue(HeaderGapAtom)
-    const headerContainer = useRecoilState(HeaderContainerAtom)
-    const containerSize = useRecoilValue(containerSizeAtom)
-    const navFlex = useRecoilValue(navFlexAtom)
-    const xyCount = useRecoilValue(xyCountAtom)
-    const gridZone = useRecoilValue(gridZoneAtom)
-    const bg = useRecoilValue(bgAtom)
+    const headerContainer = useRecoilValue(HeaderContainerAtom)
+
     const logo = useRecoilValue(LogoAtom)
     const logoSize = useRecoilValue(LogoSizeAtom)
+    
     const mainMenu = useRecoilValue(mainMenuAtom)
     const subMenu = useRecoilValue(subMenuAtom)
+    const navFlex = useRecoilValue(navFlexAtom)
+
+    const bg = useRecoilValue(bgAtom)
+    const contentsContainer = useRecoilState(contentsContainerAtom)
+    const xyCount = useRecoilValue(xyCountAtom)
+    const gridZone = useRecoilValue(gridZoneAtom)
 
     const [bgHeight, setBgHeight] = useRecoilState(bgHeightAtom)
-    const bgImgRef = useRef()
+    const bgImgRef = useRef(null)
 
     useEffect(()=>{
         if(bgHeight){
-            bgImgRef.current.style.height = bgHeight
+            if(bgImgRef.current){
+                bgImgRef.current.style.height = bgHeight
+            }
         }
     },[bgHeight])
 
 
+    useEffect(()=>{
+        if(!onMode){
+            setSmartModalOpen({...SmartModalOpen, selection : ''})
+        }
+    },[onMode])
 
     const activeSelector = (e) => {
 
@@ -79,7 +90,6 @@ function EditorPage ({onMode}) {
         gap : navFlex.gap ? navFlex.gap + 'px' : '40px'
     }
 
-
     return (
         <section className="page-edit kinder-page" onClick={activeSelector} style={pageGrid}>
             <header id="h" className={classNames({active : SmartModalOpen.selection === 'h'})}>
@@ -116,12 +126,13 @@ function EditorPage ({onMode}) {
                 </Container>
                 {onMode && <button className="add-btn" onClick={openSmartModal}>설정</button>}
             </header>
+            
             <main id="m" className={classNames({active : SmartModalOpen.selection === 'm'})}>
                 {bg && <ImgBox ref={bgImgRef} addClass={'bg-img'} src={bg} imgSize={{height: bgHeight > 400 ? bgHeight : 400}}/>}
                 
                 <div className={classNames("content", "default-option")}>
-                    {count && xyCount &&
-                    <Container width={containerSize.unit === 'px' && containerSize.width} perWidth={containerSize.unit === '%' && containerSize.width}>
+                    {count>0 && xyCount &&
+                    <Container width={contentsContainer.unit === 'px' && contentsContainer.width} perWidth={contentsContainer.unit === '%' && contentsContainer.width}>
                         <div className="content-box" style={contentsGrid}>
                         {Array(count).fill(0).map((_,idx)=>{
                             return <div className="grid-line" key={idx}>

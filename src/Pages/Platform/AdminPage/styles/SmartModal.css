@@ -119,16 +119,6 @@
 }
 
 /* extra */
-.header-edit .upload input{
-    width: 40px;
-    margin-left: 5px;
-    margin-right: 3px;
-    border: none;
-    border-bottom: 1px solid #e1e1e1;
-    outline: none;
-    text-align: right;
-    color: #004898;
-}
 
 .header-edit .option-box .inner{
     margin-bottom: 0;
@@ -151,6 +141,7 @@
 .smart-modal .upload label{
     display: inline-flex;
     user-select: none;
+    padding-right: 15px;
 }
 .smart-modal .upload .checkbox{
     width: auto;
@@ -185,3 +176,13 @@
     border-right: none;
 }
 
+.smart-modal .upload .count-box input{
+    width: 40px;
+    margin-left: 5px;
+    margin-right: 3px;
+    border: none;
+    border-bottom: 1px solid #e1e1e1;
+    outline: none;
+    text-align: right;
+    color: #004898;
+}

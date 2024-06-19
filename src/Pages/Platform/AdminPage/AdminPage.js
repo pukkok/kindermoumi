@@ -9,24 +9,28 @@ import axios from "axios";
 import EditorPage from "./EditorPage";
 import SmartModal from "./SmartModal";
 import { useRecoilState, useSetRecoilState } from "recoil";
-import { HeaderAtom, HeaderContainerAtom, HeaderGapAtom, LogoAtom, LogoSizeAtom, bgAtom, gridZoneAtom, loadBgsAtom, mainMenuAtom, navFlexAtom, subMenuAtom, xyCountAtom } from "../../../Recoil/AdminAtom";
+import { HeaderAtom, HeaderContainerAtom, HeaderGapAtom, LogoAtom, LogoSizeAtom, bgAtom, bgHeightAtom, gridZoneAtom, loadBgsAtom, mainMenuAtom, navFlexAtom, subMenuAtom, xyCountAtom } from "../../../Recoil/AdminAtom";
 import Calendar from "../../../Custom/Calendar";
 function AdminPage () {
 
     const token = JSON.parse(localStorage.getItem('token'))
 
     const [loadData, setLoadData] = useState({})
+
     const setHeaderHeight = useSetRecoilState(HeaderAtom)
     const setHeaderGap = useSetRecoilState(HeaderGapAtom)
     const setHeaderContainer = useSetRecoilState(HeaderContainerAtom)
 
     const setLogo = useSetRecoilState(LogoAtom)
     const setLogoSize = useSetRecoilState(LogoSizeAtom)
-    const setNavFlex = useSetRecoilState(navFlexAtom)
-    const setBg = useSetRecoilState(bgAtom)
-    const setLoadBgs = useSetRecoilState(loadBgsAtom)
+    
     const setMainMenu = useSetRecoilState(mainMenuAtom)
     const setSubMenu = useSetRecoilState(subMenuAtom)
+    const setNavFlex = useSetRecoilState(navFlexAtom)
+    
+    const setBgHeight = useSetRecoilState(bgHeightAtom)
+    const setBg = useSetRecoilState(bgAtom)
+    const setLoadBgs = useSetRecoilState(loadBgsAtom)
     const setGridZone = useSetRecoilState(gridZoneAtom)
     const setXyCount = useSetRecoilState(xyCountAtom)
 
@@ -84,14 +88,13 @@ function AdminPage () {
         if(loadData.selectBgSrc){
             setBg(loadData.selectBgSrc)
         }
-        // if(loadData.containerSize){
-        //     setContainerSize({...containerSize, width : loadData.containerSize, unit : loadData.containerUnit})
-        // }
-
+        if(loadData.bgHeight){
+            setBgHeight(loadData.bgHeight)
+        }
         
         /** 컨텐츠 옵션 데이터 */
-        if(loadData.gridCoord){
-            setXyCount({row: loadData.gridCoord.row, col: loadData.gridCoord.col})
+        if(loadData.gridMatrix){
+            setXyCount({row: loadData.gridMatrix.row, col: loadData.gridMatrix.col})
         }
         if(loadData.zoneData){
             setGridZone({...loadData.zoneData})

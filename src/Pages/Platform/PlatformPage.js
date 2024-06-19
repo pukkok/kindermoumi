@@ -26,9 +26,9 @@ function PlatformPage () {
         getPageData()
     },[])
 
-    const contentGrid = loadData && loadData.data.gridCoord && {
-        gridTemplateColumns: loadData.data.gridCoord.col ? 
-        `repeat(${loadData.data.gridCoord.col}, 1fr)` : '1fr',
+    const contentGrid = loadData && loadData.data.gridMatrix && {
+        gridTemplateColumns: loadData.data.gridMatrix.col ? 
+        `repeat(${loadData.data.gridMatrix.col}, 1fr)` : '1fr',
     }
 
     const Tester = ({item}) => {
@@ -105,11 +105,11 @@ function PlatformPage () {
                 </Routes>
 
                 {decodeURIComponent(location.pathname) === `/kinder/${kinderUrl}` && <Container
-                width={loadData.data.containerUnit === 'px' && loadData.data.containerSize}
-                perWidth={loadData.data.containerUnit === '%' && loadData.data.containerSize}>
+                width={loadData.data.contentsContainer && loadData.data.contentsContainer.unit === 'px' && loadData.data.contentsContainer.width}
+                perWidth={loadData.data.contentsContainer ? loadData.data.contentsContainer.unit === '%' && loadData.data.contentsContainer.width : 100}>
                     <div className="content" style={contentGrid}>
-                        {loadData.data.gridCoord && 
-                        Array(loadData.data.gridCoord.row * loadData.data.gridCoord.col).fill(0).map((_, idx) => {
+                        {loadData.data.gridMatrix && 
+                        Array(loadData.data.gridMatrix.row * loadData.data.gridMatrix.col).fill(0).map((_, idx) => {
                             let key = loadData.data.zoneData['zone'+(idx+1)]
                             let type = loadData.data.zoneData[key]
                             return <div key={idx} className="content-item">

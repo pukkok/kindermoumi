@@ -9,7 +9,7 @@ function HeaderEditor ({token}) {
     const [headerGap, setHeaderGap] = useRecoilState(HeaderGapAtom)
     const [headerContainer, setHeaderContainer] = useRecoilState(HeaderContainerAtom)
 
-    const [isCheck, setIsCheck] = useState(true)
+    const [isCheck, setIsCheck] = useState(false)
 
     const headerInput = (e) => {
         const { name, value } = e.target

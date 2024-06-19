@@ -5,11 +5,19 @@ import './styles/LogoEditor.css'
 import { useRecoilState } from "recoil";
 import { LogoAtom, LogoSizeAtom } from "../../../../Recoil/AdminAtom";
 import classNames from "classnames";
+import CountBtn from "../../../../Components/CountBtn";
 
 function LogoEditor ({ token }) {
 
     const [logo, setLogo] = useRecoilState(LogoAtom)
     const [logoSize, setLogoSize] = useRecoilState(LogoSizeAtom)
+
+    const [logoWidth, setLogoWidth] = useState(logoSize.width)
+    const [logoHeight, setLogoHeight] = useState(logoSize.height)
+
+    useEffect(()=>{
+        setLogoSize({...logoSize, width: logoWidth, height : logoHeight})
+    },[logoWidth, logoHeight])
 
     const logoRef= useRef() // 사진 업로드 input
 
@@ -41,28 +49,32 @@ function LogoEditor ({ token }) {
         }
     }
 
-    const imgRef = useRef()
-
-    useEffect(()=>{
-        if(logo && logo!=='notFound'){
-            setLogoSize({width: imgRef.current.offsetWidth, height: imgRef.current.offsetHeight})
-        }else{
-            setLogoSize({width : '', height : ''})
-        }
-    },[logo])
-
     const logoSizeInput = (e) => {
         if(logo){
             const {name, value} = e.target
     
-            if(value > 250){
-                return alert('이미지 크기가 너무 큽니다.')
+            if(name === 'width'){
+                setLogoWidth(value)
             }
-            setLogoSize({...logoSize, [name] : value})
+            if(name === 'height'){
+                setLogoHeight(value)
+            }
         }else{
             alert('이미지를 먼저 추가해 주세요')
         }
     }
+
+    useEffect(()=>{
+        if(logoWidth>300){
+            setLogoWidth(300)
+            return alert('가로 길이는 300px을 넘길 수 없습니다.')
+        }
+        if(logoHeight>80){
+            setLogoHeight(80)
+            return alert('세로 길이는 80px을 넘길 수 없습니다.')
+        }
+
+    },[logoWidth, logoHeight])
 
     const [openDetail, setOpenDetail] = useState(false)
     const detailViewOpen = () => {
@@ -92,7 +104,7 @@ function LogoEditor ({ token }) {
                             add_photo_alternate
                         </span>
                     :
-                    <ImgBox addClass={'logo-box'} src={logo} alt="이미지" imgSize={logoSize} ref={imgRef}/>
+                    <ImgBox addClass={'logo-box'} src={logo} alt="이미지" imgSize={logoSize}/>
                     }
                     </button>
                     {/* <span className="summary">최대 넓이는 250px이며, 최대 높이는 150px입니다.</span> */}
@@ -100,13 +112,21 @@ function LogoEditor ({ token }) {
                 <div className="option-box">
                     <p>로고 옵션</p>
                     <div className="inner">                            
-                        <p><span>가로 : </span>
-                            <input onChange={logoSizeInput} name="width" placeholder={logoSize.width} value={logoSize.width}/>
+                        <p className="count-box">
+                            <span>가로 : </span>
+                            <input onChange={logoSizeInput} type="number" name="width" placeholder={logoWidth} value={logoWidth}/>
                             px
+                            <span className="count-btn-box">
+                                <CountBtn addClass={'count-btn'} count={logoWidth} setCount={setLogoWidth}/>        
+                            </span>
                         </p>
-                        <p><span>세로 : </span>
-                            <input onChange={logoSizeInput} name="height" placeholder={logoSize.height} value={logoSize.height}/>
+                        <p className="count-box">
+                            <span>세로 : </span>
+                            <input onChange={logoSizeInput} name="height" placeholder={logoHeight} value={logoHeight}/>
                             px 
+                            <span className="count-btn-box">
+                                <CountBtn addClass={'count-btn'} count={logoHeight} setCount={setLogoHeight}/>        
+                            </span>
                         </p>
                     </div>
                     <p>클릭시 옵션</p>

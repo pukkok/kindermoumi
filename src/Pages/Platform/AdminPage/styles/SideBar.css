@@ -1,9 +1,19 @@
 /* 사이드바 파트 */
+
+.admin-side{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+}
+
 .admin-page .side-bar{
     padding: 0 20px;
     height: 100%;
-    background-color: #edf1fe;
-    position: absolute;
+    background-color: #fff;
+    border-right: 1px solid #f0f0f0;
+    position: fixed;
     left: -250px;
     transition: .5s;
     z-index: 100;
@@ -17,9 +27,19 @@
     width: 200px;
     height: 50px;
     display: flex;
-    align-items: center;
+    align-items: flex-end;
+    padding-bottom: 5px;
     margin-bottom: 15px;
     border-bottom: solid 1px #004898;
+}
+.admin-page .side-bar .title h1{
+    display: flex;
+    width: 100%;
+    align-items: center;
+}
+.admin-page .side-bar .title h1 button{
+    margin-left: auto;
+    font-size: 14px;
 }
 .admin-page .side-bar .ctrl{
     width: 200px;
@@ -51,14 +71,16 @@
 
 .admin-page .switch-box{
     display: flex;
+    align-items: center;
 }
+
 .admin-page .switch-btn{
     all: unset;
     margin-left: auto;
     border: solid 1px #5172df;
     padding: 2px;
-    width: 36px;
-    height: 18px;
+    width: 28px;
+    height: 14px;
     border-radius: 30px;
     overflow: hidden;
     background-color: #fff;
@@ -70,8 +92,8 @@
 }
 .admin-page .switch-btn span{
     display: block;
-    width: 18px;
-    height: 18px;
+    width: 14px;
+    height: 14px;
     border-radius: 50%;
     background-color: red;
     position: absolute;

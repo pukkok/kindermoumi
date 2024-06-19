@@ -1,11 +1,10 @@
 import classNames from "classnames";
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import './styles/SideBar.css'
 
 function SideBar ({ sideOpen, setSideOpen, setTheme, onMode, setOnMode }) {
 
     const sendTabInfo = (e, title) => {
-
         if(!e.target.className){ // 이상한 곳 클릭
             return
         }
@@ -14,19 +13,39 @@ function SideBar ({ sideOpen, setSideOpen, setTheme, onMode, setOnMode }) {
 
     const tabList = [
         {className: 'logo', text: '메인 페이지'},
-        {className: 'navigation', text: '네비게이션'},
-        {className: 'bg', text: '배경'},
-        {className: 'container', text: '컨테이너'},
-        {className: 'content', text: '컨텐츠'}
     ]
 
     const changeType = () => {
         setOnMode(!onMode)
     }
 
+    
+
+    const [loadingZIndex, setLoadingZIndex] = useState({zIndex: 0})
+
+    const closeSideBar = (e) => {
+        if(e.target.className === 'admin-side'){
+            setSideOpen(false)
+        }
+
+    }
+
+    useEffect(()=>{
+        let timer
+        if(sideOpen){
+            setLoadingZIndex({zIndex: 100})
+        }else{
+            timer = setTimeout(() => {
+               setLoadingZIndex({zIndex: 0}) 
+            }, 400);
+        }
+        return () => clearTimeout(timer)
+    },[sideOpen])
 
     return (
-        <section className={classNames("side-bar", {on : sideOpen})}>
+        <section className="admin-side" style={loadingZIndex} onClick={closeSideBar}>
+
+        <div className={classNames("side-bar", {on : sideOpen})}>
             <div className="title">
                 <h1>관리자 페이지 <button onClick={()=>setSideOpen(false)}>닫기</button></h1>
             </div>
@@ -58,6 +77,8 @@ function SideBar ({ sideOpen, setSideOpen, setTheme, onMode, setOnMode }) {
                 </ul>
             </div>
             
+        </div>
+
         </section>
     )
 }

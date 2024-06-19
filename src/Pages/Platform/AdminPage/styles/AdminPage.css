@@ -18,10 +18,12 @@
 }
 /* 헤더바 파트 */
 .admin-page .header-bar{
+    position: relative;
     display: flex;
     padding: 10px 20px;
     align-items: center;
     background-color: #fff;
+    z-index: 10;
 }
 
 .admin-page .header-bar > button{

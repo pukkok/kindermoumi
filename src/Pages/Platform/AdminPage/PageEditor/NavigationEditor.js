@@ -4,6 +4,7 @@ import axios from "axios";
 import { useRecoilState } from "recoil";
 import { mainMenuAtom, subMenuAtom, navFlexAtom } from "../../../../Recoil/AdminAtom";
 import classNames from "classnames";
+import CountBtn from "../../../../Components/CountBtn";
 
 const horizonTypes = [
     {name : 'align_justify_center', style: 'center'},
@@ -45,7 +46,6 @@ function NavigationEditor ({token}) {
         setMainMenu(newMain)
     }
 
-    
     const addSubMenu = (e, idx) => {
         if(subMenu[idx]){
             setSubMenu({...subMenu, [idx] : [...subMenu[idx], {subIdx: subMenu[idx].length, subName: '', subPath: ''}]})
@@ -118,12 +118,18 @@ function NavigationEditor ({token}) {
     const [openDetail2, setOpenDetail2] = useState(false)
 
     const [navFlex, setNavFlex] = useRecoilState(navFlexAtom)
+    const [navGap, setNavGap] = useState(navFlex.gap)
+
     const flexStyler = (e) => {
         setNavFlex({...navFlex, style : e.target.dataset.style})
     }
     const flexGapInput = (e) => {
-        setNavFlex({...navFlex, gap: e.target.value})
+        setNavGap(e.target.value)
     }
+
+    useEffect(()=>{
+        setNavFlex({...navFlex, gap: navGap})
+    },[navGap])
 
     const saveFlexStyle = async () => {
         const {data} = await axios.post('platform/upload/data', {
@@ -214,10 +220,14 @@ function NavigationEditor ({token}) {
                     })}
                 </div>
                 <div className="option-box">
-                    <p>
+                    <p>메뉴 ↔ 메뉴</p>
+                    <p className="count-box">
                         <span>간격 :</span>
-                        <input onChange={flexGapInput} value={navFlex.gap}/>
+                        <input onChange={flexGapInput} value={navGap}/>
                         px
+                        <span className="count-btn-box">
+                            <CountBtn addClass={'count-btn'} count={navGap} setCount={setNavGap}/>        
+                        </span>
                     </p>
                 </div>
             </div>

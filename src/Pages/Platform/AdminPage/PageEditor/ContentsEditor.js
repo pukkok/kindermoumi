@@ -69,7 +69,7 @@ function ContentEditor ({ token }) {
         if(!col) col = 1
 
         const { data } = await axios.post('platform/upload/data', {
-            zoneData : gridZone, gridCoord: {row, col}
+            zoneData : gridZone, gridMatrix: {row, col}
         },{headers : {'Authorization' : `Bearer ${token}`}})
         alert(data.msg)
     }
