@@ -99,3 +99,8 @@ export const sideOptionsAtom = atom({
     key: 'menuSideOptions',
     default : []
 })
+
+export const MenusAtom = atom({
+    key: 'menus',
+    default: []
+})

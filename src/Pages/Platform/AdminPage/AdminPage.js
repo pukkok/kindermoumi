@@ -9,7 +9,7 @@ import axios from "axios";
 import EditorPage from "./EditorPage";
 import SmartModal from "./SmartModal";
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import { HeaderAtom, HeaderContainerAtom, HeaderGapAtom, LogoAtom, LogoSizeAtom, adminThemeAtom, bgAtom, bgHeightAtom, gridZoneAtom, loadBgsAtom, mainMenuAtom, moveLinkAtom, navFlexAtom, subMenuAtom, xyCountAtom } from "../../../Recoil/AdminAtom";
+import { HeaderAtom, HeaderContainerAtom, HeaderGapAtom, LogoAtom, LogoSizeAtom, adminThemeAtom, bgAtom, bgHeightAtom, deleteYOILAtom, gridZoneAtom, loadBgsAtom, mainMenuAtom, moveLinkAtom, navFlexAtom, sideOptionsAtom, subMenuAtom, xyCountAtom } from "../../../Recoil/AdminAtom";
 
 import MenuTable from "./MenuEditor/MenuTable";
 import MenuEditor from "./MenuEditor/MenuEditor";
@@ -19,6 +19,7 @@ function AdminPage () {
     const token = JSON.parse(localStorage.getItem('token'))
 
     const [loadData, setLoadData] = useState({})
+    const [loadMenu, setLoadMenu] = useState({})
 
     const setHeaderHeight = useSetRecoilState(HeaderAtom)
     const setHeaderGap = useSetRecoilState(HeaderGapAtom)
@@ -37,6 +38,9 @@ function AdminPage () {
     const setGridZone = useSetRecoilState(gridZoneAtom)
     const setXyCount = useSetRecoilState(xyCountAtom)
 
+    const setDeleteYOIL = useSetRecoilState(deleteYOILAtom)
+    const setSideOptions = useSetRecoilState(sideOptionsAtom)
+
     useEffect(()=>{
         const downloadData = async () => {
             const {data} = await axios.post('/kinder/download/data', {}, {
@@ -49,9 +53,22 @@ function AdminPage () {
             }
         }
         downloadData()
+
+        const downloadMenu = async () => {
+            const {data} = await axios.post('/kinder/download/menu', {}, {
+                headers : {'Authorization' : `Bearer ${token}`}
+            })
+            if(data.code === 200){
+                return setLoadMenu(data.personalMenu)
+            }else{
+                console.log(data.msg)
+            }
+        }
+        downloadMenu()
     },[])
 
-    // console.log(loadData)
+    console.log(loadData)
+    console.log(loadMenu)
 
     useEffect(()=>{
         /** 헤더 데이터 */
@@ -103,7 +120,13 @@ function AdminPage () {
             setGridZone({...loadData.zoneData})
         }
 
-    },[loadData])
+        if(loadMenu.deleteYOIL){
+            setDeleteYOIL(loadMenu.deleteYOIL)
+        }
+        if(loadMenu.sideOptions){
+            setSideOptions([...loadMenu.sideOptions])
+        }
+    },[loadData, loadMenu])
 
 
     // 그리드 사이즈 지정 (사이드바 접고 펼칠때 사용)
@@ -114,10 +137,6 @@ function AdminPage () {
     const [onMode, setOnMode] = useState(true)
 
     const moveLink = useRecoilValue(moveLinkAtom)
-
-    // 식단표 메뉴 입력 부분
-    const [deleteYOIL, setDelteYoil] = useState([])
-    const [sideOptions, setSideOptions] = useState([])
 
     // 디폴트 알러지
     const defaultAllergies = ['난류', '우유','메밀', '땅콩', '대두', '밀', '고등어', '게', '새우', '돼지고기', '복숭아', '토마토', `아황산포함식품(대부분의 가공식품에 포함되어 따로 표기하지 않음)`, '호두', '닭고기', '소고기', '오징어', '조개류(굴, 전복, 홍합 포함)', '잣', '견과류(아몬드)']

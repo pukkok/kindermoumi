@@ -1,15 +1,15 @@
 import React, { useEffect, useRef, useState } from "react";
 import DateModal from "./DateModal";
 import Calendar from "../../../../Custom/Calendar";
-import { useRecoilValue } from "recoil";
-import { deleteYOILAtom, sideOptionsAtom } from "../../../../Recoil/AdminAtom";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { MenusAtom, deleteYOILAtom, sideOptionsAtom } from "../../../../Recoil/AdminAtom";
 
 function MenuTable ({ allergyList }) {
     
     const deleteYOIL = useRecoilValue(deleteYOILAtom)
     const sideOptions = useRecoilValue(sideOptionsAtom)
 
-    const [menu, setMenu] = useState([]) // [{title:'' date: ''}]
+    const [menu, setMenu] = useRecoilState(MenusAtom) // [{title:'' date: ''}]
     const [sendData, setSendData] = useState({})
 
     const [openModal, setOpenModal] = useState(false)
@@ -23,6 +23,7 @@ function MenuTable ({ allergyList }) {
             setMenu(reverseMenu)
         }
     },[sendData])
+    console.log(menu)
 
     const openDay = (info) => {
         const date = info.day.format('YYYY-MM-DD')

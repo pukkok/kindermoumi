@@ -1,7 +1,7 @@
-import React, { useEffect, useRef, useState, useCallback } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { useRecoilState } from "recoil";
-import { deleteYOILAtom, sideOptionsAtom } from "../../../../Recoil/AdminAtom";
+import { MenusAtom, deleteYOILAtom, sideOptionsAtom } from "../../../../Recoil/AdminAtom";
 import readXlsxFile from "read-excel-file";
 
 
@@ -32,7 +32,6 @@ function MenuEditor ({ token }) {
         alert(data.msg)
     }
 
-
     const resetYoilValue = () => {
         setDeleteYOIL([])
     }
@@ -41,6 +40,22 @@ function MenuEditor ({ token }) {
         {num:0, optionName: ''}
     ])
 
+
+    useEffect(()=>{
+        if(deleteYOIL.length>0){
+            deleteYOIL.forEach(yoil=>{
+                yoilRef.current[yoil].checked = true
+            })
+        }
+
+        if(sideOptions.length>0){
+            const loadOptions = sideOptions.map((option, idx) => {
+                return {num: idx, optionName: option}
+            })
+            setImsiOptions([...loadOptions])
+        }
+    },[deleteYOIL, sideOptions])
+
     // 추가
     const addSideOptions = () => {
         setImsiOptions([...imsiOptions, {num : imsiOptions.length, optionName:''}])
@@ -48,7 +63,6 @@ function MenuEditor ({ token }) {
 
     // 삭제
     const deleteSideOption = (e, num) => {
-
         const sorting = imsiOptions.map((option, idx) => {
             if(option.num > num){
                 option.num = option.num - 1
@@ -96,14 +110,6 @@ function MenuEditor ({ token }) {
         
     }
 
-    const testerAxios = async () => {
-        console.dir(uploadRef.current.files[0])
-        
-        // const { data } = await axios.post('platform/menu/table', {
-
-        // },{headers : {'Authorization' : `Bearer ${token}`}})
-        // console.log(data)
-    }
     const testerAxios2 = async () => {
         if(uploadRef.current.files[0]){
             const fd = new FormData()
@@ -121,47 +127,48 @@ function MenuEditor ({ token }) {
         }
     }
 
-    const uploadBtn = () => {
-        uploadRef.current.click()
-    }
-
     const [testFile, setTestFile] = useState()
 
     const uploadRef = useRef(null)
     const uploadChange = () => {
         setTestFile(uploadRef.current.files[0])
     }
-    const [readData, setReadData] = useState([])
+    const [readData, setReadData] = useRecoilState(MenusAtom)
     const readExcel = () => {
-        const Schema = {
-            '순번': {prop: '순번', type: String},
-            '날짜': {prop: '날짜', type: String},
-            '사이드 메뉴 번호' : {prop: '사이드 메뉴 번호', type: Number},
-            '메뉴명' : {prop: '메뉴명', type: String},
-            '알레르기 번호' : {prop: '알레르기 번호', type: String}
-        }
-
-        readXlsxFile(uploadRef.current.files[0], {
-            Schema
+        const headers = [ 'date', 'idx', 'title', 'allergyNums']
+        readXlsxFile(uploadRef.current.files[0])
+        .then(rows=> {
+            return [...rows].map(datas => { // 순번 제거
+                return datas.filter((_, i) => {
+                    return i !== 0
+                })
+            })
         })
-        .then(rows=> setReadData([...rows]))
+        .then(rows => [...rows].filter((_, i) => {
+            return i !== 0 // 헤더 제거
+        }))
+        .then(filterRows => { // 전부 공백인 값 제거
+            return filterRows.filter(datas => {
+                return !datas.every(data=> {
+                    return data === null
+                })
+            })
+        })
+        .then(rows => [...rows].map(datas => {
+            const buildObj = datas.map((data, i) => {
+                return { [headers[i]] : data }
+            })
+            const changeObj = buildObj.reduce((acc, r)=>{
+                return acc = {...acc, ...r}
+            },{})
+            return {...changeObj}
+        }))
+        .then(result => setReadData([...result]))
+        .catch(err => {
+            alert('잘못된 양식입니다. 다시 한번 확인해주세요!')
+            console.log(err)
+        })
     }
-
-    useEffect(()=>{
-        const filteringData = readData.map(datas => {
-            return datas.filter((_, i) => {
-                return i !== 0
-            })
-        })
-        const menuData = filteringData.filter(datas=>{
-            return !datas.every(data=> {
-                return data === null
-            })
-        })
-        const header = menuData[0]
-        console.log(filteringData)
-        console.log(menuData)
-    },[readData])
 
     console.log(readData)
 
@@ -224,22 +231,25 @@ function MenuEditor ({ token }) {
                 </div>
             </div>
 
-            <div>
-                <a href={`${origin}/식단표 양식.xlsx`} download={'월간 식단표.xlsx'}>양식 다운로드</a>
-            </div>
-            <div>
-                <button onClick={uploadBtn}>양식 업로드</button> <span>{testFile && testFile.name}</span>
-            </div>
-            <button onClick={testerAxios2} type="submit">페치 버튼</button>
-            <div>
-                <button onClick={readExcel} type="submit">브라우저 엑셀읽기</button>
-            </div>
-            <input type="file" hidden onChange={uploadChange} ref={uploadRef} accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"/>
+            
             <div className="summary">
                 <h2>정보 입력하기</h2>
                 <p>입력하고 싶은 칸을 클릭해보세요.</p>
                 <span>* 클릭하여 정보를 입력할 수 있습니다.</span><br/>
             </div>
+            <div className="remote-btns">
+                <p>엑셀 양식</p><span></span>
+                <button>
+                    <a href={`${origin}/식단표 양식.xlsx`} download={'월간 식단표.xlsx'}>다운로드</a>
+                </button>
+                <button onClick={()=>uploadRef.current.click()}>업로드</button>
+                <button onClick={readExcel}>적용</button>
+                <button onClick={saveSideOptions}>저장</button>
+            </div>
+            <div>
+                파일명 : {testFile && testFile.name}
+            </div>
+            <input type="file" hidden onChange={uploadChange} ref={uploadRef} accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"/>
         </section>
     )
 }
