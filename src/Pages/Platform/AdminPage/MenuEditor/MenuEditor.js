@@ -1,7 +1,9 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useCallback } from "react";
 import axios from "axios";
 import { useRecoilState } from "recoil";
 import { deleteYOILAtom, sideOptionsAtom } from "../../../../Recoil/AdminAtom";
+import readXlsxFile from "read-excel-file";
+
 
 function MenuEditor ({ token }) {
 
@@ -94,7 +96,74 @@ function MenuEditor ({ token }) {
         
     }
 
+    const testerAxios = async () => {
+        console.dir(uploadRef.current.files[0])
+        
+        // const { data } = await axios.post('platform/menu/table', {
 
+        // },{headers : {'Authorization' : `Bearer ${token}`}})
+        // console.log(data)
+    }
+    const testerAxios2 = async () => {
+        if(uploadRef.current.files[0]){
+            const fd = new FormData()
+            fd.append('menuTable', uploadRef.current.files[0])
+
+            const { data } = await axios.post('platform/menu/excel', 
+                fd
+            ,
+            {headers : {
+                'Content-Type': 'multipart/form-data',
+                'Authorization' : `Bearer ${token}`
+                }
+            })
+            console.log(data)
+        }
+    }
+
+    const uploadBtn = () => {
+        uploadRef.current.click()
+    }
+
+    const [testFile, setTestFile] = useState()
+
+    const uploadRef = useRef(null)
+    const uploadChange = () => {
+        setTestFile(uploadRef.current.files[0])
+    }
+    const [readData, setReadData] = useState([])
+    const readExcel = () => {
+        const Schema = {
+            '순번': {prop: '순번', type: String},
+            '날짜': {prop: '날짜', type: String},
+            '사이드 메뉴 번호' : {prop: '사이드 메뉴 번호', type: Number},
+            '메뉴명' : {prop: '메뉴명', type: String},
+            '알레르기 번호' : {prop: '알레르기 번호', type: String}
+        }
+
+        readXlsxFile(uploadRef.current.files[0], {
+            Schema
+        })
+        .then(rows=> setReadData([...rows]))
+    }
+
+    useEffect(()=>{
+        const filteringData = readData.map(datas => {
+            return datas.filter((_, i) => {
+                return i !== 0
+            })
+        })
+        const menuData = filteringData.filter(datas=>{
+            return !datas.every(data=> {
+                return data === null
+            })
+        })
+        const header = menuData[0]
+        console.log(filteringData)
+        console.log(menuData)
+    },[readData])
+
+    console.log(readData)
 
     return(
         <section className="menu-edit">
@@ -155,6 +224,17 @@ function MenuEditor ({ token }) {
                 </div>
             </div>
 
+            <div>
+                <a href={`${origin}/식단표 양식.xlsx`} download={'월간 식단표.xlsx'}>양식 다운로드</a>
+            </div>
+            <div>
+                <button onClick={uploadBtn}>양식 업로드</button> <span>{testFile && testFile.name}</span>
+            </div>
+            <button onClick={testerAxios2} type="submit">페치 버튼</button>
+            <div>
+                <button onClick={readExcel} type="submit">브라우저 엑셀읽기</button>
+            </div>
+            <input type="file" hidden onChange={uploadChange} ref={uploadRef} accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"/>
             <div className="summary">
                 <h2>정보 입력하기</h2>
                 <p>입력하고 싶은 칸을 클릭해보세요.</p>
