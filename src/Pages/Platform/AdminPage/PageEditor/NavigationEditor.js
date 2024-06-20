@@ -215,7 +215,7 @@ function NavigationEditor ({token}) {
                 <div className="option-box">
                     <p>정렬 방법</p>
                     {horizonTypes.map((type, idx) => {
-                        return <span data-style={type.style} key={idx} className="material-symbols-outlined border-box" 
+                        return <span data-style={type.style} title={idx> 2 && '자동으로 간격이 조절됩니다.'} key={idx} className="material-symbols-outlined border-box" 
                         onClick={flexStyler}>{type.name}</span>
                     })}
                 </div>

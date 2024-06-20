@@ -6,12 +6,14 @@ import EventDateEditor from "./EventDateEditor";
 import './styles/ContentsEditor.css'
 import axios from "axios";
 import { useRecoilState } from "recoil";
-import { gridZoneAtom, xyCountAtom } from "../../../../Recoil/AdminAtom";
+import { contentsContainerAtom, gridZoneAtom, xyCountAtom } from "../../../../Recoil/AdminAtom";
+import CountBtn from "../../../../Components/CountBtn";
 
 function ContentEditor ({ token }) {
 
     const [xyCount, setXyCount] = useRecoilState(xyCountAtom)
     const [gridZone, setGridZone] = useRecoilState(gridZoneAtom)
+    const [contentsContainer, setContentsContainer] = useRecoilState(contentsContainerAtom)
     const xyCounter = (e, xy) => {
         setXyCount({...xyCount, [xy] : e.target.value})
     }
@@ -49,8 +51,6 @@ function ContentEditor ({ token }) {
 
     const [contentType, setContentType] = useState({})
 
-    console.log(gridZone)
-
     useEffect(()=>{
         setGridZone({...gridZone, ...contentType})
     },[contentType])
@@ -74,6 +74,59 @@ function ContentEditor ({ token }) {
         alert(data.msg)
     }
 
+    const [isCheck, setIsCheck] = useState(false)
+    const addContainer = () => {
+        setIsCheck(!isCheck)
+    }
+
+    const [containerWidth, setContainerWidth] = useState(contentsContainer.width)
+    const [containerUnit, setContainerUnit] = useState(contentsContainer.unit)
+    const contentsContainerChange = (e) => {
+        setContainerWidth(e.target.value)
+    }
+
+    const unitChange = (unit) => {
+        if(unit === '%'){
+            setContainerWidth(100)
+        }
+        if(unit === 'px'){
+            setContainerWidth(1240)
+        }
+        setContainerUnit(unit)
+    }
+
+
+    useEffect(()=>{
+        if(containerUnit === '%'){
+            if(containerWidth > 100){
+                setContainerWidth(100)
+            }
+        }
+        if(containerUnit === 'px'){
+            if(containerWidth > 3000){
+                setContainerWidth(3000)
+            }
+        }
+        setContentsContainer({unit : containerUnit, width : containerWidth})
+    },[containerWidth, containerUnit])
+
+    const saveContainerData = async () => {
+        let container = contentsContainer
+        if(contentsContainer.unit ==='px' && contentsContainer.width < 800){
+            return alert('최소 컨테이너의 크기는 800px입니다.')
+        }
+        if(!isCheck){
+            contentsContainer = {width: 100, unit: '%'}
+        }
+        const { data } = await axios.post('platform/upload/data', {
+            contentsContainer : container
+        },{headers : {'Authorization' : `Bearer ${token}`}})
+        alert(data.msg)
+    }
+
+
+
+
     return(
         <section className="content-edit">
             <>
@@ -81,6 +134,41 @@ function ContentEditor ({ token }) {
                 <h2>컨텐츠</h2>
                 <p>메인페이지에서 보여줄수 있는 컨텐츠를 설정해 보세요.</p>
                 <span>*구역을 나눠서 컨텐츠를 지정할수 있습니다.</span>
+            </div>
+            <div className="remote-btns">
+                <p>컨테이너</p><span></span>
+                <button onClick={saveContainerData}>저장</button>
+                <button >초기화</button>
+            </div>
+            <div className="upload mb">
+                <div className="option-box diff">
+                        <label>
+                            <input type="checkbox" className="checkbox" onChange={addContainer} checked={isCheck}/>
+                            컨테이너 추가
+                        </label>
+                        {isCheck && 
+                        <>
+                            <p className="inner count-box">
+                                <span>컨테이너 넓이 :</span>
+                                <input type="text" onChange={contentsContainerChange} name="container" placeholder="1240" value={containerWidth}/>
+                                {contentsContainer.unit}
+                                <span className="count-btn-box">
+                                    <CountBtn addClass={'count-btn'} count={containerWidth} setCount={setContainerWidth}/>        
+                                </span>
+                            </p>
+                        
+                            <p className="inner">
+                                <span>단위 선택 : </span>
+                                <label>
+                                    <input type="radio" name="unit" className="radio" onChange={()=>unitChange('px')} checked={containerUnit === 'px'}/>px
+                                </label>
+                                <label>
+                                    <input type='radio' name="unit" className="radio" onChange={()=>unitChange('%')} checked={containerUnit === '%'} />%
+                                </label>
+                            </p>
+                        </>
+                        }
+                </div>
             </div>
             <div className="summary">
                 <h2>구역선택</h2>

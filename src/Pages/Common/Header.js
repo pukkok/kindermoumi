@@ -4,8 +4,9 @@ import './styles/Header.css'
 import Container from "../../Components/Container";
 import axios from "axios";
 import classnames from "classnames";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { isLoginAtom } from "../../Recoil/LoginAtom";
+import { adminThemeAtom } from "../../Recoil/AdminAtom";
 
 function Header ({userName, admin, token, kinderUrl, setKinderUrl}) {
     // 로그인 로그아웃시 이벤트처리
@@ -21,6 +22,7 @@ function Header ({userName, admin, token, kinderUrl, setKinderUrl}) {
         alert('로그아웃 되었습니다.')
         localStorage.clear()
         setIsLogin(false)
+        navigate('/')
     }
 
     const location = useLocation() // kinder-page체크용도
@@ -74,6 +76,8 @@ function Header ({userName, admin, token, kinderUrl, setKinderUrl}) {
         )
     }
 
+    const setAdminTheme = useSetRecoilState(adminThemeAtom)
+
     return(
         <header className={classnames("header",{ small : location.pathname.includes('kinder') })}>
             <Container>
@@ -113,9 +117,9 @@ function Header ({userName, admin, token, kinderUrl, setKinderUrl}) {
                                 {!kinderUrl && <li><Link onClick={toggleModal}>페이지 생성</Link></li>}
                                 {kinderUrl && 
                                 <>
-                                    <li><Link to={'/admin'}>페이지 관리</Link></li>
+                                    <li onClick={()=>setAdminTheme('page')}><Link to={'/admin'}>페이지 관리</Link></li>
                                     <li><Link to={'/admin'}>원아 관리</Link></li>
-                                    <li><Link to={'/admin'}>식단 관리</Link></li>
+                                    <li onClick={()=>setAdminTheme('menus')}><Link to={'/admin'}>식단 관리</Link></li>
                                 </>
                                 }
                             </ul>

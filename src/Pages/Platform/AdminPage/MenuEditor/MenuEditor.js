@@ -1,11 +1,15 @@
 import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
+import { useRecoilState } from "recoil";
+import { deleteYOILAtom, sideOptionsAtom } from "../../../../Recoil/AdminAtom";
 
-function MenuEditor ({token, deleteYOIL, setDeleteYoil, sideOptions, setSideOptions }) {
+function MenuEditor ({ token }) {
 
     const weeks = ['월', '화', '수', '목', '금', '토', '일']
     const yoilRef = useRef({})
 
+    const [deleteYOIL, setDeleteYOIL]  = useRecoilState(deleteYOILAtom)
+    const [sideOptions, setSideOptions] = useRecoilState(sideOptionsAtom)
     // 요일 지우기
     const checkYoilValue = () => {
         let deleteYoils = []
@@ -16,7 +20,7 @@ function MenuEditor ({token, deleteYOIL, setDeleteYoil, sideOptions, setSideOpti
             }
         })
 
-        setDeleteYoil(deleteYoils)
+        setDeleteYOIL(deleteYoils)
     }
 
     const saveYoilValue = async () => {
@@ -28,7 +32,7 @@ function MenuEditor ({token, deleteYOIL, setDeleteYoil, sideOptions, setSideOpti
 
 
     const resetYoilValue = () => {
-        setDeleteYoil([])
+        setDeleteYOIL([])
     }
 
     const [imsiOptions, setImsiOptions] = useState([
@@ -73,6 +77,9 @@ function MenuEditor ({token, deleteYOIL, setDeleteYoil, sideOptions, setSideOpti
 
     //보내기
     const sendSideOptions = () => {
+        if(imsiOptions.length === 1 && imsiOptions[0].optionName === ''){
+            return setSideOptions([])
+        }
         setSideOptions(
             imsiOptions.map(option => {
             return option.optionName
@@ -109,15 +116,17 @@ function MenuEditor ({token, deleteYOIL, setDeleteYoil, sideOptions, setSideOpti
                 <button onClick={saveYoilValue}>저장</button>
                 <button onClick={resetYoilValue}>초기화</button>
             </div>
-            <div className="mb">
-                <p>삭제할 요일 선택</p>
-                {weeks.map((yoil, idx) => {
-                    return(
-                        <label key={idx}>
-                            <input type="checkbox" ref={el => yoilRef.current[yoil] = el}/>{yoil}
-                        </label>
-                    )
-                })}
+            <div className="upload mb">
+                <div className="option-box">
+                    <p>삭제할 요일 선택</p>
+                    {weeks.map((yoil, idx) => {
+                        return(
+                            <label key={idx}>
+                                <input type="checkbox" ref={el => yoilRef.current[yoil] = el}/>{yoil}
+                            </label>
+                        )
+                    })}
+                </div>
             </div>
             
             <div className="summary">
@@ -134,14 +143,16 @@ function MenuEditor ({token, deleteYOIL, setDeleteYoil, sideOptions, setSideOpti
                 <button onClick={saveSideOptions}>저장</button>
                 <button >초기화</button>
             </div>
-            <div className="mb">
-                <p>사이드 메뉴 입력</p>
-                {imsiOptions.map((option, idx)=> {
-                    return <div key={idx}>
-                        {idx+1}번 <input onChange={(e)=>sideInputValue(e, idx)} value={option.optionName}/>
-                        {idx !== 0 && <button onClick={(e)=>deleteSideOption(e, idx)}>삭제</button>}
-                    </div>
-                })}
+            <div className="upload mb">
+                <div className="option-box">
+                    <p>사이드 메뉴 등록</p>
+                    {imsiOptions.map((option, idx)=> {
+                        return <div key={idx} className="side-menu-box">
+                            {idx+1} : <input onChange={(e)=>sideInputValue(e, idx)} value={option.optionName}/>
+                            {idx !== 0 && <button onClick={(e)=>deleteSideOption(e, idx)}>삭제</button>}
+                        </div>
+                    })}
+                </div>
             </div>
 
             <div className="summary">

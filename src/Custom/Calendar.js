@@ -6,7 +6,7 @@ import './styles/Calendar.css'
 const weekdays = ['일', '월', '화', '수', '목', '금', '토']
 
 /** (어떤 요일을 지우고싶나요?) wantDeleteYOIL : ['요일', '요일', ...] */
-function Calendar ({wantDeleteYOIL, borderColor='gray', sideOptions=[], dayClick, menuInfo={title:'',date:'', idx:0}, merge, footerTitle, footerList=[]}) {
+function Calendar ({wantDeleteYOIL=[], borderColor='gray', sideOptions=[], dayClick, menuInfo=[{title:'',date:'', idx:0}], merge, footerTitle, footerList=[]}) {
     const today = dayjs()
     const todayD = today.date() // 오늘 몇일?
     const todayYM = today.format('YYYY년 M월')
@@ -79,7 +79,7 @@ function Calendar ({wantDeleteYOIL, borderColor='gray', sideOptions=[], dayClick
     const styles = {
         calendar: {
             padding : '10px',
-            border : '1px solid #004898'
+            // border : '1px solid #004898'
         },
         grid : {
             display: 'grid',

@@ -23,11 +23,11 @@ function EditorPage ({onMode}) {
     const navFlex = useRecoilValue(navFlexAtom)
 
     const bg = useRecoilValue(bgAtom)
-    const contentsContainer = useRecoilState(contentsContainerAtom)
+    const contentsContainer = useRecoilValue(contentsContainerAtom)
     const xyCount = useRecoilValue(xyCountAtom)
     const gridZone = useRecoilValue(gridZoneAtom)
 
-    const [bgHeight, setBgHeight] = useRecoilState(bgHeightAtom)
+    const bgHeight = useRecoilValue(bgHeightAtom)
     const bgImgRef = useRef(null)
 
     useEffect(()=>{
@@ -94,7 +94,7 @@ function EditorPage ({onMode}) {
         <section className="page-edit kinder-page" onClick={activeSelector} style={pageGrid}>
             <header id="h" className={classNames({active : SmartModalOpen.selection === 'h'})}>
                 <Container 
-                width={headerContainer.unit === 'px' && headerContainer.width}
+                width={headerContainer.unit === 'px' && headerContainer.width > 800 ? headerContainer.width : 800}
                 perWidth={headerContainer.unit === '%' && headerContainer.width} >
                 <div className="nav-bar" style={{gap: headerGap + 'px'}}>
                     {logo && 
@@ -129,10 +129,13 @@ function EditorPage ({onMode}) {
             
             <main id="m" className={classNames({active : SmartModalOpen.selection === 'm'})}>
                 {bg && <ImgBox ref={bgImgRef} addClass={'bg-img'} src={bg} imgSize={{height: bgHeight > 400 ? bgHeight : 400}}/>}
-                
-                <div className={classNames("content", "default-option")}>
+
+                <Container 
+                width={contentsContainer.unit === 'px' && contentsContainer.width > 800 ? contentsContainer.width : 800} 
+                perWidth={contentsContainer.unit === '%' && contentsContainer.width}>
+                {/* <div className={classNames("content", "default-option")}> */}
                     {count>0 && xyCount &&
-                    <Container width={contentsContainer.unit === 'px' && contentsContainer.width} perWidth={contentsContainer.unit === '%' && contentsContainer.width}>
+                    
                         <div className="content-box" style={contentsGrid}>
                         {Array(count).fill(0).map((_,idx)=>{
                             return <div className="grid-line" key={idx}>
@@ -155,9 +158,9 @@ function EditorPage ({onMode}) {
                                 </div>
                         })}
                         </div>
-                    </Container>}
-                </div>
-
+                    }
+                {/* </div> */}
+                </Container>
                 {!bg && '컨텐츠 영역'}
                 {onMode && <button className="add-btn" onClick={openSmartModal}>설정</button>}
             </main>

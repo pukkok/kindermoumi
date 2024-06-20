@@ -141,8 +141,7 @@ function AllergyTable ({defaultAllergies, allergyList, setAllergyList}) {
                 })}
                 </div>
             </div>
-            
-            
+
         </>
     )
 }

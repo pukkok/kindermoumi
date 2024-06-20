@@ -114,7 +114,7 @@ function LogoEditor ({ token }) {
                     <div className="inner">                            
                         <p className="count-box">
                             <span>가로 : </span>
-                            <input onChange={logoSizeInput} type="number" name="width" placeholder={logoWidth} value={logoWidth}/>
+                            <input onChange={logoSizeInput} name="width" placeholder={logoWidth} value={logoWidth}/>
                             px
                             <span className="count-btn-box">
                                 <CountBtn addClass={'count-btn'} count={logoWidth} setCount={setLogoWidth}/>        

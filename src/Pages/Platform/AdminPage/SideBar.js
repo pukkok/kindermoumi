@@ -1,33 +1,34 @@
 import classNames from "classnames";
 import React, { useEffect, useRef, useState } from "react";
 import './styles/SideBar.css'
+import { useSetRecoilState } from "recoil";
+import { adminThemeAtom, moveLinkAtom } from "../../../Recoil/AdminAtom";
 
-function SideBar ({ sideOpen, setSideOpen, setTheme, onMode, setOnMode }) {
+function SideBar ({ sideOpen, setSideOpen, onMode, setOnMode }) {
 
+    const setAdminTheme = useSetRecoilState(adminThemeAtom)
+    const setMoveLink = useSetRecoilState(moveLinkAtom)
     const sendTabInfo = (e, title) => {
         if(!e.target.className){ // 이상한 곳 클릭
             return
         }
-        setTheme(title)
+        setAdminTheme(title)
+        setMoveLink(e.target.className)
     }
 
     const tabList = [
-        {className: 'logo', text: '메인 페이지'},
+        {className: 'main', text: '메인 페이지'},
     ]
 
     const changeType = () => {
         setOnMode(!onMode)
     }
 
-    
-
     const [loadingZIndex, setLoadingZIndex] = useState({zIndex: 0})
-
     const closeSideBar = (e) => {
         if(e.target.className === 'admin-side'){
             setSideOpen(false)
         }
-
     }
 
     useEffect(()=>{

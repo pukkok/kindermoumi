@@ -1,5 +1,14 @@
 import { atom } from "recoil";
 
+export const adminThemeAtom = atom({
+    key: 'admin-theme',
+    default: 'page'
+})
+export const moveLinkAtom = atom({
+    key: 'move-link',
+    default: ''
+})
+
 export const HeaderAtom = atom({
     key: 'header',
     default: 60
@@ -73,4 +82,20 @@ export const contentsContainerAtom = atom({
 export const SmartModalOpenAtom = atom({
     key: 'SMOPEN',
     default : {isOpen : false, selection: ''}
+})
+
+
+
+
+
+/** 식단관리 파트 */
+
+export const deleteYOILAtom = atom({
+    key: 'deleteYOIL',
+    default : []
+})
+
+export const sideOptionsAtom = atom({
+    key: 'menuSideOptions',
+    default : []
 })

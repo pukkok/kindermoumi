@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import './styles/AdminPage.css'
 import classNames from "classnames";
 
@@ -8,9 +8,12 @@ import HeaderBar from "./HeaderBar";
 import axios from "axios";
 import EditorPage from "./EditorPage";
 import SmartModal from "./SmartModal";
-import { useRecoilState, useSetRecoilState } from "recoil";
-import { HeaderAtom, HeaderContainerAtom, HeaderGapAtom, LogoAtom, LogoSizeAtom, bgAtom, bgHeightAtom, gridZoneAtom, loadBgsAtom, mainMenuAtom, navFlexAtom, subMenuAtom, xyCountAtom } from "../../../Recoil/AdminAtom";
-import Calendar from "../../../Custom/Calendar";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { HeaderAtom, HeaderContainerAtom, HeaderGapAtom, LogoAtom, LogoSizeAtom, adminThemeAtom, bgAtom, bgHeightAtom, gridZoneAtom, loadBgsAtom, mainMenuAtom, moveLinkAtom, navFlexAtom, subMenuAtom, xyCountAtom } from "../../../Recoil/AdminAtom";
+
+import MenuTable from "./MenuEditor/MenuTable";
+import MenuEditor from "./MenuEditor/MenuEditor";
+import AllergyEditor from "./MenuEditor/AllergyEditor";
 function AdminPage () {
 
     const token = JSON.parse(localStorage.getItem('token'))
@@ -48,7 +51,7 @@ function AdminPage () {
         downloadData()
     },[])
 
-    console.log(loadData)
+    // console.log(loadData)
 
     useEffect(()=>{
         /** 헤더 데이터 */
@@ -102,26 +105,15 @@ function AdminPage () {
 
     },[loadData])
 
-    
-
 
     // 그리드 사이즈 지정 (사이드바 접고 펼칠때 사용)
     const [sideOpen, setSideOpen] = useState(false)
-
     // 테마 선택
-    const [theme, setTheme] = useState('page')
-
+    const adminTheme = useRecoilValue(adminThemeAtom)
     // 수정 or 미리보기
     const [onMode, setOnMode] = useState(true)
-    const [hideContainer, setHideContainer] = useState(false) // 컨테이너 보이기/숨기기
 
-    const [previewSize, setPreviewSize] = useState()
-
-    const sizeRef = useRef()
-    useEffect(()=>{
-        setPreviewSize(sizeRef.current.offsetWidth)
-    },[])  
-    
+    const moveLink = useRecoilValue(moveLinkAtom)
 
     // 식단표 메뉴 입력 부분
     const [deleteYOIL, setDelteYoil] = useState([])
@@ -135,16 +127,20 @@ function AdminPage () {
         <section className="admin-page open">
             <SideBar 
             sideOpen={sideOpen} setSideOpen={setSideOpen}
-            setTheme={setTheme}
             onMode={onMode} setOnMode={setOnMode}
             />
 
             <HeaderBar area='h' token={token} setSideOpen={setSideOpen} />
 
             <div className={classNames("option-part", "c")}>
-                <div className="part" ref={sizeRef}>
-                    {theme === 'page' && <EditorPage onMode={onMode}/>}
-                    {theme === 'menus' && <Calendar />}
+                <div className={classNames("part", {division2 : adminTheme==='menus'})}>
+                    {adminTheme === 'page' && <EditorPage onMode={onMode}/>}
+                    {adminTheme === 'menus' && 
+                    <>
+                        <MenuTable allergyList={allergyList}/>
+                        {moveLink === 'menu-table' && <MenuEditor token={token}/>}
+                        {moveLink === 'allergy' && <AllergyEditor/>}
+                    </>}
                 </div>
             </div>
 

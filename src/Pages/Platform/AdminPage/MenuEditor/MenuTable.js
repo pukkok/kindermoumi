@@ -1,9 +1,14 @@
 import React, { useEffect, useRef, useState } from "react";
 import DateModal from "./DateModal";
 import Calendar from "../../../../Custom/Calendar";
+import { useRecoilValue } from "recoil";
+import { deleteYOILAtom, sideOptionsAtom } from "../../../../Recoil/AdminAtom";
 
-function MenuTable ({deleteYOIL, sideOptions, allergyList}) {
+function MenuTable ({ allergyList }) {
     
+    const deleteYOIL = useRecoilValue(deleteYOILAtom)
+    const sideOptions = useRecoilValue(sideOptionsAtom)
+
     const [menu, setMenu] = useState([]) // [{title:'' date: ''}]
     const [sendData, setSendData] = useState({})
 

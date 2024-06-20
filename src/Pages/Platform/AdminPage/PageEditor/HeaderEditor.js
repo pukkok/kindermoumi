@@ -20,7 +20,6 @@ function HeaderEditor ({token}) {
             setHeaderGap(value)
         }
         if(name === 'container'){
-            setHeaderContainer({...headerContainer, width : value})
             setCount(value)
         }
     }
@@ -29,43 +28,38 @@ function HeaderEditor ({token}) {
         setIsCheck(!isCheck)
     }
 
+    const [count, setCount] = useState(headerContainer.width)
+    const [containerUnit, setContainerUnit] = useState(headerContainer.unit)
+
     const unitChange = (unit) => {
         if(unit === '%'){
-            setHeaderContainer({width: 100, unit})
             setCount(100)
         }
         if(unit === 'px'){
-            setHeaderContainer({width: 1240, unit})
             setCount(1240)
         }
+        setContainerUnit(unit)
     }
 
-    const [count, setCount] = useState(headerContainer.width)
-    const [prevUnit, setPrevUnit] = useState(headerContainer.unit)
-
     useEffect(()=>{
-        if(prevUnit !== headerContainer.unit){
-            setPrevUnit(headerContainer.unit)
-            setCount(headerContainer.width)
-        }
-    },[prevUnit, headerContainer.unit, headerContainer.width])
-
-    useEffect(()=>{
-        if(headerContainer.unit === '%'){
+        if(containerUnit === '%'){
             if(count > 100){
                 setCount(100)
             }
         }
-        if(headerContainer.unit === 'px'){
+        if(containerUnit === 'px'){
             if(count > 3000){
                 setCount(3000)
             }
         }
-        setHeaderContainer({...headerContainer, width: count})
-    },[count, headerContainer.unit])
+        setHeaderContainer({unit : containerUnit, width: count})
+    },[count, containerUnit])
 
     const saveHeaderData = async () => {
         let container = headerContainer
+        if(headerContainer.unit ==='px' && headerContainer.width < 800){
+            return alert('최소 컨테이너의 크기는 800px입니다.')
+        }
         if(!isCheck){
             container = {width: 100, unit: '%'}
         }
@@ -120,7 +114,7 @@ function HeaderEditor ({token}) {
                     <>
                         <p className="inner count-box">
                             <span>컨테이너 넓이 :</span>
-                            <input type="text" onChange={headerInput} name="container" placeholder="1240" value={headerContainer.width}/>
+                            <input type="text" onChange={headerInput} name="container" placeholder="1240" value={count}/>
                             {headerContainer.unit}
                             <span className="count-btn-box">
                                 <CountBtn addClass={'count-btn'} count={count} setCount={setCount}/>        
@@ -130,10 +124,10 @@ function HeaderEditor ({token}) {
                         <p className="inner">
                             <span>단위 선택 : </span>
                             <label >
-                                <input type="radio" name="unit" className="radio" onChange={()=>unitChange('px')} checked={headerContainer.unit === 'px'}/>px
+                                <input type="radio" name="unit" className="radio" onChange={()=>unitChange('px')} checked={containerUnit === 'px'}/>px
                             </label>
                             <label>
-                                <input type='radio' name="unit" className="radio" onChange={()=>unitChange('%')} checked={headerContainer.unit === '%'} />%
+                                <input type='radio' name="unit" className="radio" onChange={()=>unitChange('%')} checked={containerUnit === '%'} />%
                             </label>
                         </p>
                     </>
