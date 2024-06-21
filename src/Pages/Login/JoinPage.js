@@ -12,7 +12,6 @@ import SelectJoinType from "./SelectJoinType";
 import Certificate from "./Certificate";
 import InputInfo from "./InputInfo";
 
-const BASE_URL = 'http://localhost:5000'
 const agreeSteps = ['약관동의', '회원구분', '본인확인', '정보입력', '가입완료']
 
 function JoinPage () {
@@ -57,7 +56,7 @@ function JoinPage () {
                 delete bodyData.phone
             }
 
-            const { data } = await axios.post(`${BASE_URL}/teacher/join/step2`, {
+            const { data } = await axios.post(`teacher/join/step2`, {
                 ...bodyData
             })
             alert(data.msg)

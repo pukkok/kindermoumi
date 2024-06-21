@@ -7,7 +7,6 @@ const step1Arr = [
     { id: 'key', type: 'text', name : '인증키'},
     { id: 'password', type: 'password', name : '패스워드'}
 ]
-const BASE_URL = 'http://localhost:5000'
 
 function DemoModal ({ setClose, setFunc }) {
 
@@ -24,7 +23,7 @@ function DemoModal ({ setClose, setFunc }) {
     const certificate = async (e, step1) => { 
         const {key, password} = step1
         e.preventDefault()
-        const { data } = await axios.post(`${BASE_URL}/teacher/join/step1`, {
+        const { data } = await axios.post(`teacher/join/step1`, {
             key, password
         })
         if(data.code === 200){

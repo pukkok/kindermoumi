@@ -30,7 +30,7 @@ function App() {
                 setKinderUrl(data.url)
             }
         }
-        // findKinderCode()
+        findKinderCode()
         }
     },[userName])
     

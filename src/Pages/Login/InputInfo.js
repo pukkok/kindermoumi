@@ -6,7 +6,6 @@ import axios from "axios";
 
 const phoneOptions = ['선택', '010', '011', '016', '017', '018', '019']
 const emailOptions = ['선택', 'naver.com', 'nate.com', 'gmail.com', 'daum.net']
-const BASE_URL = 'http://localhost:5000'
 
 function InputInfo ({type, info, setFunc, inputValues}) {
 
@@ -128,7 +127,7 @@ function InputInfo ({type, info, setFunc, inputValues}) {
         e.preventDefault()
         const userId = inputValues.userId
         let url = ''
-        if(type === '교직원') url = `${BASE_URL}/teacher/join/id-check`
+        if(type === '교직원') url = `teacher/join/id-check`
         const { data } = await axios.post(url, {
             userId
         })
