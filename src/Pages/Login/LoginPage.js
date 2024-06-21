@@ -4,8 +4,6 @@ import axios from "axios";
 
 function LoginPage () {
 
-    const BASE_URL = 'http://localhost:5000'
-
     const [input, setInput] = useState({})
 
     const [switchType, setSwitchType] = useState('parent')
@@ -18,7 +16,7 @@ function LoginPage () {
         e.preventDefault()
         const {userId, password} = input
         
-        const { data } = await axios.post(`${BASE_URL}/${switchType}/login`, {
+        const { data } = await axios.post(`${switchType}/login`, {
                userId, password
         })
 

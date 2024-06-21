@@ -52,7 +52,7 @@ function PlatformPage () {
                     <div className="nav-bar">
                         <div className="logo" style={{width : loadData.data.logoWidth+'px', height: loadData.data.logoHeight+'px'}}>
                             <Link to={`/kinder/${loadData.originUrl}`}>
-                                <img src={`${process.env.REACT_APP_RESTAPI_URL}/${loadData.data.logoPath}`}/>
+                                <img src={`${loadData.data.logoPath}`}/>
                             </Link>
                         </div>
                         <nav className="navigation" style={{width : `calc(100% - ${loadData.data.logoWidth+'px'})`}}>

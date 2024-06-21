@@ -110,28 +110,21 @@ function MenuEditor ({ token }) {
         
     }
 
-    const testerAxios2 = async () => {
-        if(uploadRef.current.files[0]){
-            const fd = new FormData()
-            fd.append('menuTable', uploadRef.current.files[0])
-
-            const { data } = await axios.post('platform/menu/excel', 
-                fd
-            ,
-            {headers : {
-                'Content-Type': 'multipart/form-data',
-                'Authorization' : `Bearer ${token}`
-                }
+    const saveMenuData = async () => {
+        if(readData.length>0){
+            const { data } = await axios.post('platform/menu/table', {
+                menus : readData
+            },
+            {headers : {'Authorization' : `Bearer ${token}`}
             })
             console.log(data)
         }
     }
 
-    const [testFile, setTestFile] = useState()
-
+    const [uploadFile, setUploadFile] = useState()
     const uploadRef = useRef(null)
     const uploadChange = () => {
-        setTestFile(uploadRef.current.files[0])
+        setUploadFile(uploadRef.current.files[0])
     }
     const [readData, setReadData] = useRecoilState(MenusAtom)
     const readExcel = () => {
@@ -169,8 +162,6 @@ function MenuEditor ({ token }) {
             console.log(err)
         })
     }
-
-    console.log(readData)
 
     return(
         <section className="menu-edit">
@@ -244,10 +235,12 @@ function MenuEditor ({ token }) {
                 </button>
                 <button onClick={()=>uploadRef.current.click()}>업로드</button>
                 <button onClick={readExcel}>적용</button>
-                <button onClick={saveSideOptions}>저장</button>
+                <button onClick={saveMenuData}>저장</button>
             </div>
-            <div>
-                파일명 : {testFile && testFile.name}
+            <div className="upload">
+                <div className="option-box">
+                <p>파일명 : {uploadFile && uploadFile.name}</p>
+                </div>
             </div>
             <input type="file" hidden onChange={uploadChange} ref={uploadRef} accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"/>
         </section>

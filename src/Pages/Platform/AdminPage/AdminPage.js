@@ -8,8 +8,8 @@ import HeaderBar from "./HeaderBar";
 import axios from "axios";
 import EditorPage from "./EditorPage";
 import SmartModal from "./SmartModal";
-import { useRecoilValue, useSetRecoilState } from "recoil";
-import { HeaderAtom, HeaderContainerAtom, HeaderGapAtom, LogoAtom, LogoSizeAtom, adminThemeAtom, bgAtom, bgHeightAtom, deleteYOILAtom, gridZoneAtom, loadBgsAtom, mainMenuAtom, moveLinkAtom, navFlexAtom, sideOptionsAtom, subMenuAtom, xyCountAtom } from "../../../Recoil/AdminAtom";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { HeaderAtom, HeaderContainerAtom, HeaderGapAtom, LogoAtom, LogoSizeAtom, MenusAtom, adminThemeAtom, bgAtom, bgHeightAtom, deleteYOILAtom, gridZoneAtom, loadBgsAtom, mainMenuAtom, moveLinkAtom, navFlexAtom, selectMonthAtom, sideOptionsAtom, subMenuAtom, xyCountAtom } from "../../../Recoil/AdminAtom";
 
 import MenuTable from "./MenuEditor/MenuTable";
 import MenuEditor from "./MenuEditor/MenuEditor";
@@ -40,6 +40,7 @@ function AdminPage () {
 
     const setDeleteYOIL = useSetRecoilState(deleteYOILAtom)
     const setSideOptions = useSetRecoilState(sideOptionsAtom)
+    const [menus, setMenus] = useRecoilState(MenusAtom)
 
     useEffect(()=>{
         const downloadData = async () => {
@@ -65,10 +66,35 @@ function AdminPage () {
             }
         }
         downloadMenu()
-    },[])
 
-    console.log(loadData)
-    console.log(loadMenu)
+    },[])
+    
+    const [loadedMonth, setLoadedMonth] = useState([])
+    const selectMonth = useRecoilValue(selectMonthAtom)
+    // 식단표 전송
+    useEffect(()=>{
+
+        const downloadMenuTable = async () => {
+            const {data} = await axios.post('/kinder/download/menu-table', {
+                selectMonth: selectMonth
+            }, {
+                headers : {'Authorization' : `Bearer ${token}`}
+            })
+            if(data.code === 200){
+                return setMenus([...menus, ...data.menulist])
+            }else{
+                console.log(data.msg)
+            }
+        }
+        if(selectMonth){    
+            if(!loadedMonth.includes(selectMonth)){
+                setLoadedMonth([...loadedMonth, selectMonth])
+                downloadMenuTable()
+            }else{
+                return
+            }
+        }
+    },[selectMonth])
 
     useEffect(()=>{
         /** 헤더 데이터 */
@@ -83,7 +109,7 @@ function AdminPage () {
         }
         /** 로고 데이터 */
         if(loadData.logoPath){
-            setLogo(process.env.REACT_APP_RESTAPI_URL+'/'+loadData.logoPath)
+            setLogo(loadData.logoPath)
         }
         if(loadData.logoWidth){
             setLogoSize({width : loadData.logoWidth, height : loadData.logoHeight})
@@ -100,10 +126,7 @@ function AdminPage () {
         }
         /** 배경 데이터 */
         if(loadData.addBgList){
-            const addBgList = loadData.addBgList.map(bg => {
-                return process.env.REACT_APP_RESTAPI_URL + '/' + bg
-            })
-            setLoadBgs([...addBgList])
+            setLoadBgs([...loadData.addBgList])
         }
         if(loadData.selectBgSrc){
             setBg(loadData.selectBgSrc)

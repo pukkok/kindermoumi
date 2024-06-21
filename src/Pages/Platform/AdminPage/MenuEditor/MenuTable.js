@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import DateModal from "./DateModal";
 import Calendar from "../../../../Custom/Calendar";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { MenusAtom, deleteYOILAtom, sideOptionsAtom } from "../../../../Recoil/AdminAtom";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { MenusAtom, deleteYOILAtom, selectMonthAtom, sideOptionsAtom } from "../../../../Recoil/AdminAtom";
 
 function MenuTable ({ allergyList }) {
     
@@ -19,11 +19,9 @@ function MenuTable ({ allergyList }) {
 
     useEffect(()=>{
         if(Object.values(sendData).length>0){
-            const reverseMenu = [...menu, sendData]
-            setMenu(reverseMenu)
+            setMenu([...menu, sendData])
         }
     },[sendData])
-    console.log(menu)
 
     const openDay = (info) => {
         const date = info.day.format('YYYY-MM-DD')
@@ -32,9 +30,11 @@ function MenuTable ({ allergyList }) {
         setOpenModal(true) // 모달창 열기
     }
 
+    const setSelectMonth = useSetRecoilState(selectMonthAtom)
+
     return(
         <section className="menu-table">
-            <Calendar wantDeleteYOIL={deleteYOIL} menuInfo={menu}
+            <Calendar wantDeleteYOIL={deleteYOIL} menuInfo={menu} getDay={setSelectMonth}
              sideOptions={sideOptions} dayClick={openDay} 
              footerTitle={'알레르기 정보'} footerList={allergyList}
              />

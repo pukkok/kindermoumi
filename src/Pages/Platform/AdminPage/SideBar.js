@@ -14,6 +14,7 @@ function SideBar ({ sideOpen, setSideOpen, onMode, setOnMode }) {
         }
         setAdminTheme(title)
         setMoveLink(e.target.className)
+        setSideOpen(false)
     }
 
     const tabList = [

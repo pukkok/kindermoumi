@@ -104,3 +104,8 @@ export const MenusAtom = atom({
     key: 'menus',
     default: []
 })
+
+export const selectMonthAtom = atom({
+    key: 'selectMonth',
+    default: ''
+})

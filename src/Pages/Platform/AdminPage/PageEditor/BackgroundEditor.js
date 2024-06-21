@@ -21,7 +21,6 @@ function BackgroundEditor ({ token }) {
     const getBg = (e) => {
         if(e.target.files[0]){
             setAddBgs([...addBgs, e.target.files[0]])
-            // setBg(URL.createObjectURL(e.target.files[0]))
         }
     }
 
@@ -33,17 +32,13 @@ function BackgroundEditor ({ token }) {
         if(loadBgs[idx] === bg){
             return alert('사용중인 이미지입니다.')
         }
-        const src = loadBgs[idx].replace(process.env.REACT_APP_RESTAPI_URL + '/', '')
 
         const {data} = await axios.put('platform/bg-data', {
-            bgSrc : src
+            bgSrc : loadBgs[idx]
         },{headers : {'Authorization' : `Bearer ${token}`}})
         alert(data.msg)
         if(data.code === 200){
-            const addBgList = data.bgList.map(bg => {
-                return process.env.REACT_APP_RESTAPI_URL + '/' + bg
-            })
-            setLoadBgs([...addBgList])
+            setLoadBgs([...data.bgList])
         }
     }
 
@@ -71,11 +66,7 @@ function BackgroundEditor ({ token }) {
         })
         alert(data.msg)
         if(data.code === 200){
-            const addBgList = data.addBgList.map(bg => {
-                return process.env.REACT_APP_RESTAPI_URL + '/' + bg
-            })
-
-            setLoadBgs([...addBgList])
+            setLoadBgs([...data.addBgList])
             setAddBgs([])
         }
     }
