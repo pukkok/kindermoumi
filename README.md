@@ -1,6 +1,9 @@
 # 유치원 모으미
 <img src=public/main/logo.png>
 
+브라우저 : kindermoumi-browser.vercel.app <br>
+서버 : kindermoumi-server.vercel.app
+
 <br><br><br>
 ## 1. 제작사유
 
