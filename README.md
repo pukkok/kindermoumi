@@ -7,7 +7,7 @@
 <BlockQuote>테스트용</BlockQuote>
 
 아이디 : amdin1 <br>
-패스워드 : 1q2w3e4r!@
+패스워드 : 1q2w3e4r!@ <br>
 교사용만 구현되어있습니다. 교사용으로 로그인하세요!
 
 <br><br><br>
