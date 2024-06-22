@@ -35,7 +35,7 @@ function App() {
     },[userName])
     
     useEffect(()=>{ // 초기 랜더링
-        // axiosKinderAllData(sggData, setAllData) // 전체 데이터 불러오기
+        axiosKinderAllData(sggData, setAllData) // 전체 데이터 불러오기
     },[])
 
     const [kinderUrl, setKinderUrl] = useState()
