@@ -22,7 +22,7 @@ function App() {
     const token = JSON.parse(localStorage.getItem('token'))
 
     useEffect(()=>{
-        if(userName){
+        if(userName){ // 유저의 kinderurl 찾기
         const findKinderCode = async () => {
             const {data} = await axios.post('user/kinderUrl', {},
             {headers : {'Authorization' : `Bearer ${token}`}})
@@ -35,7 +35,7 @@ function App() {
     },[userName])
     
     useEffect(()=>{ // 초기 랜더링
-        axiosKinderAllData(sggData, setAllData) // 전체 데이터 불러오기
+        // axiosKinderAllData(sggData, setAllData) // 전체 데이터 불러오기
     },[])
 
     const [kinderUrl, setKinderUrl] = useState()
