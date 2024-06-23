@@ -160,8 +160,8 @@ function EditorPage ({onMode}) {
                         </div>
                     }
                 {/* </div> */}
-                </Container>
                 {!bg && '컨텐츠 영역'}
+                </Container>
                 {onMode && <button className="add-btn" onClick={openSmartModal}>설정</button>}
             </main>
             <footer id="f" className={classNames({active : SmartModalOpen.selection === 'f'})}>

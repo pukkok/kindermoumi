@@ -9,7 +9,11 @@ import axios from "axios";
 import EditorPage from "./EditorPage";
 import SmartModal from "./SmartModal";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import { HeaderAtom, HeaderContainerAtom, HeaderGapAtom, LogoAtom, LogoSizeAtom, MenusAtom, adminThemeAtom, bgAtom, bgHeightAtom, deleteYOILAtom, gridZoneAtom, loadBgsAtom, mainMenuAtom, moveLinkAtom, navFlexAtom, selectMonthAtom, sideOptionsAtom, subMenuAtom, xyCountAtom } from "../../../Recoil/AdminAtom";
+import { 
+    HeaderAtom, HeaderContainerAtom, HeaderGapAtom, LogoAtom, LogoSizeAtom, 
+    MenusAtom, adminThemeAtom, bgAtom, bgHeightAtom, deleteYOILAtom, gridZoneAtom, 
+    loadBgsAtom, mainMenuAtom, moveLinkAtom, navFlexAtom, selectMonthAtom, sideOptionsAtom, 
+    subMenuAtom, xyCountAtom } from "../../../Recoil/AdminAtom";
 
 import MenuTable from "./MenuEditor/MenuTable";
 import MenuEditor from "./MenuEditor/MenuEditor";
@@ -181,7 +185,7 @@ function AdminPage () {
                     <>
                         <MenuTable allergyList={allergyList}/>
                         {moveLink === 'menu-table' && <MenuEditor token={token}/>}
-                        {moveLink === 'allergy' && <AllergyEditor/>}
+                        {moveLink === 'allergy' && <AllergyEditor defaultAllergies={defaultAllergies} allergyList={allergyList} setAllergyList={setAllergyList}/>}
                     </>}
                 </div>
             </div>
