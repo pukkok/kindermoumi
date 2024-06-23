@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import DateModal from "./DateModal";
 import Calendar from "../../../../Custom/Calendar";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import { MenusAtom, deleteYOILAtom, selectMonthAtom, sideOptionsAtom } from "../../../../Recoil/AdminAtom";
+import { MenusAtom, dayColorOptionsAtom, deleteYOILAtom, selectMonthAtom, sideOptionsAtom } from "../../../../Recoil/AdminAtom";
 
 function MenuTable ({ allergyList }) {
     
@@ -31,11 +31,13 @@ function MenuTable ({ allergyList }) {
     }
 
     const setSelectMonth = useSetRecoilState(selectMonthAtom)
+    const dayColorOptions = useRecoilValue(dayColorOptionsAtom)
 
     return(
         <section className="menu-table">
             <Calendar wantDeleteYOIL={deleteYOIL} menuInfo={menu} getDay={setSelectMonth}
-             sideOptions={sideOptions} dayClick={openDay} 
+             sideOptions={sideOptions} dayClick={openDay}
+             isBold={dayColorOptions.isBold} dayColor={dayColorOptions.color} dayBackColor={dayColorOptions.backgound}
              footerTitle={'알레르기 정보'} footerList={allergyList}
              />
              

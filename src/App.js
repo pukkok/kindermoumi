@@ -16,7 +16,6 @@ function App() {
 
     //검색 전체 데이터
     const [allData, setAllData] = useState([]) // 전체 데이터
-    
     const userName = JSON.parse(localStorage.getItem('user'))
     const admin = JSON.parse(localStorage.getItem('admin'))
     const token = JSON.parse(localStorage.getItem('token'))

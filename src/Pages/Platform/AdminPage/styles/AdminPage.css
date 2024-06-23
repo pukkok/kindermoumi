@@ -86,8 +86,9 @@
     grid-template-columns: 70% 30%;
 }
 
-.admin-page .option-part .part.division2 .menu-edit{
-    border: 1px solid #e1e1e1;
+.admin-page .option-part .part.division2 .menu-edit,
+.admin-page .option-part .part.division2 .allergy-edit{
+    border-left: 1px solid #e1e1e1;
     padding: 10px;
 }
 .admin-page .option-part .part.division2 .menu-edit .side-menu-box{

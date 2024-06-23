@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { useRecoilState } from "recoil";
-import { MenusAtom, deleteYOILAtom, sideOptionsAtom } from "../../../../Recoil/AdminAtom";
+import { MenusAtom, deleteYOILAtom, sideOptionsAtom, dayColorOptionsAtom } from "../../../../Recoil/AdminAtom";
 import readXlsxFile from "read-excel-file";
-
+import { SketchPicker } from "react-color";
 
 function MenuEditor ({ token }) {
 
@@ -163,6 +163,11 @@ function MenuEditor ({ token }) {
         })
     }
 
+    const [dayColorOptions, setDayColorOptions] = useRecoilState(dayColorOptionsAtom)
+    const changeColor = (color, where) => {
+        setDayColorOptions({...dayColorOptions, [where] : color.hex})
+    }
+
     return(
         <section className="menu-edit">
             <div className="summary mb">
@@ -170,7 +175,26 @@ function MenuEditor ({ token }) {
                 <p>월간 식단표를 입력합니다. 필요한 요일을 삭제 할 수도, 사이드 옵션을 추가하여 관리할 수 있습니다.</p>
                 <span>* 특별한 식단표를 만들어 보세요.</span><br/>
             </div>
-            
+
+            <div className="summary">
+                <h2>날짜 색 설정</h2>
+                <p>월마다 원하는 색으로 설정할 수 있습니다.</p>
+                <span>* 현재 월 확인하고 색상만 선택하면 끝!</span>
+            </div>
+            <div className="remote-btns">
+                <p>설정</p><span></span>
+                <button onClick={checkYoilValue}>적용</button>
+                <button onClick={saveYoilValue}>저장</button>
+                <button onClick={resetYoilValue}>초기화</button>
+            </div>
+            <div className="color-picker mb">
+                <div>배경 색상 선택</div>
+                <SketchPicker color={dayColorOptions.backgound} onChange={(color)=>changeColor(color, 'backgound')} onChangeComplete={(color)=>changeColor(color, 'backgound')}/>
+                <div>글씨 색상 선택</div>
+                <SketchPicker color={dayColorOptions.color} onChange={(color)=>changeColor(color, 'color')} onChangeComplete={(color)=>changeColor(color, 'color')}/>
+                <div>진하게 하기 <input type="checkbox" onChange={()=>setDayColorOptions({...dayColorOptions, isBold : !dayColorOptions.isBold})}/></div>
+            </div>
+
             <div className="summary">
                 <h2>요일 제외하기</h2>
                 <p>사용하지 않는 요일을 삭제할 수 있습니다.</p>
@@ -220,8 +244,14 @@ function MenuEditor ({ token }) {
                         </div>
                     })}
                 </div>
+                <div className="option-box">
+                    <p>배경 색상 선택</p>
+                    <SketchPicker color={dayColorOptions.backgound} onChange={(color)=>changeColor(color, 'backgound')} onChangeComplete={(color)=>changeColor(color, 'backgound')}/>
+                    <p>글짜 색상 선택</p>
+                    <SketchPicker color={dayColorOptions.backgound} onChange={(color)=>changeColor(color, 'backgound')} onChangeComplete={(color)=>changeColor(color, 'backgound')}/>
+                    <p>진하게 하기 <input type="checkbox" onChange={()=>setDayColorOptions({...dayColorOptions, isBold : !dayColorOptions.isBold})}/></p>
+                </div>
             </div>
-
             
             <div className="summary">
                 <h2>정보 입력하기</h2>

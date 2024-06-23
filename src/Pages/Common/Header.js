@@ -20,7 +20,7 @@ function Header ({userName, admin, token, kinderUrl, setKinderUrl}) {
 
     const logout = () => {
         alert('로그아웃 되었습니다.')
-        localStorage.clear()
+        sessionStorage.clear()
         setIsLogin(false)
         navigate('/')
     }
