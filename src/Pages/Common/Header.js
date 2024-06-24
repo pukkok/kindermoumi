@@ -8,14 +8,26 @@ import { useRecoilState, useSetRecoilState } from "recoil";
 import { isLoginAtom } from "../../Recoil/LoginAtom";
 import { adminThemeAtom } from "../../Recoil/AdminAtom";
 
-function Header ({userName, admin, token, kinderUrl, setKinderUrl}) {
-    // 로그인 로그아웃시 이벤트처리
-    // const [isLogin, setIsLogin] = useState(false) 
+function Header ({userName, admin, token, scrollDown}) {
 
+    // 로그인 로그아웃시 이벤트처리 
     const [isLogin, setIsLogin] = useRecoilState(isLoginAtom)
+    const [kinderUrl, setKinderUrl] = useState()
 
     useEffect(()=>{
         userName && setIsLogin(true)
+
+        if(userName){ // 유저의 kinderurl 찾기
+            const findKinderCode = async () => {
+                const {data} = await axios.post('user/kinderUrl', {},
+                {headers : {'Authorization' : `Bearer ${token}`}})
+                if(data.code === 200){
+                    setKinderUrl(data.url)
+                }
+            }
+            findKinderCode()
+        }
+
     },[userName])
 
     const logout = () => {
@@ -79,7 +91,7 @@ function Header ({userName, admin, token, kinderUrl, setKinderUrl}) {
     const setAdminTheme = useSetRecoilState(adminThemeAtom)
 
     return(
-        <header className={classnames("header",{ small : location.pathname.includes('kinder') })}>
+        <header className={classnames("header",{up : scrollDown}, { small : location.pathname.includes('kinder') })}>
             <Container>
                 <nav>
                     <button className="logo" onClick={()=>{navigate('/')}}> <img src={`${origin}/main/logo.png`}/> </button>
