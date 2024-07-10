@@ -1,0 +1,15 @@
+.date-modal{
+    position: fixed;
+    box-sizing: border-box;
+    width : 300px;
+    height : 300px;
+    padding: 10px;
+    background-color : #fff;
+    border: solid 1px blue;
+    z-index: 10;
+    display: flex;
+}
+
+.close-btn{
+    margin-top: auto;
+}

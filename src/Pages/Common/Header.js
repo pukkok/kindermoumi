@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, json, useLocation, useNavigate, useParams } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import './styles/Header.css'
 import Container from "../../Components/Container";
 import axios from "axios";
@@ -28,7 +28,7 @@ function Header ({userName, admin, token, scrollDown}) {
             findKinderCode()
         }
 
-    },[userName])
+    },[userName, token, setIsLogin])
 
     const logout = () => {
         alert('로그아웃 되었습니다.')
@@ -43,7 +43,7 @@ function Header ({userName, admin, token, scrollDown}) {
     const [modalOpen, setModalOpen] = useState(false)
     const navigate = useNavigate()
 
-    const findKinderCode = async () => {
+    const loginCheck = () => {
         if(!isLogin) alert('로그인 후 이용 가능합니다.')
     }
 
@@ -94,7 +94,7 @@ function Header ({userName, admin, token, scrollDown}) {
         <header className={classnames("header",{up : scrollDown}, { small : location.pathname.includes('kinder') })}>
             <Container>
                 <nav>
-                    <button className="logo" onClick={()=>{navigate('/')}}> <img src={`${origin}/main/logo.png`}/> </button>
+                    <button className="logo" onClick={()=>{navigate('/')}}> <img src={`${origin}/main/logo.png`} alt=""/> </button>
                     <ul className="depth1">
                         <li><Link to={'service/info'}>유치원 모으미란</Link>
                             <ul className="depth2">
@@ -104,11 +104,11 @@ function Header ({userName, admin, token, scrollDown}) {
                                 <li><Link>홍보자료</Link></li>
                             </ul>
                         </li>
-                        <li><Link to={'search'}>유치원 정보</Link>
+                        <li><Link to={'search/find'}>유치원 정보</Link>
                             <ul className="depth2">
-                                <li><Link to={'search'}>유치원 조회</Link></li>
-                                <li><Link to={'search'}>유치원 비교</Link></li>
-                                <li><Link to={'search'}>정보공시지표</Link></li>
+                                <li><Link to={'/search/find'}>유치원 조회</Link></li>
+                                <li><Link >유치원 비교</Link></li>
+                                <li><Link >정보공시지표</Link></li>
                             </ul>
                         </li>
                         <li><Link>공지사항</Link></li>
@@ -122,7 +122,7 @@ function Header ({userName, admin, token, scrollDown}) {
                                 <li><Link>채용준비</Link></li>
                             </ul>
                         </li>
-                        <li><Link to={isLogin ? `/kinder/${kinderUrl}` : '/'} onClick={findKinderCode}>내 유치원</Link></li>
+                        <li><Link to={isLogin ? `/kinder/${kinderUrl}` : '/'} onClick={loginCheck}>내 유치원</Link></li>
                         {isLogin && admin && <li><Link to={kinderUrl ? '/admin' : '/'} 
                         onClick={()=>!kinderUrl && alert('페이지 생성을 먼저 해주세요')}>관리자 페이지</Link>
                             <ul className="depth2">

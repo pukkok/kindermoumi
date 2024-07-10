@@ -1,14 +1,14 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import './styles/PlatformPage.css'
-import { Link, Outlet, Route, Routes, useLocation, useNavigate, useParams } from "react-router-dom";
+import { Link, Route, Routes, useLocation, useParams } from "react-router-dom";
 import axios from 'axios'
 import ImgBox from "../../Components/ImgBox";
 import NotFoundPage from "../NotFoundPage";
 import Container from "../../Components/Container";
-import { EventDateBox1, EventDateBox2 } from "./TemplateBox/EventDateBox";
-import { PhotoBox1 } from "./TemplateBox/PhotoBox";
-import { TodayMenuBox1 } from "./TemplateBox/TodayMenuBox";
-import { NoticeBox1 } from "./TemplateBox/NoticeBox";
+import { EventDateBox1, EventDateBox2 } from "../../Editor/TemplateBox/EventDateBox";
+import { PhotoBox1 } from "../../Editor/TemplateBox/PhotoBox";
+import { TodayMenuBox1 } from "../../Editor/TemplateBox/TodayMenuBox";
+import { NoticeBox1 } from "../../Editor/TemplateBox/NoticeBox";
 
 function PlatformPage () {
 
@@ -24,7 +24,7 @@ function PlatformPage () {
             setLoadData(data.result)
         }
         getPageData()
-    },[])
+    },[kinderUrl])
 
     const contentGrid = loadData && loadData.data.gridMatrix && {
         gridTemplateColumns: loadData.data.gridMatrix.col ? 
@@ -52,7 +52,7 @@ function PlatformPage () {
                     <div className="nav-bar">
                         <div className="logo" style={{width : loadData.data.logoWidth+'px', height: loadData.data.logoHeight+'px'}}>
                             <Link to={`/kinder/${loadData.originUrl}`}>
-                                <img src={`${loadData.data.logoPath}`}/>
+                                <img src={`${loadData.data.logoPath}`} alt=""/>
                             </Link>
                         </div>
                         <nav className="navigation" style={{width : `calc(100% - ${loadData.data.logoWidth+'px'})`}}>

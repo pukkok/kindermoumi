@@ -9,10 +9,11 @@ import PageBtn from "../../Components/PageBtn";
 import Loading from '../../Components/Loading'
 import Container from "../../Components/Container";
 import SearchModal from "./SearchModal";
-import { Link, useLocation, useParams } from "react-router-dom";
+import navData from "../../Datas/navData";
+import Navigator from "../Common/Navigator";
 
 function SearchPage ({ allData }) {
-    
+    const { main, sub, list } = navData.search
     const [localData, setLocalData] = useState([]) // 검색한 데이터 범위(지역 검색)
     const [filterData, setFilterData] = useState([]) // 검색한 결과 
     const [viewData, setViewData] = useState([]) // 화면에 보여주는 데이터
@@ -225,21 +226,9 @@ function SearchPage ({ allData }) {
         setKinderData(data)
     }
 
-    const location = useLocation()
-
     return(
         <>
-        <nav className="common-nav">
-            <h1>유치원 정보</h1>
-            <p>유치원의 정보공시를 조회 할 수 있습니다</p>
-            <Container>
-                <ul>
-                    <li className={classnames({active : location.pathname === '/search'})}><Link to={`/search`}>유치원 조회</Link></li>
-                    <li ><Link >유치원 비교</Link></li>
-                    <li ><Link >정보공시지표</Link></li>
-                </ul>
-            </Container>
-        </nav>
+        <Navigator main={main} sub={sub} list={list}/>
         <Container>
         <div className="Search">
             <div className="search-local">

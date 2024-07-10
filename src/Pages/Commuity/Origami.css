@@ -1,0 +1,20 @@
+.origami{
+    width: 100vw;
+    height: 100vh;
+    border: solid 1px red;
+    display: flex;
+}
+
+.origami .paper{
+    border: solid 1px blue;
+    flex: 8;
+}
+.origami .btn-box{
+    flex: 2;
+}
+
+.origami .btn-box button{
+    border: solid 1px blue;
+    padding: 10px 20px;
+    margin: 5px;
+}

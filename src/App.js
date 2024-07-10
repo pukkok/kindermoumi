@@ -1,16 +1,17 @@
 import React, {useState, useEffect} from 'react';
-import { Routes, Route, Outlet, useLocation } from 'react-router-dom';
+import { Routes, Route, Outlet } from 'react-router-dom';
 import { JoinPage, LoginPage, MainPage, NotFoundPage, SearchPage } from './Pages'
 import './App.css'
 import PlatformPage from './Pages/Platform/PlatformPage';
 import ServicePage from './Pages/Service/ServicePage';
 import Header from './Pages/Common/Header';
 import Footer from './Pages/Common/Footer';
-import AdminPage from './Pages/Platform/AdminPage/AdminPage';
+import AdminPage from './Pages/Admin/AdminPage';
 
 
 import { axiosKinderAllData } from './Components/axiosData'
 import sggData from './Datas/sggData';
+import Origami from './Pages/Commuity/Origami';
 
 function App() {
 
@@ -21,7 +22,7 @@ function App() {
     const token = JSON.parse(localStorage.getItem('token'))
     
     useEffect(()=>{ // 초기 랜더링
-        axiosKinderAllData(sggData, setAllData) // 전체 데이터 불러오기
+        // axiosKinderAllData(sggData, setAllData) // 전체 데이터 불러오기
     },[])
 
     const UseCommon = ({userName, admin, token, scrollDown}) => {
@@ -56,7 +57,7 @@ function App() {
                 <Route element={<UseCommon userName={userName} admin={admin} token={token} scrollDown={scrollDown}/>}>
                     <Route exact path='/' element={<MainPage/>}/>
                     <Route exact path='/service/:serviceName' element={<ServicePage/>}/>
-                    <Route exact path='/search' element={<SearchPage allData={allData}/>}/>
+                    <Route exact path='/search/:serviceName' element={<SearchPage allData={allData}/>}/>
                     <Route path='/kinder/:kinderUrl/*' element={<PlatformPage/>}/>
                 </Route>
                 <Route path='user'>
@@ -64,10 +65,12 @@ function App() {
                     <Route exact path='join' element={<JoinPage/>}/>
                 </Route>
                 <Route path='admin' element={<AdminPage/>}/>
+                <Route path='paper' element={<Origami/>}></Route>
                 <Route exact path='*' element={<NotFoundPage />}/>
             </Routes>
         </div>
     )
 }
 
+// 8919
 export default App;
