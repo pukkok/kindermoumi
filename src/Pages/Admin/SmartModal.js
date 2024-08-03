@@ -16,11 +16,9 @@ function SmartModal ({ selectedTab, token }) {
 
     const [SmartModalOpen, setSmartModalOpen] = useRecoilState(SmartModalOpenAtom)
 
-    const containerRef = useRef(null); // 드래그 할 영역 네모 박스 Ref
-    const dragComponentRef = useRef(null); // // 움직일 드래그 박스 Ref
-    const [originPos, setOriginPos] = useState({ x: 0, y: 0 }); // 드래그 전 포지션값 (e.target.offset의 상대 위치)
-    const [clientPos, setClientPos] = useState({ x: 0, y: 0 }); // 실시간 커서위치인 e.client를 갱신하는값
-    const [pos, setPos] = useState({ left: 400, top: 100 }); // 실제 drag할 요소가 위치하는 포지션값
+    const containerRef = useRef(null) // 드래그 할 영역 네모 박스 Ref
+    const dragComponentRef = useRef(null) // // 움직일 드래그 박스 Ref
+    const [pos, setPos] = useState({ left: 400, top: 100 }) // 실제 drag할 요소가 위치하는 포지션값
 
     const closeModal = () => {
         setSmartModalOpen({...SmartModalOpen, isOpen: false})
@@ -28,9 +26,8 @@ function SmartModal ({ selectedTab, token }) {
     
     const dragStartHandler = (e) => {
 
-        let emptyImg = new Image();
-        e.dataTransfer.setDragImage(emptyImg, 0, 0);
-        // e.dataTransfer.effectAllowed = "move"; // 크롬의그린 +아이콘 제거
+        let emptyImg = new Image()
+        e.dataTransfer.setDragImage(emptyImg, 0, 0)
 
     }
 

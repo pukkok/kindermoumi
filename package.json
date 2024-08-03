@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@mediapipe/tasks-vision": "^0.10.14",
     "@react-three/drei": "^9.108.3",
     "@react-three/fiber": "^8.16.8",
     "@testing-library/jest-dom": "^5.17.0",
@@ -22,6 +23,7 @@
     "react-scripts": "5.0.1",
     "read-excel-file": "^5.8.2",
     "recoil": "^0.7.7",
+    "source-map-loader": "^5.0.0",
     "three": "^0.166.1",
     "web-vitals": "^2.1.4"
   },

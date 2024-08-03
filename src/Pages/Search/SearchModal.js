@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import './styles/SearchModal.css'
 import KakaoMap from "../../Components/KakaoMap";
 import ImgBox from "../../Components/ImgBox";
@@ -18,7 +18,7 @@ function SearchModal ({ kinderData, setClose }) {
             }
         }
         findOpenKinder()
-    },[])
+    },[kinderData.kindercode])
 
     const closeModal = (e) =>{
         if(e.target.className === 'search-modal'){

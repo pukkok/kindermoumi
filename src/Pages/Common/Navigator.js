@@ -7,7 +7,6 @@ import { useParams } from "react-router-dom";
 function Navigator ({main, sub, list}) {
 
     const { serviceName } = useParams()
-    console.log(serviceName)
     return(
         <nav className="common-nav">
             <h1>{main}</h1>

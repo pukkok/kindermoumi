@@ -189,7 +189,7 @@ function SearchPage ({ allData }) {
                 }
 
                 if(fkey.includes('방과후과정')||(fkey.includes('운영') && fkey.includes('미운영'))){
-                    newData = newData
+                    // 동일
                 }else{
                     if(fkey.includes('미운영')){
                         newData = newData.filter(data => {

@@ -15,7 +15,6 @@ function MainPage () {
                         어려운 유치원 관리를 위한 첫걸음 <br/>
                         <span>지금, 유치원 모으미에서</span>
                     </h1>
-                    <h4></h4>
                 </div>
                 <div className="main-chart">
                     <div>

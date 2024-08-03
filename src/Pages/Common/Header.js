@@ -5,14 +5,33 @@ import Container from "../../Components/Container";
 import axios from "axios";
 import classnames from "classnames";
 import { useRecoilState, useSetRecoilState } from "recoil";
-import { isLoginAtom } from "../../Recoil/LoginAtom";
+import { headerPaddingTopAtom, isLoginAtom } from "../../Recoil/LoginAtom";
 import { adminThemeAtom } from "../../Recoil/AdminAtom";
 
-function Header ({userName, admin, token, scrollDown}) {
+function Header ({userName, admin, token}) {
 
     // 로그인 로그아웃시 이벤트처리 
     const [isLogin, setIsLogin] = useRecoilState(isLoginAtom)
     const [kinderUrl, setKinderUrl] = useState()
+    const [lastScrollY, setLastScrollY] = useState(0);
+    const [isVisible, setIsVisible] = useState(true);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            const currentScrollY = window.scrollY;
+            if (currentScrollY > lastScrollY) {
+                setIsVisible(false)
+            } else {
+                setIsVisible(true)
+            }
+            setLastScrollY(currentScrollY)
+        }
+
+        window.addEventListener('scroll', handleScroll)
+        return () => {
+            window.removeEventListener('scroll', handleScroll)
+        }
+    }, [lastScrollY])
 
     useEffect(()=>{
         userName && setIsLogin(true)
@@ -32,12 +51,18 @@ function Header ({userName, admin, token, scrollDown}) {
 
     const logout = () => {
         alert('로그아웃 되었습니다.')
-        sessionStorage.clear()
+        localStorage.clear()
         setIsLogin(false)
         navigate('/')
     }
 
     const location = useLocation() // kinder-page체크용도
+    const setHeaderPaddingTop = useSetRecoilState(headerPaddingTopAtom)
+    useEffect(() => {
+        location.pathname.includes('kinder') ?
+        setHeaderPaddingTop(40) :
+        setHeaderPaddingTop(60)
+    }, [location])
 
     // 관리자 페이지 생성시
     const [modalOpen, setModalOpen] = useState(false)
@@ -91,7 +116,7 @@ function Header ({userName, admin, token, scrollDown}) {
     const setAdminTheme = useSetRecoilState(adminThemeAtom)
 
     return(
-        <header className={classnames("header",{up : scrollDown}, { small : location.pathname.includes('kinder') })}>
+        <header className={classnames("header", { "header--hidden": !isVisible, small : location.pathname.includes('kinder') })}>
             <Container>
                 <nav>
                     <button className="logo" onClick={()=>{navigate('/')}}> <img src={`${origin}/main/logo.png`} alt=""/> </button>
