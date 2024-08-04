@@ -1,0 +1,77 @@
+.content-edit .row-col-selector{
+    display: flex;
+    gap: 40px;
+    border: solid 1px grey;
+    padding: 10px;
+}
+.content-edit .row-col-selector p{
+    padding-bottom: 10px;
+}
+.content-edit .row-col-selector .row-col label{
+    font-size: 14px;
+    padding-bottom: 5px;
+}
+.content-edit .row-col-selector .row-col{
+    display: flex;
+    flex-direction: column;
+}
+.content-edit select{
+    width: 100px;
+    height: 30px;
+}
+
+.mb{
+    margin-bottom: 50px;
+}
+
+/* 구역선택 셀렉트 박스 */
+.content-edit .item-zone{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+}
+
+.content-edit .item-zone select option{
+    all: unset;
+    display: block;
+    width: 100%;
+    height: 100%;
+
+}
+
+.content-edit .type-box h1{
+    display: flex;
+}
+
+.content-edit .type-box h1 button{
+    margin-left: auto;
+    font-weight: 400;
+    font-size: 14px;
+}
+
+/* 셀렉트 타입 */
+.select-type{
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    height: fit-content;
+}
+
+.select-type .type-box{
+    max-width: 450px;
+    border: solid 1px grey;
+    background-color: #f7f7f7;
+    padding: 10px;
+}
+
+.select-type .type-box .img-box{
+    width: 100%;
+}
+.select-type .type-box .img-box img{
+    width: 100%;
+    height: 100%;
+}
+
+.select-type .type-box h1{
+    padding-bottom: 10px;
+}

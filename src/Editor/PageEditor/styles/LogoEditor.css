@@ -1,0 +1,39 @@
+.logo-edit .upload > div:nth-child(1){
+    width: 100%;
+    height: 80px;
+    background-color: #f1f1f1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo-edit .upload .add-img{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.logo-edit .upload .add-img span{
+    font-size: 40px;
+    color: #696969;
+}
+
+.logo-edit .upload .logo-box{
+    box-sizing: content-box;
+    width: 150px;
+    height: 60px;
+}
+.logo-edit .upload .logo-box img{
+    width: 100%;
+    height: 100%;
+}
+
+.logo-edit .upload input{
+    width: 40px;
+    margin-right: 3px;
+    border: none;
+    border-bottom: 1px solid #696969;
+    outline: none;
+    text-align: right;
+}

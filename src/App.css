@@ -6,6 +6,7 @@
 body{
     margin: 0;
     padding: 0;
+    /* padding-top: 60px; */
 }
 
 ul, li{
@@ -48,8 +49,8 @@ button{
     background-color: #5172df;
     color: #fff;
     text-align: center;
-    padding-top: 30px;
-    margin-bottom: 40px;
+    padding-top: 80px;
+    margin-bottom: 60px;
 }
 
 .common-nav h1{
@@ -58,7 +59,7 @@ button{
 }
 .common-nav p{
     font-size: 16px;
-    padding-bottom: 30px;
+    padding-bottom: 50px;
 }
 
 .common-nav ul{
@@ -86,7 +87,7 @@ button{
     right: 0;
     top: 50%;
     transform: translate(0, -50%);
-    border-right: 1px solid #fff;
+    border-right: 1px solid #e1e1e1;
     height: 20px;
 }
 

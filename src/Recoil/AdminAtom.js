@@ -109,3 +109,8 @@ export const selectMonthAtom = atom({
     key: 'selectMonth',
     default: ''
 })
+
+export const dayColorOptionsAtom = atom({
+    key: 'dayColorOptions',
+    default: {backgound : '#fff' , color: '#000', isBold: false}
+})

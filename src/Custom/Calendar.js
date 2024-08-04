@@ -6,7 +6,7 @@ import './styles/Calendar.css'
 const weekdays = ['일', '월', '화', '수', '목', '금', '토']
 
 /** (어떤 요일을 지우고싶나요?) wantDeleteYOIL : ['요일', '요일', ...] */
-function Calendar ({wantDeleteYOIL=[], borderColor='gray', sideOptions=[], dayClick, menuInfo=[{title:'',date:'', idx:0}], merge, footerTitle, footerList=[], getDay}) {
+function Calendar ({wantDeleteYOIL=[], borderColor='#e1e1e1', dayBackColor, dayColor, isBold, sideOptions=[], dayClick, menuInfo=[{title:'',date:'', idx:0}], merge, footerTitle, footerList=[], getDay}) {
     const today = dayjs()
     const todayD = today.date() // 오늘 몇일?
     const todayYM = today.format('YYYY년 M월')
@@ -84,8 +84,7 @@ function Calendar ({wantDeleteYOIL=[], borderColor='gray', sideOptions=[], dayCl
 
     const styles = {
         calendar: {
-            padding : '10px',
-            // border : '1px solid #004898'
+            padding : '10px'
         },
         grid : {
             display: 'grid',
@@ -123,6 +122,11 @@ function Calendar ({wantDeleteYOIL=[], borderColor='gray', sideOptions=[], dayCl
         today: {
             backgroundColor : '#5172df',
             color: '#fff'
+        },
+        selectDayBackColor: {
+            backgroundColor : dayBackColor ? dayBackColor : '#fff',
+            color : dayColor ? dayColor : '#000',
+            fontWeight : isBold ? 'bold' : ''
         }
     }
     
@@ -174,7 +178,7 @@ function Calendar ({wantDeleteYOIL=[], borderColor='gray', sideOptions=[], dayCl
                                         style={
                                             todayYM===YM && day===todayD ? styles.today : // 오늘인가?
                                             (idx+1)%weekArr.length===0 ? // 마지막 border-right
-                                            styles.lastBRight : styles.bRight}>
+                                            {...styles.selectDayBackColor, ...styles.lastBRight} : {... styles.selectDayBackColor, ...styles.bRight}}>
 
                                             <p className="nalzza">{day===0 ? '' : day}</p>
                                         </div>)

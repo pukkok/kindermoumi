@@ -1,22 +1,53 @@
 import React, { useState, useEffect } from "react";
-import { Link, json, useLocation, useNavigate, useParams } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import './styles/Header.css'
 import Container from "../../Components/Container";
 import axios from "axios";
 import classnames from "classnames";
 import { useRecoilState, useSetRecoilState } from "recoil";
-import { isLoginAtom } from "../../Recoil/LoginAtom";
+import { headerPaddingTopAtom, isLoginAtom } from "../../Recoil/LoginAtom";
 import { adminThemeAtom } from "../../Recoil/AdminAtom";
 
-function Header ({userName, admin, token, kinderUrl, setKinderUrl}) {
-    // 로그인 로그아웃시 이벤트처리
-    // const [isLogin, setIsLogin] = useState(false) 
+function Header ({userName, admin, token}) {
 
+    // 로그인 로그아웃시 이벤트처리 
     const [isLogin, setIsLogin] = useRecoilState(isLoginAtom)
+    const [kinderUrl, setKinderUrl] = useState()
+    const [lastScrollY, setLastScrollY] = useState(0);
+    const [isVisible, setIsVisible] = useState(true);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            const currentScrollY = window.scrollY;
+            if (currentScrollY > lastScrollY) {
+                setIsVisible(false)
+            } else {
+                setIsVisible(true)
+            }
+            setLastScrollY(currentScrollY)
+        }
+
+        window.addEventListener('scroll', handleScroll)
+        return () => {
+            window.removeEventListener('scroll', handleScroll)
+        }
+    }, [lastScrollY])
 
     useEffect(()=>{
         userName && setIsLogin(true)
-    },[userName])
+
+        if(userName){ // 유저의 kinderurl 찾기
+            const findKinderCode = async () => {
+                const {data} = await axios.post('user/kinderUrl', {},
+                {headers : {'Authorization' : `Bearer ${token}`}})
+                if(data.code === 200){
+                    setKinderUrl(data.url)
+                }
+            }
+            findKinderCode()
+        }
+
+    },[userName, token, setIsLogin])
 
     const logout = () => {
         alert('로그아웃 되었습니다.')
@@ -26,12 +57,18 @@ function Header ({userName, admin, token, kinderUrl, setKinderUrl}) {
     }
 
     const location = useLocation() // kinder-page체크용도
+    const setHeaderPaddingTop = useSetRecoilState(headerPaddingTopAtom)
+    useEffect(() => {
+        location.pathname.includes('kinder') ?
+        setHeaderPaddingTop(40) :
+        setHeaderPaddingTop(60)
+    }, [location])
 
     // 관리자 페이지 생성시
     const [modalOpen, setModalOpen] = useState(false)
     const navigate = useNavigate()
 
-    const findKinderCode = async () => {
+    const loginCheck = () => {
         if(!isLogin) alert('로그인 후 이용 가능합니다.')
     }
 
@@ -79,10 +116,10 @@ function Header ({userName, admin, token, kinderUrl, setKinderUrl}) {
     const setAdminTheme = useSetRecoilState(adminThemeAtom)
 
     return(
-        <header className={classnames("header",{ small : location.pathname.includes('kinder') })}>
+        <header className={classnames("header", { "header--hidden": !isVisible, small : location.pathname.includes('kinder') })}>
             <Container>
                 <nav>
-                    <button className="logo" onClick={()=>{navigate('/')}}> <img src={`${origin}/main/logo.png`}/> </button>
+                    <button className="logo" onClick={()=>{navigate('/')}}> <img src={`${origin}/main/logo.png`} alt=""/> </button>
                     <ul className="depth1">
                         <li><Link to={'service/info'}>유치원 모으미란</Link>
                             <ul className="depth2">
@@ -92,11 +129,11 @@ function Header ({userName, admin, token, kinderUrl, setKinderUrl}) {
                                 <li><Link>홍보자료</Link></li>
                             </ul>
                         </li>
-                        <li><Link to={'search'}>유치원 정보</Link>
+                        <li><Link to={'search/find'}>유치원 정보</Link>
                             <ul className="depth2">
-                                <li><Link to={'search'}>유치원 조회</Link></li>
-                                <li><Link to={'search'}>유치원 비교</Link></li>
-                                <li><Link to={'search'}>정보공시지표</Link></li>
+                                <li><Link to={'/search/find'}>유치원 조회</Link></li>
+                                <li><Link >유치원 비교</Link></li>
+                                <li><Link >정보공시지표</Link></li>
                             </ul>
                         </li>
                         <li><Link>공지사항</Link></li>
@@ -110,7 +147,7 @@ function Header ({userName, admin, token, kinderUrl, setKinderUrl}) {
                                 <li><Link>채용준비</Link></li>
                             </ul>
                         </li>
-                        <li><Link to={isLogin ? `/kinder/${kinderUrl}` : '/'} onClick={findKinderCode}>내 유치원</Link></li>
+                        <li><Link to={isLogin ? `/kinder/${kinderUrl}` : '/'} onClick={loginCheck}>내 유치원</Link></li>
                         {isLogin && admin && <li><Link to={kinderUrl ? '/admin' : '/'} 
                         onClick={()=>!kinderUrl && alert('페이지 생성을 먼저 해주세요')}>관리자 페이지</Link>
                             <ul className="depth2">
