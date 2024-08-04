@@ -13,7 +13,8 @@ import { axiosKinderAllData } from './Components/axiosData'
 import sggData from './Datas/sggData';
 import Origami from './Pages/Commuity/Origami';
 import { useRecoilValue } from 'recoil';
-import { headerPaddingTopAtom } from './Recoil/LoginAtom';
+import { headerPaddingTopAtom } from './Recoil/CommonAtom';
+import NoticePage from './Pages/Notice/NoticePage';
 
 function App() {
 
@@ -43,7 +44,8 @@ function App() {
             <Routes>
                 <Route element={<UseCommon userName={userName} admin={admin} token={token}/>}>
                     <Route exact path='/' element={<MainPage/>}/>
-                    <Route exact path='/service/:serviceName' element={<ServicePage/>}/>
+                    <Route exact path='/service/*' element={<ServicePage/>}/>
+                    <Route exact path='/notice/*' element={<NoticePage/>}/>
                     <Route exact path='/search/:serviceName' element={<SearchPage allData={allData}/>}/>
                     <Route path='/kinder/:kinderUrl/*' element={<PlatformPage/>}/>
                 </Route>

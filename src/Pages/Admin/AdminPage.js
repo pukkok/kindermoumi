@@ -18,7 +18,10 @@ import {
 import MenuTable from "../../Editor/MenuEditor/MenuTable";
 import MenuEditor from "../../Editor/MenuEditor/MenuEditor";
 import AllergyEditor from "../../Editor/MenuEditor/AllergyEditor";
+import { headerPaddingTopAtom } from "../../Recoil/CommonAtom";
 function AdminPage () {
+
+    const setHeaderPaddingTop = useSetRecoilState(headerPaddingTopAtom)
 
     const token = JSON.parse(localStorage.getItem('token'))
 
@@ -45,6 +48,10 @@ function AdminPage () {
     const setDeleteYOIL = useSetRecoilState(deleteYOILAtom)
     const setSideOptions = useSetRecoilState(sideOptionsAtom)
     const [menus, setMenus] = useRecoilState(MenusAtom)
+
+    useEffect(() => {
+        setHeaderPaddingTop(0)
+    },[])
 
     useEffect(()=>{
         const downloadData = async () => {

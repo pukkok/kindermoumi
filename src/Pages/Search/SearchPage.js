@@ -11,6 +11,7 @@ import Container from "../../Components/Container";
 import SearchModal from "./SearchModal";
 import navData from "../../Datas/navData";
 import Navigator from "../Common/Navigator";
+import HeadLine from "../Common/HeadLine";
 
 function SearchPage ({ allData }) {
     const { main, sub, list } = navData.search
@@ -230,6 +231,7 @@ function SearchPage ({ allData }) {
         <>
         <Navigator main={main} sub={sub} list={list}/>
         <Container>
+        <HeadLine depth1={main} depth2={list[0].description}/>
         <div className="Search">
             <div className="search-local">
                 <div className="local-select" >

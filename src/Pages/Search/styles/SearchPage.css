@@ -64,6 +64,7 @@
     transform: translate(-50%, 0);
     border: solid 1px #5172df;
     z-index: 5;
+    background-color: #fff;
 }
 .search-local .local-option.on{
     display: block;
@@ -89,7 +90,6 @@
     height: 300px;
     overflow: scroll;
     border: solid 1px #cddaee;
-    background-color: #fff;
 }
 
 .search-local .local-option nav ul li{

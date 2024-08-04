@@ -1,29 +1,12 @@
 import React from "react";
 import ImgBox from "../../Components/ImgBox";
-import { useNavigate } from 'react-router-dom'
+import HeadLine from "../Common/HeadLine";
 
-function ServiceInfo () {
-
-    const printPage = () => {
-        window.print()
-    }
-
-    const navigate = useNavigate()
+function ServiceInfo ({depth1, depth2}) {
 
     return(
         <>
-        <div className="title">
-            <h2>서비스 안내
-                <ImgBox src={`${origin}/btn-icon-print.png`} alt="print" addClass={'print'} handleClick={printPage}/>
-            </h2>
-            <h5>
-                <ImgBox src={`${origin}/icon-breadcrumb-home.png`} alt="홈" handleClick={()=>{navigate('/')}}/>
-                <span className="material-symbols-outlined">arrow_forward_ios</span>
-                <span>유치원 모으미란</span>
-                <span className="material-symbols-outlined">arrow_forward_ios</span>
-                <span>서비스 안내</span>
-            </h5>
-        </div>
+        <HeadLine depth1={depth1} depth2={depth2}/>
         <h4>공시 개요</h4>
         <div className="info-box">
             <div className="info">

@@ -43,6 +43,10 @@ button{
     cursor: pointer;
 }
 
+table{
+    border-collapse: collapse;
+}
+
 .common-nav{
     display: flex;
     flex-direction: column;
@@ -99,4 +103,38 @@ button{
     background-color: #fff;
     font-weight: bold;
     color: #3c5fd3;
+}
+
+.title{
+    display: flex;
+    padding-right: 10px;
+    gap: 20px;
+}
+
+.title h2{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.title .print{
+    background-color: #f2f4fa;
+    border-radius: 50%;
+    display: flex;
+    box-sizing: content-box;
+    padding: 6px;
+    width: 15px;
+    height: 15px;
+    cursor: pointer;
+}
+
+.title h5{
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+}
+
+.title h5 .material-symbols-outlined{
+    font-size: 10px;
+    padding: 3px 5px 0;
 }

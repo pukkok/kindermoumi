@@ -17,6 +17,15 @@ const navData = {
             {active : '', link: '', description: '유치원 비교'},
             {active : '', link: '', description: '정보공시지표'},
         ]
+    },
+    notice : {
+        main: '공지사항',
+        sub: '유치원 모으미의 정보 및 공지사항을 확인해보세요.',
+        list : [
+            {active : 'update', link: '/notice/update', description: '업데이트'},
+            {active : 'event', link: '/notice/event', description: '이벤트'},
+            {active : 'qna', link: '/notice/qna', description: 'QnA'},
+        ]
     }
 
 }

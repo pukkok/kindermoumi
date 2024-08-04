@@ -3,39 +3,6 @@
     padding-bottom: 10px;
 }
 
-.service-info .title{
-    display: flex;
-    gap: 20px;
-}
-
-.service-info .title h2{
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.service-info .title .print{
-    background-color: #f2f4fa;
-    border-radius: 50%;
-    display: flex;
-    box-sizing: content-box;
-    padding: 6px;
-    width: 15px;
-    height: 15px;
-    cursor: pointer;
-}
-
-.service-info .title h5{
-    margin-left: auto;
-    display: flex;
-    align-items: center;
-}
-
-.service-info .title h5 .material-symbols-outlined{
-    font-size: 10px;
-    padding: 3px 5px 0;
-}
-
 .service-info .info-box{
     border: solid 1px #ddd;
     padding: 20px;

@@ -5,7 +5,7 @@ import Container from "../../Components/Container";
 import axios from "axios";
 import classnames from "classnames";
 import { useRecoilState, useSetRecoilState } from "recoil";
-import { headerPaddingTopAtom, isLoginAtom } from "../../Recoil/LoginAtom";
+import { headerPaddingTopAtom, isLoginAtom } from "../../Recoil/CommonAtom";
 import { adminThemeAtom } from "../../Recoil/AdminAtom";
 
 function Header ({userName, admin, token}) {
@@ -136,7 +136,12 @@ function Header ({userName, admin, token}) {
                                 <li><Link >정보공시지표</Link></li>
                             </ul>
                         </li>
-                        <li><Link>공지사항</Link></li>
+                        <li><Link to={'/notice/update'}>공지사항</Link>
+                            <ul className="depth2">
+                                <li><Link to={'/notice/update'}>업데이트 안내</Link></li>
+                                <li><Link to={'/notice/FAQ'}>FAQ</Link></li>
+                            </ul>
+                        </li>
                         <li><Link>커뮤니티</Link></li>
                         <li><Link>교사채용</Link>
                             <ul className="depth2">

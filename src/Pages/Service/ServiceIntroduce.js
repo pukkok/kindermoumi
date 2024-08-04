@@ -1,26 +1,11 @@
 import React from "react";
-import ImgBox from "../../Components/ImgBox";
+import HeadLine from "../Common/HeadLine";
 
-function ServiceIntroduce () {
-
-    const printPage = () => {
-        window.print()
-    }
+function ServiceIntroduce ({depth1, depth2}) {
 
     return(
         <>
-            <div className="title">
-                <h2>공시항목 소개
-                <ImgBox src={`${origin}/btn-icon-print.png`} alt="print" addClass={'print'} handleClick={printPage}/>
-                </h2>
-                <h5>
-                <ImgBox src={`${origin}/icon-breadcrumb-home.png`} alt="홈"/>
-                <span className="material-symbols-outlined">arrow_forward_ios</span>
-                <span>유치원 모으미란</span>
-                <span className="material-symbols-outlined">arrow_forward_ios</span>
-                <span>공시항목 소개</span>
-                </h5>
-            </div>
+            <HeadLine depth1={depth1} depth2={depth2}/>
             <h4>공시 항목</h4>
             <div className="info-box">
             <div className="text-box">
