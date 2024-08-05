@@ -13,7 +13,7 @@ function NoticePage () {
     const {main, sub, list} = navData.notice
 
     return(
-        <section className="notice">
+        <section className="notice-page">
             <Navigator main={main} sub={sub} list={list}/>
             <Container>
                 <HeadLine depth1={main} depth2={list[0].description}/>

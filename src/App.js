@@ -8,7 +8,6 @@ import Header from './Pages/Common/Header';
 import Footer from './Pages/Common/Footer';
 import AdminPage from './Pages/Admin/AdminPage';
 
-
 import { axiosKinderAllData } from './Components/axiosData'
 import sggData from './Datas/sggData';
 import Origami from './Pages/Commuity/Origami';

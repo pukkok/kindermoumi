@@ -11,10 +11,17 @@ import Agreement from "./Agreement";
 import SelectJoinType from "./SelectJoinType";
 import Certificate from "./Certificate";
 import InputInfo from "./InputInfo";
+import { useSetRecoilState } from "recoil";
+import { headerPaddingTopAtom } from "../../Recoil/CommonAtom";
 
 const agreeSteps = ['약관동의', '회원구분', '본인확인', '정보입력', '가입완료']
 
 function JoinPage () {
+
+    const setHeaderPaddingTop = useSetRecoilState(headerPaddingTopAtom)
+    useEffect(() => {
+        setHeaderPaddingTop(0)
+    },[])
 
     const [step, setStep] = useState(0) // 회원가입 절차
 
@@ -22,6 +29,7 @@ function JoinPage () {
     const navigate = useNavigate()
 
     const [joinType, setJoinType] = useState('') // 스텝1 : 타입선택
+
     useEffect(()=>{
         if(joinType){
             setStep(step+1)

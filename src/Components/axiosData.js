@@ -8,7 +8,7 @@ async function axiosKinderData (sidoCode, sggCode, setFunc) {
 
 // 전체 데이터 불러오기
 async function axiosKinderAllData(allData, setFunc) {
-    const chunkSize = 10 // 각 청크의 크기를 설정합니다. 필요에 따라 조정할 수 있습니다.
+    const chunkSize = 40 // 각 청크의 크기 설정
     const chunks = []
 
     for (let i = 0; i < allData.length; i += chunkSize) {

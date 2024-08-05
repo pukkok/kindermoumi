@@ -33,7 +33,11 @@ function AllergyTable ({defaultAllergies, allergyList, setAllergyList}) {
     const dragOverItem = useRef() // 드래그 놓는 아이템 
     const [itemA, setItemA] = useState(null)
     const [itemB, setItemB] = useState(null)
-    const dragStartHandler = (idx) => { // 잡는 아이템의 인덱스
+    const dragStartHandler = (e, idx) => { // 잡는 아이템의 인덱스
+        const img = new Image()
+        img.src= ''
+        e.dataTransfer.setDragImage(img, 0, 0)
+
         dragItem.current = idx
         setItemA(idx)
     }
@@ -121,7 +125,7 @@ function AllergyTable ({defaultAllergies, allergyList, setAllergyList}) {
                 {allergyList.map((allergy, idx)=> {
                     return (
                         <div key={idx} className={classNames("allergy-item", {active : idx===itemA}, {active: idx===itemB})}
-                        onDragStart={()=>dragStartHandler(idx)}
+                        onDragStart={(e)=>dragStartHandler(e, idx)}
                         onDragEnter={()=>dragEnterHandler(idx)}
                         onDragOver={e => e.preventDefault()}
                         onDragEnd={drop}

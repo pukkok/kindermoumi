@@ -1,8 +1,16 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import './styles/LoginPage.css'
 import axios from "axios";
+import { useSetRecoilState } from "recoil";
+import {headerPaddingTopAtom } from '../../Recoil/CommonAtom'
 
 function LoginPage () {
+
+    const setHeaderPaddingTop = useSetRecoilState(headerPaddingTopAtom)
+
+    useEffect(() => {
+        setHeaderPaddingTop(0)
+    },[])
 
     const [input, setInput] = useState({})
 

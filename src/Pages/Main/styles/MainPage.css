@@ -8,17 +8,17 @@
     top: 60%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 800px;
+    width: 1000px;
     height: 350px;
     z-index: 10;
-    text-align: center;
     display: flex;
     flex-direction: column;
+    border: solid 1px red;
 }
 .main-page .main-bg .content .main-text h1{
     color: #fff;
-    font-size: 26px;
-    font-weight: 400;
+    font-size: 40px;
+    font-weight: bold;
 }
 .main-page .main-bg .content h1 span{
     font-size: 36px;
@@ -49,42 +49,136 @@
 }
 
 
-/* main-go 파트 */
+/* 파트A */
 .main-page .content-go{
     margin-bottom: 120px;
 }
-
-.main-page .main-go{
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+.main-page .part-a h1{
+    font-size: 32px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
     margin-bottom: 40px;
-    border: solid 1px #e5e5e5;
 }
-.main-page .main-go .img-box{
-    width: 720px;
-    /* border: solid 1px #e5e5e5; */
+.main-page .part-a .part-wrap{
+    margin-top: 20px;
+    display: flex;
+    gap: 10px;
+}
+.main-page .part-a .part-wrap .text-card{
+    flex: 1;
+    padding: 40px 30px;
+    border-radius: 12px;
+    height: 300px;
+    border: solid 1px #dbdee1;
+}
+.main-page .part-a .part-wrap .text-card h2{
+    margin-top: 50px;
+    font-size: 22px;
+}
+.main-page .part-a .part-wrap .text-card p{
+    margin-top: 10px;
+    font-size: 18px;
 }
 
-.main-page .main-go .img-box img{
+.main-page .part-a .part-wrap .img-box{
+    width: 65px;
+    height: 65px;
+}
+.main-page .part-a .part-wrap .img-box img{
     width: 100%;
     height: 100%;
 }
 
-.main-page .main-go .text-box{
+.main-page .part-a a{
+    margin-left: auto;
+    padding: 15px 30px;
+    background-color: #4F52C3;
+    color: #fff;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 18px;
+    transition: background-color 0.3s ease;
+}
+
+/* 파트B */
+.main-page .part-b {
+    margin: 100px 0;
+    padding: 50px 0;
+    text-align: center;
+}
+
+.main-page .part-b h1 {
+    font-size: 32px;
+    margin-bottom: 40px;
+    color: #333;
+}
+
+.main-page .part-b .part-wrap {
     display: flex;
-    flex-direction: column;
-    padding: 40px;
+    justify-content: space-between;
+    align-items: flex-start;
+    min-height: 550px;
 }
 
-.main-page .main-go .text-box h2{
-    padding-bottom: 40px;
+.main-page .part-b .text-box {
+    max-width: 600px;
+    text-align: left;
+    margin-top: 30px;
+    height: 100%;
+    margin-right: 20px;
 }
 
-.main-page .main-go .text-box a{
-    margin-top: auto;
-    border: solid 1px #004898;
-    padding: 5px 10px;
-    width: 150px;
+.main-page .part-b .text-box h3 {
+    font-size: 24px;
+    color: #4F52C3;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.main-page .part-b .text-box h3 svg {
+    margin-right: 10px;
+}
+
+.main-page .part-b .text-box p {
+    font-size: 18px;
+    color: #555;
+    margin-bottom: 20px;
+}
+
+.main-page .part-b .text-box span {
+    display: block;
+    margin-top: 20px;
+    color: #999;
+    font-size: 14px;
+}
+.main-page .part-b .part-wrap .img-box{
+    width: 800px;
+}
+
+.main-page .part-b .part-wrap img {
+    object-fit: contain;
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.main-page .part-b a {
+    display: inline-block;
+    margin-top: 50px;
+    padding: 15px 30px;
+    background-color: #4F52C3;
+    color: #fff;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 18px;
+    transition: background-color 0.3s ease;
+}
+.main-page .part-a a:hover,
+.main-page .part-b a:hover {
+    background-color: #3b41a1;
 }
 
 /* notice */

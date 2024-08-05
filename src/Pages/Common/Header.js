@@ -108,7 +108,7 @@ function Header ({userName, admin, token}) {
         window.open(
             e.target.href,
             '_blank',
-            `width=580 height=550
+            `width=560 height=550
             top=100 left=150`
         )
     }

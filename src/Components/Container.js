@@ -1,6 +1,6 @@
 import React from "react";
 
-function Container ({width=1240, perWidth, children}) {
+function Container ({width=1280, perWidth, children}) {
     const containerStyle = {
         // maxWidth: width+'px',
         width: perWidth ? perWidth+'%' : width+'px',
