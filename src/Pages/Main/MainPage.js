@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import './styles/MainPage.css'
 import ImgBox from "../../Components/ImgBox";
 import Container from "../../Components/Container";
@@ -6,14 +6,38 @@ import { Link } from "react-router-dom";
 import MainBg from "./MainBg";
 import { updateDatas } from "../../Datas/UpdateData";
 import MainSwiper from "./MainSwiperWords";
+import classNames from "classnames";
 
 
-function MainPage ({loading}) {
+function MainPage ({loading, token=''}) {
 
     const CheckIcon = () => {
         return <svg width="19" height="14" viewBox="0 0 19 14" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path fillRule="evenodd" clipRule="evenodd" d="M18.0229 0.453362C17.2555 -0.201005 16.0756 -0.140598 15.389 0.59307L6.91198 9.6254L3.19364 6.03211C2.47013 5.33277 1.28856 5.32532 0.554995 6.01561C-0.17773 6.70564 -0.186383 7.83208 0.537689 8.53142L5.65085 13.4712C6.00172 13.8103 6.48044 14 6.97925 14C6.99404 14 7.00911 14 7.0253 14C7.54003 13.9883 8.02656 13.7735 8.36933 13.4071L18.1697 2.96385C18.8564 2.23258 18.7902 1.10746 18.0229 0.453362Z" fill="#4F52C3"/>
         </svg>
+    }
+
+    const [active, setActive] = useState('update')
+
+    const changeNoticeViewer = (e) => {
+        setActive(e.target.dataset.notice)
+    }
+
+    const goToMyKinder = (e) => {
+        if(token){
+            window.scrollTo(0,0)
+        }else{
+            alert('로그인이 필요합니다.')
+            e.preventDefault()
+            console.log(e.target.href)
+            window.open(
+                `${origin}/user/login`,
+                '_blank',
+                `width=560 height=550
+                top=100 left=150`
+            )
+            return 
+        }
     }
 
     return(
@@ -27,14 +51,15 @@ function MainPage ({loading}) {
                     <span className="type-c">미</span>
                     와 함께</h2>
                 <div className="slide-box">
-                    <h1>쉽게</h1>   
+                    <h1>쉽게</h1>
                     {loading ? <MainSwiper/> : <strong className="type-a">관리</strong>}
                     <h1>하자</h1>
                 </div>
                 </div>
             </MainBg>
-            <Container>
                 <div className="content-go">
+                    <div className="part-a-bg">
+                    <Container>
                     <div className="part-a">
                         <h1>새로운 친구를 만나는 유치원 <br/>
                             유치원하나하나 알아보기 어려우신가요?
@@ -65,6 +90,9 @@ function MainPage ({loading}) {
                             </div>
                         </div>
                     </div>
+                    </Container>
+                    </div>
+                    <Container>
                     <div className="part-b">
                         <h1>모든 유치원 홈페이지의 시작! 유치원 모으미</h1>
                         <div className="part-wrap">
@@ -81,66 +109,48 @@ function MainPage ({loading}) {
                                     이젠 모으미와 함께 유치원을 꾸며보세요!
                                 <span>* 플랫폼 꾸미기 기능은 교사만 가능합니다.</span>
 
-                                <Link to={'/kinder'} onClick={()=>{
-                            window.scrollTo(0,0)
-                        }}>내 유치원 가기</Link>
+                                <Link to={'/kinder'} onClick={goToMyKinder}>내 유치원 가기</Link>
                             </div>
                             <ImgBox src={`${origin}/main/main-2.jpg`} />
                         </div>
                     </div>
+                    </Container>
                 </div>
-                </Container>
-                    <div className="wave-bg">
-                        <div className="part-c">
-                                partc
-                        </div>
-                    </div>
+                    
                 <Container>
                 <div className="notice-box">
-                    <div className="title">
-                        <h1>공지사항 & FAQ</h1>
-                        <h2>모으미의 새로운 소식을 전해드립니다.</h2>
+                    <h1>유치원 모으미에서 알립니다</h1>
+                    <div className="notice-btn-box">
+                        <button data-notice={'update'} 
+                        onClick={changeNoticeViewer}
+                        className={classNames({active : active === 'update'})}
+                        >업데이트</button>
+                        <button data-notice={'FAQ'}
+                        onClick={changeNoticeViewer}
+                        className={classNames({active : active === 'FAQ'})}
+                        >FAQ</button>
+                        <button data-notice={'job'} 
+                        onClick={changeNoticeViewer}
+                        className={classNames({active : active === 'job'})}
+                        >채용공고</button>
+                        <Link to={`/notice/${active}`} onClick={()=>window.scrollTo(0,0)}>전체보기</Link>
                     </div>
-                    <div className="notice">
-                        <div className="pick">
-                            <h3 className="active">공지사항</h3>
-                            <h3>FAQ</h3>
-                        </div>
-                        <div className="content-box">
-                            <div className="content">
-                                <h4>공지사항</h4>
-                                <p>2024년 1차(4월) 유치원 정보 공시 오픈 안내</p>
-                                <span>2024-04-29</span>
-                            </div>
-                            <div className="content">
-                                <h4>공지사항</h4>
-                                <p>2023년 유치원알리미 이용자 만족도 조사 당첨자 발표</p>
-                                <span>2024-05-22</span>
-                            </div>
-                            <div className="content">
-                                <h4>공지사항</h4>
-                                <p>4월 16일 업데이트 안내</p>
-                                <span>2024-04-16</span>
-                            </div>
-                        </div>
+
+                    <div className="content">
+                    {active === 'update' && updateDatas.length>0 && updateDatas.slice(updateDatas.length -5 , updateDatas.length).reverse().map((data, idx)=> {
+                        const {title, date, auth} = data
+                        return (
+                                <p key={idx}>
+                                    <Link to={`/notice/update/${updateDatas.length - idx}`}>{title}</Link>
+                                    <span>{date}</span>
+                                </p>
+                            )
+                        })}
+                    {active !== 'update' &&
+                        <p>등록된 공지가 없습니다.</p>                        
+                    }
                     </div>
-                    <div className="update">
-                        <div className="pick">
-                            <h3>업데이트 안내</h3>
-                        </div>
-                        <div className="content-box">
-                            {updateDatas.length>0 && updateDatas.slice().reverse().map((data, idx)=> {
-                                const {title, date, auth} = data
-                                return (
-                                    <div className="content" key={idx}>
-                                        <h4>업데이트</h4>
-                                        <p><Link to={`/notice/update/${updateDatas.length - idx}`}>{title}</Link></p>
-                                        <span>{date}</span>
-                                    </div>
-                                )
-                            })}
-                        </div>
-                    </div>
+
                 </div>
             </Container>
             

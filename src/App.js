@@ -42,7 +42,7 @@ function App() {
         <div className="App" style={{paddingTop : headerPaddingTop + 'px'}}>
             <Routes>
                 <Route element={<UseCommon userName={userName} admin={admin} token={token}/>}>
-                    <Route exact path='/' element={<MainPage loading={allData.length > 0}/>}/>
+                    <Route exact path='/' element={<MainPage token={token} loading={allData.length > 0}/>}/>
                     <Route exact path='/service/*' element={<ServicePage/>}/>
                     <Route exact path='/notice/*' element={<NoticePage/>}/>
                     <Route exact path='/search/:serviceName' element={<SearchPage allData={allData}/>}/>

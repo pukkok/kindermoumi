@@ -120,8 +120,17 @@
 .main-page .content-go{
     margin-bottom: 120px;
 }
+.main-page .part-a-bg{
+    width: 100vw;
+    background-color: #edf1fe;
+    background-size: 100vw;
+    height: 100%;
+    padding: 30px;
+}
+
 .main-page .part-a h1{
-    font-size: 32px;
+    font-size: 28px;
+    line-height: 150%;
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -138,6 +147,7 @@
     border-radius: 12px;
     height: 300px;
     border: solid 1px #dbdee1;
+    background-color: #fff;
 }
 .main-page .part-a .part-wrap .text-card h2{
     margin-top: 50px;
@@ -159,6 +169,10 @@
 
 .main-page .part-a a{
     margin-left: auto;
+    display: flex;
+    align-items: center;
+    max-height: 52px;
+    box-sizing: border-box;
     padding: 15px 30px;
     background-color: #4F52C3;
     color: #fff;
@@ -176,7 +190,7 @@
 }
 
 .main-page .part-b h1 {
-    font-size: 32px;
+    font-size: 28px;
     margin-bottom: 40px;
     color: #333;
 }
@@ -258,59 +272,44 @@
 .notice-box{
     margin-bottom: 120px;
 }
-.notice-box .title{
-    text-align: center;
-    margin-bottom: 80px;
-}
-.notice-box .title h1{
+.notice-box h1{
     font-size: 28px;
-    padding-bottom: 10px;
 }
-.notice-box .title h2{
+
+.notice-box .notice-btn-box{
     font-size: 18px;
-}
-
-.notice-box .pick{
+    margin: 50px 0 20px 0;
     display: flex;
-    gap: 15px;
-    margin-bottom: 15px;
-}
-
-.notice-box .pick h3{
-    border-bottom: 2px solid transparent;
-}
-
-.notice-box .pick .active{
-    border-bottom: 2px solid #3f526e;
-}
-
-.notice-box .notice{
-    margin-bottom: 40px;
-}
-
-
-.notice-box .content-box{
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
     gap: 20px;
 }
+.notice-box .notice-btn-box button.active{
+    font-weight: bold;
+}
 
-.notice-box .content-box .content{
-    border: solid 1px #e5e5e5;
-    padding: 20px;
+.notice-box .notice-btn-box a{
+    margin-left: auto;
+}
+
+
+.notice-box .content{
+    min-height: 230px;
+    border-top: 1px solid #eff1f9;
+    border-bottom: 1px solid #9e9e9e;
+}
+
+.notice-box .content p{
     display: flex;
-    flex-direction: column;
-    gap: 20px;
+    justify-content: space-between;
+    padding: 10px 0;
+}
+.notice-box .content p:nth-child(1){
+    padding-top: 20px;
+}
+.notice-box .content p:nth-last-child(1){
+    padding-bottom: 20px;
 }
 
-.notice-box .content-box .content h4{
-    
-}
-.notice-box .content-box .content p{
-    
-}
 .notice-box .content-box .content span{
     color: #a3a3a3;
     font-size: 14px;
-    margin-top: auto;
 }

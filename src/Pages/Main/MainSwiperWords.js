@@ -28,8 +28,9 @@ function MainSwiper () {
         observeParents={true}
         spaceBetween={20}
         slidesPerView={1}
-        onSlideChange={() => console.log('slide change')}
-        onSwiper={(swiper) => console.log(swiper, '스와이프')}>
+        // onSlideChange={() => console.log('slide change')}
+        // onSwiper={(swiper) => console.log(swiper, '스와이프')}
+        >
             <SwiperSlide><strong className="type-a">관리</strong></SwiperSlide>
             <SwiperSlide><strong className="type-b">이용</strong></SwiperSlide>
             <SwiperSlide><strong className="type-c">업무</strong></SwiperSlide>

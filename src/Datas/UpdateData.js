@@ -10,16 +10,16 @@ const updateDatas = [
     {title: '관리자 페이지 제작시 데이터 저장', date:'2024-05-31', auth:'pukkok', file: ''},
     {title: 'vercel 서버 배포', date:'2024-06-15', auth:'pukkok', file: ''},
     {title: 'vercel 서버 배포시 문제 해결', date:'2024-06-30', auth:'pukkok', file: ''},
-    {title: '업데이트 예정', date:'2024-04-29', auth:'pukkok', file: ''},
-    {title: '업데이트 예정', date:'2024-04-29', auth:'pukkok', file: ''},
-    {title: '업데이트 예정', date:'2024-04-29', auth:'pukkok', file: ''},
-    {title: '업데이트 예정', date:'2024-04-29', auth:'pukkok', file: ''},
+    // {title: '업데이트 예정', date:'2024-04-29', auth:'pukkok', file: ''},
+    // {title: '업데이트 예정', date:'2024-04-29', auth:'pukkok', file: ''},
+    // {title: '업데이트 예정', date:'2024-04-29', auth:'pukkok', file: ''},
+    // {title: '업데이트 예정', date:'2024-04-29', auth:'pukkok', file: ''},
     
-    {title: '업데이트 예정', date:'2024-04-29', auth:'pukkok', file: ''},
-    {title: '업데이트 예정', date:'2024-04-29', auth:'pukkok', file: ''},
-    {title: '업데이트 예정', date:'2024-04-29', auth:'pukkok', file: ''},
-    {title: '업데이트 예정', date:'2024-04-29', auth:'pukkok', file: ''},
-    {title: '업데이트 예정', date:'2024-04-29', auth:'pukkok', file: ''},
+    // {title: '업데이트 예정1', date:'2024-04-29', auth:'pukkok', file: ''},
+    // {title: '업데이트 예정2', date:'2024-04-29', auth:'pukkok', file: ''},
+    // {title: '업데이트 예정3', date:'2024-04-29', auth:'pukkok', file: ''},
+    // {title: '업데이트 예정4', date:'2024-04-29', auth:'pukkok', file: ''},
+    // {title: '업데이트 예정5', date:'2024-04-29', auth:'pukkok', file: ''},
 
 
 ]
@@ -152,21 +152,21 @@ index.html에 script를 추가하여 사용하면 됩니다.
 왜 사라지나 찾아본 결과 a를 저장하면 b, c, d 저장해놓았던 것들이 초기화 되고 있었습니다.
 아래와 같은 데이터 구조를 사용하였는데,
 
-kinder.data = {...kinder.data, 
-    headerHeight : headerHeight || kinder.data.headerHeight,
-    headerGap : headerGap || kinder.data.headerGap,
-    headerContainer : headerContainer && {...headerContainer} || kinder.data.headerContainer,
-    logoWidth : logoWidth || kinder.data.logoWidth,
-    logoHeight : logoHeight || kinder.data.logoHeight,
-    navFlexStyle : navFlexStyle && {...navFlexStyle} || kinder.data.navFlexStyle,
-    navDepth1 : navMainList && [...navMainList] || kinder.data.navDepth1,
-    navDepth2 : navSubList && {...navSubList} || kinder.data.navDepth2,
-    selectBgSrc : newSelectBgSrc || kinder.data.selectBgSrc,
-    bgHeight : bgHeight || kinder.data.bgHeight,
-    zoneData: zoneData && {...zoneData} || kinder.data.zoneData,
-    gridMatrix : gridMatrix && {...gridMatrix} || kinder.data.gridMatrix,
-    contentsContainer : contentsContainer && {...contentsContainer} || kinder.data.contentsContainer
-}
+©kinder.data = {...kinder.data, 
+©✓    headerHeight : headerHeight || kinder.data.headerHeight,
+©✓    headerGap : headerGap || kinder.data.headerGap,
+©✓    headerContainer : headerContainer && {...headerContainer} || kinder.data.headerContainer,
+©✓    logoWidth : logoWidth || kinder.data.logoWidth,
+©✓    logoHeight : logoHeight || kinder.data.logoHeight,
+©✓    navFlexStyle : navFlexStyle && {...navFlexStyle} || kinder.data.navFlexStyle,
+©✓    navDepth1 : navMainList && [...navMainList] || kinder.data.navDepth1,
+©✓    navDepth2 : navSubList && {...navSubList} || kinder.data.navDepth2,
+©✓    selectBgSrc : newSelectBgSrc || kinder.data.selectBgSrc,
+©✓    bgHeight : bgHeight || kinder.data.bgHeight,
+©✓    zoneData: zoneData && {...zoneData} || kinder.data.zoneData,
+©✓    gridMatrix : gridMatrix && {...gridMatrix} || kinder.data.gridMatrix,
+©✓    contentsContainer : contentsContainer && {...contentsContainer} || kinder.data.contentsContainer
+©}
 
 이런 식으로 or을 사용하여 변하는 내용이 없을 경우엔 원본데이터로 그대로 저장되도록 구현하여 문제를 해결했습니다.
 `,
@@ -188,7 +188,7 @@ multer의 사용은 일단 보류로 놓고, 로컬로 서버를 켜두는 방�
 사용하는 국가 등록이 문제였는데 vercel.json에 regions를 icn1로 옮겨서 문제를 해결했습니다.
 
 4. cors오류가 발생하였습니다..
-cors 오류 같은경우는 vercel.json을 이용하여 헤더 부분옵션을 추가하여 해결했으나,
+cors 오류 같은경우는 vercel.json을 이용하여 헤더 부분옵션을 추가하여 해결했습니다.
 
 추가한 헤더 부분
 © "headers": [
