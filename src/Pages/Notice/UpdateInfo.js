@@ -19,7 +19,7 @@ function UpdateInfo ({updateDatas}) {
                 })
             )
         }else{
-            setViewerDatas(updateDatas)
+            setViewerDatas((prev) => prev = updateDatas.reverse())
         }
     },[pagesCnt, updateDatas])
 
