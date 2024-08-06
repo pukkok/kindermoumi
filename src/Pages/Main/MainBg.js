@@ -17,7 +17,7 @@ function MainBg ({children}) {
                     <ImgBox addClass={'img8 img-box'} src={`${origin}/main/visual-bg8.png`}/>
                     <ImgBox addClass={'img9 img-box'} src={`${origin}/main/visual-bg9.png`}/>
                     <ImgBox addClass={'img10 img-box'} src={`${origin}/main/chase.png`}/>
-                    <ImgBox addClass={'img1 img-box'} src={`${origin}/main/text-cloud.png`}/>
+                    {/* <ImgBox addClass={'img1 img-box'} src={`${origin}/main/text-cloud.png`}/> */}
                 </div>
             </div>
             <div className="bg2 bg-item">

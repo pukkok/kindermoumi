@@ -16,10 +16,11 @@
 }
 .main-page .main-bg .content .img-box{
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    left: 220px;
+    bottom: 10px;
+    width: 660px;
+    height: 500px;
+    z-index: -1;
 }
 .main-page .main-bg .content .img-box img{
     width: 100%;
@@ -28,12 +29,10 @@
 .main-page .main-bg .content .main-text{
     margin-left: 300px;
     text-align: left;
+    height: 100%;
 }
 
-.main-page .main-bg .content .main-text h2{
-    font-size: 40px;
-    margin-bottom: 30px;
-}
+
 .main-page .main-bg .content .main-text h1{
     font-size: 70px;
     font-weight: bold;
@@ -43,12 +42,50 @@
     font-size: 70px;
     font-weight: bold;
     display: inline-flex;
+    overflow: hidden;
     gap: 20px;
-    height: auto;
+    height: 100px;
 }
-.main-page  .main-bg .content .main-text .slide-box strong{
-    color: #fd825d;
-    color: #b746e6;
+
+.main-page .main-bg .content .main-text h2{
+    font-size: 35px;
+    margin: 10px 0;
+    display: flex;
+    align-items: center;
+}
+.main-page  .main-bg .content .main-text h2 span{
+    box-sizing: content-box;
+    color: #fff;
+    border-radius: 12px;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+}
+.main-page  .main-bg .content .main-text h2 span.type-a{
+    background-color: #F6CC84;
+    transform: rotate(-20deg);
+    
+}
+.main-page  .main-bg .content .main-text h2 span.type-b{
+    background-color: #BD84F6;
+    transform: rotate(10deg);
+}
+.main-page  .main-bg .content .main-text h2 span.type-c{
+    background-color: #F684A3;
+    transform: rotate(-5deg);
+}
+
+.main-page  .main-bg .content .main-text .slide-box strong.type-a{
+    color: #F6CC84;
+}
+.main-page  .main-bg .content .main-text .slide-box strong.type-b{
+    color: #BD84F6;
+}
+.main-page  .main-bg .content .main-text .slide-box strong.type-c{
+    color: #F684A3;   
 }
 
 .main-page .main-bg .content h1 span{

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import './styles/MainPage.css'
 import ImgBox from "../../Components/ImgBox";
 import Container from "../../Components/Container";
@@ -8,7 +8,7 @@ import { updateDatas } from "../../Datas/UpdateData";
 import MainSwiper from "./MainSwiperWords";
 
 
-function MainPage () {
+function MainPage ({loading}) {
 
     const CheckIcon = () => {
         return <svg width="19" height="14" viewBox="0 0 19 14" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -20,10 +20,15 @@ function MainPage () {
         <section className="main-page">
             <MainBg>
                 <div className="main-text">
-                <h2>모으미와 함께</h2>
+                <ImgBox src={`${origin}/main/text-cloud.png`}/>
+                <h2>
+                    <span className="type-a">모</span>
+                    <span className="type-b">으</span>
+                    <span className="type-c">미</span>
+                    와 함께</h2>
                 <div className="slide-box">
-                    <h1>쉽게</h1>
-                    <MainSwiper/>
+                    <h1>쉽게</h1>   
+                    {loading ? <MainSwiper/> : <strong className="type-a">관리</strong>}
                     <h1>하자</h1>
                 </div>
                 </div>
