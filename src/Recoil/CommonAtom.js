@@ -9,3 +9,8 @@ export const isLoginAtom = atom({
     key: 'isLogin',
     default: false
 })
+
+export const kinderUrlAtom = atom({
+    key: 'kinderUrl',
+    default: ''
+})

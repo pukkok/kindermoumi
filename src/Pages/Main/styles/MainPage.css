@@ -281,9 +281,16 @@
     margin: 50px 0 20px 0;
     display: flex;
     gap: 20px;
-}
-.notice-box .notice-btn-box button.active{
     font-weight: bold;
+    
+}
+.notice-box .notice-btn-box button{
+    border-bottom: 2px solid transparent;
+}
+
+.notice-box .notice-btn-box button.active{
+    color: #4F52C3;
+    border-bottom: 2px solid #4F52C3;
 }
 
 .notice-box .notice-btn-box a{
@@ -301,6 +308,9 @@
     display: flex;
     justify-content: space-between;
     padding: 10px 0;
+}
+.notice-box .content p a:hover{
+    color: #4F52C3;
 }
 .notice-box .content p:nth-child(1){
     padding-top: 20px;

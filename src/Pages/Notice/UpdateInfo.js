@@ -18,8 +18,10 @@ function UpdateInfo ({updateDatas}) {
                     return (pagesCnt-1) * 15 < idx+1 && idx+1 <= pagesCnt * 15
                 })
             )
+        }else{
+            setViewerDatas(updateDatas)
         }
-    },[pagesCnt])
+    },[pagesCnt, updateDatas])
 
     return(
         <section className="update-info">

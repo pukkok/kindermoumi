@@ -37,7 +37,7 @@ function MenuTable ({ allergyList }) {
         <section className="menu-table">
             <Calendar wantDeleteYOIL={deleteYOIL} menuInfo={menu} getDay={setSelectMonth}
              sideOptions={sideOptions} dayClick={openDay}
-             isBold={dayColorOptions.isBold} dayColor={dayColorOptions.color} dayBackColor={dayColorOptions.backgound}
+             isBold={dayColorOptions.isBold} dayColor={dayColorOptions.color} dayBackColor={dayColorOptions.background}
              footerTitle={'알레르기 정보'} footerList={allergyList}
              />
              

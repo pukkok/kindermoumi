@@ -3,7 +3,7 @@ import axios from "axios";
 import { useRecoilState } from "recoil";
 import { MenusAtom, deleteYOILAtom, sideOptionsAtom, dayColorOptionsAtom } from "../../Recoil/AdminAtom";
 import readXlsxFile from "read-excel-file";
-import { SketchPicker } from "react-color";
+import { BlockPicker } from "react-color";
 
 function MenuEditor ({ token }) {
 
@@ -189,9 +189,9 @@ function MenuEditor ({ token }) {
             </div>
             <div className="color-picker mb">
                 <div>배경 색상 선택</div>
-                <SketchPicker color={dayColorOptions.backgound} onChange={(color)=>changeColor(color, 'backgound')} onChangeComplete={(color)=>changeColor(color, 'backgound')}/>
+                <BlockPicker color={dayColorOptions.background} triangle="hide" width="170px" onChangeComplete={(color)=>changeColor(color, 'background')}/>
                 <div>글씨 색상 선택</div>
-                <SketchPicker color={dayColorOptions.color} onChange={(color)=>changeColor(color, 'color')} onChangeComplete={(color)=>changeColor(color, 'color')}/>
+                {/* <BlockPicker color={dayColorOptions.color} onChange={(color)=>changeColor(color, 'color')} onChangeComplete={(color)=>changeColor(color, 'color')}/> */}
                 <div>진하게 하기 <input type="checkbox" onChange={()=>setDayColorOptions({...dayColorOptions, isBold : !dayColorOptions.isBold})}/></div>
             </div>
 
@@ -246,9 +246,9 @@ function MenuEditor ({ token }) {
                 </div>
                 <div className="option-box">
                     <p>배경 색상 선택</p>
-                    <SketchPicker color={dayColorOptions.backgound} onChange={(color)=>changeColor(color, 'backgound')} onChangeComplete={(color)=>changeColor(color, 'backgound')}/>
+                    {/* <SketchPicker color={dayColorOptions.background} onChange={(color)=>changeColor(color, 'background')} onChangeComplete={(color)=>changeColor(color, 'background')}/> */}
                     <p>글짜 색상 선택</p>
-                    <SketchPicker color={dayColorOptions.backgound} onChange={(color)=>changeColor(color, 'backgound')} onChangeComplete={(color)=>changeColor(color, 'backgound')}/>
+                    {/* <SketchPicker color={dayColorOptions.background} onChange={(color)=>changeColor(color, 'background')} onChangeComplete={(color)=>changeColor(color, 'background')}/> */}
                     <p>진하게 하기 <input type="checkbox" onChange={()=>setDayColorOptions({...dayColorOptions, isBold : !dayColorOptions.isBold})}/></p>
                 </div>
             </div>

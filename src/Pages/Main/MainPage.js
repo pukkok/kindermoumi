@@ -7,9 +7,13 @@ import MainBg from "./MainBg";
 import { updateDatas } from "../../Datas/UpdateData";
 import MainSwiper from "./MainSwiperWords";
 import classNames from "classnames";
+import { useRecoilValue } from "recoil";
+import { kinderUrlAtom } from "../../Recoil/CommonAtom";
 
 
-function MainPage ({loading, token=''}) {
+function MainPage ({loading}) {
+
+    const kinderUrl = useRecoilValue(kinderUrlAtom)
 
     const CheckIcon = () => {
         return <svg width="19" height="14" viewBox="0 0 19 14" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -24,7 +28,7 @@ function MainPage ({loading, token=''}) {
     }
 
     const goToMyKinder = (e) => {
-        if(token){
+        if(kinderUrl){
             window.scrollTo(0,0)
         }else{
             alert('로그인이 필요합니다.')
@@ -63,7 +67,7 @@ function MainPage ({loading, token=''}) {
                     <div className="part-a">
                         <h1>새로운 친구를 만나는 유치원 <br/>
                             유치원하나하나 알아보기 어려우신가요?
-                            <Link to={'/search'} onClick={()=>{window.scrollTo(0,0)
+                            <Link to={'/search/find'} onClick={()=>{window.scrollTo(0,0)
                             }}>유치원 찾아보기</Link>
                         </h1>
                         <div className="part-wrap">
@@ -109,7 +113,7 @@ function MainPage ({loading, token=''}) {
                                     이젠 모으미와 함께 유치원을 꾸며보세요!
                                 <span>* 플랫폼 꾸미기 기능은 교사만 가능합니다.</span>
 
-                                <Link to={'/kinder'} onClick={goToMyKinder}>내 유치원 가기</Link>
+                                <Link to={`/kinder/${kinderUrl}`} onClick={goToMyKinder}>내 유치원 가기</Link>
                             </div>
                             <ImgBox src={`${origin}/main/main-2.jpg`} />
                         </div>
@@ -141,7 +145,7 @@ function MainPage ({loading, token=''}) {
                         const {title, date, auth} = data
                         return (
                                 <p key={idx}>
-                                    <Link to={`/notice/update/${updateDatas.length - idx}`}>{title}</Link>
+                                    <Link to={`/notice/update/${updateDatas.length - idx}`} onClick={()=>window.scrollTo(0,0)}>{title}</Link>
                                     <span>{date}</span>
                                 </p>
                             )

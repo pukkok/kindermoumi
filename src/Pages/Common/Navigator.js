@@ -10,7 +10,6 @@ function Navigator ({main, sub, list}) {
     const href = useHref()
     const { serviceName } = useParams()
     
-    
     return(
         <nav className="common-nav">
             <h1>{main}</h1>

@@ -5,14 +5,14 @@ import Container from "../../Components/Container";
 import axios from "axios";
 import classnames from "classnames";
 import { useRecoilState, useSetRecoilState } from "recoil";
-import { headerPaddingTopAtom, isLoginAtom } from "../../Recoil/CommonAtom";
-import { adminThemeAtom } from "../../Recoil/AdminAtom";
+import { headerPaddingTopAtom, isLoginAtom, kinderUrlAtom } from "../../Recoil/CommonAtom";
+import { adminThemeAtom, moveLinkAtom } from "../../Recoil/AdminAtom";
 
 function Header ({userName, admin, token}) {
 
     // 로그인 로그아웃시 이벤트처리 
     const [isLogin, setIsLogin] = useRecoilState(isLoginAtom)
-    const [kinderUrl, setKinderUrl] = useState()
+    const [kinderUrl, setKinderUrl] = useRecoilState(kinderUrlAtom)
     const [lastScrollY, setLastScrollY] = useState(0);
     const [isVisible, setIsVisible] = useState(true);
 
@@ -52,6 +52,7 @@ function Header ({userName, admin, token}) {
     const logout = () => {
         alert('로그아웃 되었습니다.')
         localStorage.clear()
+        setKinderUrl('')
         setIsLogin(false)
         navigate('/')
     }
@@ -114,7 +115,7 @@ function Header ({userName, admin, token}) {
     }
 
     const setAdminTheme = useSetRecoilState(adminThemeAtom)
-
+    const setMoveLink = useSetRecoilState(moveLinkAtom)
     return(
         <header className={classnames("header", { "header--hidden": !isVisible, small : location.pathname.includes('kinder') })}>
             <Container>
@@ -161,7 +162,10 @@ function Header ({userName, admin, token}) {
                                 <>
                                     <li onClick={()=>setAdminTheme('page')}><Link to={'/admin'}>페이지 관리</Link></li>
                                     <li><Link to={'/admin'}>원아 관리</Link></li>
-                                    <li onClick={()=>setAdminTheme('menus')}><Link to={'/admin'}>식단 관리</Link></li>
+                                    <li onClick={()=>{
+                                        setAdminTheme('menus')
+                                        setMoveLink('menu-table')
+                                    }}><Link to={'/admin'}>식단 관리</Link></li>
                                 </>
                                 }
                             </ul>
