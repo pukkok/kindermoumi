@@ -13,15 +13,46 @@
     z-index: 10;
     display: flex;
     flex-direction: column;
-    border: solid 1px red;
+}
+.main-page .main-bg .content .img-box{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+.main-page .main-bg .content .img-box img{
+    width: 100%;
+    height: 100%;
+}
+.main-page .main-bg .content .main-text{
+    margin-left: 300px;
+    text-align: left;
+}
+
+.main-page .main-bg .content .main-text h2{
+    font-size: 40px;
+    margin-bottom: 30px;
 }
 .main-page .main-bg .content .main-text h1{
-    color: #fff;
-    font-size: 40px;
+    font-size: 70px;
     font-weight: bold;
 }
+
+.main-page  .main-bg .content .main-text .slide-box{
+    font-size: 70px;
+    font-weight: bold;
+    display: inline-flex;
+    gap: 20px;
+    height: auto;
+}
+.main-page  .main-bg .content .main-text .slide-box strong{
+    color: #fd825d;
+    color: #b746e6;
+}
+
 .main-page .main-bg .content h1 span{
-    font-size: 36px;
+    /* font-size: 36px; */
     font-weight: bold;
 }
 
@@ -47,7 +78,6 @@
     padding-top: 10px;
     font-weight: bold;
 }
-
 
 /* 파트A */
 .main-page .content-go{
@@ -179,6 +209,12 @@
 .main-page .part-a a:hover,
 .main-page .part-b a:hover {
     background-color: #3b41a1;
+}
+
+/* 파트C */
+.main-page .part-c{
+    padding: 10px;
+    border: solid 1px red;
 }
 
 /* notice */

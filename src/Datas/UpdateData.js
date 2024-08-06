@@ -24,7 +24,7 @@ const updateDatas = [
 
 ]
 
-const updateContents = [
+const updateContents = [ //© ✓
 // 1번
 `안녕하세요 신입개발자 푹곡입니다. 
 
@@ -74,10 +74,10 @@ useRef를 사용하여 일단 클릭한 데이터들의 정보를 가지고 있�
 
 알레르기 표 제작시 문제점으로는 드래그하여 이동시 고스트이미지가 생겼었는데,
 dragStart 부분에 새로운 이미지를 생성하여 드래그시 고스트 이미지가 생기지 않도록 하여 해결했습니다.
-예시 코드)
-const img = new Image()
-img.src= ''
-e.dataTransfer.setDragImage(img, 0, 0)
+
+© const img = new Image()
+© img.src= ''
+© e.dataTransfer.setDragImage(img, 0, 0)
 `,
 //5번
 `
@@ -214,38 +214,33 @@ A. AWS-S3를 이용하여 파일을 저장 위치를 변경했습니다.
 Q. 처음에 브라우저를 불러올 때 유치원알리미 api 데이터를 요청하는데 5초가 넘어서 gateway timeout문제가 생겼습니다.
 A. 한번에 너무 많은 요청을 하기 때문에 5초가 넘게 걸렸기 때문에, 한번에 요청하는 부분을 줄였습니다.
 
-청크를 이용하여 한번에 요청하는 수 제한 설정
-© async function axiosKinderAllData(allData, setFunc) {
-© ✓   const chunkSize = 40 // 각 청크의 크기 설정
-© ✓   const chunks = []
+묶음을 만들어 한번에 요청하는 수 제한 설정
+©async function axiosKinderAllData(allData, setFunc) {
+©✓const chunkSize = 40 // 각 청크의 크기 설정
+©✓const chunks = []
 ©
-© ✓   for (let i = 0; i < allData.length; i += chunkSize) {
-© ✓✓      chunks.push(allData.slice(i, i + chunkSize));
-©✓   }
+©✓for (let i = 0; i < allData.length; i += chunkSize) {
+©✓✓chunks.push(allData.slice(i, i + chunkSize));
+©✓}
 ©
-©✓   const success = []
+©✓const success = []
 ©
-©✓  for (const chunk of chunks) {
-©✓✓      const results = await Promise.all(
-©✓✓✓          chunk.map(item => {
-©✓✓✓✓             const { sidoCode, code } = item;
-©✓✓✓✓              return axios.post('/api/kinder', {
-©✓✓✓✓✓                sidoCode, sggCode: code
-©✓✓✓✓              })
-©✓✓✓          })
-©✓✓      );
+©✓for (const chunk of chunks) {
+©✓✓const results = await Promise.all(
+©✓✓✓chunk.map(item => {
+©✓✓✓✓const { sidoCode, code } = item;
+©✓✓✓✓return axios.post('/api/kinder', {
+©✓✓✓✓✓sidoCode, sggCode: code
+©✓✓✓✓})
+©✓✓✓})
+©✓✓);
 ©
-©✓✓     success.push(...results)
-©✓  }
+©✓✓success.push(...results)
+©✓}
 ©
-©   ✓ const flat = success.reduce((acc, r) => acc.concat(r.data), []);
-©   ✓ return setFunc(flat)
+©✓const flat = success.reduce((acc, r) => acc.concat(r.data), []);
+©✓return setFunc(flat)
 ©}
-
-
-
-
-
 
 `,
 ``,

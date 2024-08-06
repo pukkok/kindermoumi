@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import './styles/MainPage.css'
 import ImgBox from "../../Components/ImgBox";
 import Container from "../../Components/Container";
 import { Link } from "react-router-dom";
 import MainBg from "./MainBg";
 import { updateDatas } from "../../Datas/UpdateData";
+import MainSwiper from "./MainSwiperWords";
+
 
 function MainPage () {
 
@@ -18,13 +20,12 @@ function MainPage () {
         <section className="main-page">
             <MainBg>
                 <div className="main-text">
-                    <h1>
-                    관리가 편해진다 <br/>
-                    유치원 모으미
-                    </h1>
-                    <h4>
-                    유치원 모으미는 학부모들의 유치원 접근성을 올리고, 교사들의 유치원 홈페이지 및 업무를 한번에 관리하는 플랫폼입니다. 소통과 협업, 경영지원을 하나의 플랫폼에서 활용하여 생산성을 높여보세요.
-                    </h4>
+                <h2>모으미와 함께</h2>
+                <div className="slide-box">
+                    <h1>쉽게</h1>
+                    <MainSwiper/>
+                    <h1>하자</h1>
+                </div>
                 </div>
             </MainBg>
             <Container>
@@ -81,9 +82,15 @@ function MainPage () {
                             </div>
                             <ImgBox src={`${origin}/main/main-2.jpg`} />
                         </div>
-                        
                     </div>
                 </div>
+                </Container>
+                    <div className="wave-bg">
+                        <div className="part-c">
+                                partc
+                        </div>
+                    </div>
+                <Container>
                 <div className="notice-box">
                     <div className="title">
                         <h1>공지사항 & FAQ</h1>

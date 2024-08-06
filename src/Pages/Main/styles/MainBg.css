@@ -5,6 +5,7 @@
     position: relative;
     height: 460px;
     margin-bottom: 120px;
+    min-width: 1280px;
 }
 .main-page .main-bg .bg-item{
     position:absolute;
@@ -37,6 +38,11 @@
 .bg-item .img7 img { width: 70px; }
 .bg-item .img8 { right: 50%; bottom: 70px; margin-right: -640px; }
 .bg-item .img8 img { width: 95px; }
+.bg-item .img10 { right: 75%; bottom: 30px; margin-right: -200px;}
+.bg-item .img10 img { width: 100px;}
+.bg-item .img1 { right: 40%; bottom: 40px; margin-right: -200px;}
+.bg-item .img1 img{ width: 680px; height: 510px;}
+
 .bg-item .img9 { right: 110px; bottom: 40px; }
 .bg-item .img11 { top: 180px; margin-left: -240px; }
 .bg-item .img12 { top: 190px; right: 50%; margin-right: -670px; }

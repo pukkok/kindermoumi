@@ -16,6 +16,8 @@ function MainBg ({children}) {
                     <ImgBox addClass={'img7 img-box'} src={`${origin}/main/visual-bg7.png`}/>
                     <ImgBox addClass={'img8 img-box'} src={`${origin}/main/visual-bg8.png`}/>
                     <ImgBox addClass={'img9 img-box'} src={`${origin}/main/visual-bg9.png`}/>
+                    <ImgBox addClass={'img10 img-box'} src={`${origin}/main/chase.png`}/>
+                    <ImgBox addClass={'img1 img-box'} src={`${origin}/main/text-cloud.png`}/>
                 </div>
             </div>
             <div className="bg2 bg-item">
@@ -25,6 +27,8 @@ function MainBg ({children}) {
                     <ImgBox addClass={'img11 img-box'} src={`${origin}/main/visual-bg11.png`}/>
                     <ImgBox addClass={'img12 img-box'} src={`${origin}/main/visual-bg11.png`}/>
                 </div>
+            </div>
+            <div className="character">
             </div>
         </div>
     )
