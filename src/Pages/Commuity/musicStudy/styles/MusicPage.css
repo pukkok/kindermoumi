@@ -1,0 +1,45 @@
+.notes {
+    display: flex;
+    justify-content: center;
+    margin: 20px;
+}
+  
+.notes button {
+    width: 40px;
+    height: 200px;
+    margin: 1px;
+    border: 1px solid #000;
+    background-color: #fff;
+    color: #000;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+    border-radius: 0 0 5px 5px;
+    box-shadow: 0 3px #999;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    transition: background-color 0.2s, box-shadow 0.2s;
+}
+  
+.notes button.active {
+box-shadow: 0 2px #666;
+transform: translateY(2px);
+background-color: blueviolet;
+}
+  
+.notes button.sharp {
+width: 30px;
+height: 120px;
+margin: 0 -15px;
+background-color: #000;
+color: #fff;
+z-index: 2;
+box-shadow: 0 3px #444;
+}
+  
+.notes button.sharp.active {
+box-shadow: 0 2px #222;
+transform: translateY(2px);
+background-color: blueviolet;
+}
