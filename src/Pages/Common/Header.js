@@ -143,10 +143,11 @@ function Header ({userName, admin, token}) {
                                 <li><Link to={'/notice/FAQ'}>FAQ</Link></li>
                             </ul>
                         </li>
-                        <li><Link>커뮤니티</Link>
+                        <li><Link>커뮤니티</Link></li>
+                        <li><Link>아이교육</Link>
                             <ul className="depth2">
-                                <li><Link to={'/comunity/music'}>음악교실</Link></li>
-                                <li><Link to={'/comunity/art'}>미술교실</Link></li>
+                                <li><Link to={'/edu/music'}>음악교실</Link></li>
+                                <li><Link to={'/edu/art'}>미술교실</Link></li>
                             </ul>
                         </li>
                         <li><Link>교사채용</Link>

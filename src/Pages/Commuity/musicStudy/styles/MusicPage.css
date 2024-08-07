@@ -1,3 +1,32 @@
+.edu-music{
+    
+}
+.edu-music .btn-box{
+    display: flex;
+    gap: 20px;
+}
+.edu-music .btn-box button{
+    padding: 5px 10px;
+    border: solid 1px blueviolet;
+}
+body{
+    overflow: hidden;
+}
+
+.score{
+    border: solid 1px red;
+}
+.score .img-box{
+    width: 100%;
+    height: 55vh;
+    overflow: scroll;
+}
+.score img{
+    width: 100%;
+    object-fit: contain;
+}
+
+/* 피아노 파트 */
 .notes {
     display: flex;
     justify-content: center;
@@ -41,5 +70,5 @@ box-shadow: 0 3px #444;
 .notes button.sharp.active {
 box-shadow: 0 2px #222;
 transform: translateY(2px);
-background-color: blueviolet;
+background-color: violet;
 }
