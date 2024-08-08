@@ -10,11 +10,11 @@ import AdminPage from './Pages/Admin/AdminPage';
 
 import { axiosKinderAllData } from './Components/axiosData'
 import sggData from './Datas/sggData';
-import Origami from './Pages/Commuity/Origami';
+import Origami from './Pages/Edu/Origami';
 import { useRecoilValue } from 'recoil';
 import { headerPaddingTopAtom } from './Recoil/CommonAtom';
 import NoticePage from './Pages/Notice/NoticePage';
-import MusicPage from './Pages/Commuity/musicStudy/MusicPage';
+import MusicPage from './Pages/Edu/MusicStudy/MusicPage';
 
 function App() {
 

@@ -2,24 +2,43 @@ import React, { useEffect, useRef, useState } from 'react'
 import Soundfont from 'soundfont-player'
 import AudioContext from 'audio-context'
 import classNames from 'classnames'
-import { notes, defaultShorcut } from '../../../Datas/MusicData'
+import { notes, defaultShorcut } from '../../../Datas/musicData'
+import { useRecoilValue } from 'recoil'
+import { isChangeModeAtom, pianoVolumeAtom } from '../../../Recoil/CommonAtom'
+import PianoController from './PianoController'
 
-const PianoPlayer = ({isChangeMode}) => {
+const PianoPlayer = () => {
+  const isChangeMode = useRecoilValue(isChangeModeAtom)
   const audioContext = useRef(null)
+  const gainNode = useRef(null)  // GainNode를 위한 ref 추가
   const player = useRef(null)
   const activeNotes = useRef({})
   const [pressedKeys, setPressedKeys] = useState([])
   const [mouseDown, setMouseDown] = useState(false)
   const [activeButtons, setActiveButtons] = useState([])
   const [shortcut, setShorcut] = useState(defaultShorcut)
+  const volume = useRecoilValue(pianoVolumeAtom)  // 기본 볼륨 설정
 
   useEffect(() => {
+    // AudioContext 및 GainNode 생성
     audioContext.current = AudioContext()
+    gainNode.current = audioContext.current.createGain()
+    gainNode.current.connect(audioContext.current.destination)
+
+    // 초기 볼륨 설정
+    gainNode.current.gain.setValueAtTime(volume, audioContext.current.currentTime)
+
     Soundfont.instrument(audioContext.current, 'acoustic_grand_piano').then((piano) => {
       player.current = piano
     })
-
   }, [])
+
+  useEffect(() => {
+    // 볼륨 변경시 GainNode의 gain 값을 업데이트
+    if (gainNode.current) {
+      gainNode.current.gain.setValueAtTime(volume, audioContext.current.currentTime)
+    }
+  }, [volume])
 
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -29,9 +48,6 @@ const PianoPlayer = ({isChangeMode}) => {
     }
 
     const handleKeyUp = (e) => {
-      if(e.key.toUpperCase()==='ESCAPE'){
-        return setPressedKeys([])
-      }
       setPressedKeys(prev => prev.filter(key => key !== e.key.toUpperCase()))
     }
 
@@ -56,7 +72,7 @@ const PianoPlayer = ({isChangeMode}) => {
 
   const playNote = (note) => {
     if (player.current) {
-      const noteObject = player.current.play(note)
+      const noteObject = player.current.play(note, audioContext.current.currentTime, { gain: gainNode.current })
       activeNotes.current[note] = noteObject
       setActiveButtons(prev => [...prev, note])
     }
@@ -71,44 +87,40 @@ const PianoPlayer = ({isChangeMode}) => {
   }
 
   const changeShortcut = (e, note) => {
-    if(e.key.toUpperCase() === 'ESCAPE'){
-      return setShorcut({...shortcut, [note] : ''})
-    }
-    console.log(e.key)
-    if(e.key.toUpperCase() === ' '){
-      return alert('스페이스 바는 악보를 넘길 때 사용됩니다.')
-    }
     setShorcut({...shortcut, [note] : e.key.toUpperCase()})
   }
 
   return (
-    <div className="notes">
-      {notes.map((note, idx) => (
-        <button key={idx}
-          className={classNames({ sharp: note.includes('#'), active: activeButtons.includes(note) })}
-          onClick={() => {
-            if (isChangeMode) {
-              window.addEventListener('keydown', (e) => changeShortcut(e, note), { once: true });
-            }
-          }}
-          onMouseDown={() => {
-            setMouseDown(true)
-            playNote(note)
-          }}
-          onMouseEnter={() => mouseDown && playNote(note)}
-          onMouseLeave={() => {
-            mouseDown &&
-            stopNote(note)
-          }}
-            
-          onMouseUp={() => {
-            console.log('뗐음')
-            stopNote(note)
-            setMouseDown(false)
-          }}>
-          {shortcut[note]}
-        </button>
-      ))}
+    <div className="piano-container">
+      
+      <div className="piano">
+        <PianoController/>
+        <div className='notes'>
+        {notes.map((note, idx) => (
+          <button key={idx}
+            className={classNames({ sharp: note.includes('#'), active: activeButtons.includes(note) })}
+            onClick={() => {
+              if (isChangeMode) {
+                window.addEventListener('keydown', (e) => changeShortcut(e, note), { once: true })
+              }
+            }}
+            onMouseDown={() => {
+              setMouseDown(true)
+              playNote(note)
+            }}
+            onMouseEnter={() => mouseDown && playNote(note)}
+            onMouseLeave={() => {
+              mouseDown && stopNote(note)
+            }}
+            onMouseUp={() => {
+              stopNote(note)
+              setMouseDown(false)
+            }}>
+            {shortcut[note]}
+          </button>
+        ))}
+        </div>
+      </div>
     </div>
   )
 }

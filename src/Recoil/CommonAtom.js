@@ -14,3 +14,24 @@ export const kinderUrlAtom = atom({
     key: 'kinderUrl',
     default: ''
 })
+
+// 피아노 파트
+export const isScrollModeAtom = atom({
+    key: 'isScroll',
+    default:false
+})
+
+export const isChangeModeAtom = atom({
+    key: 'isChangeMode',
+    default : false
+})
+
+export const pianoVolumeAtom = atom({
+    key: 'volume',
+    default : 0.5
+})
+
+export const scoresAtom = atom({
+    key: 'scores',
+    default : ['네가있어행복해']
+})

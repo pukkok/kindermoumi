@@ -7,19 +7,17 @@ function UpdateInfo ({updateDatas}) {
 
     const href = useHref()
 
-    const [viewerDatas, setViewerDatas] = useState([])
+    const [viewerDatas, setViewerDatas] = useState([...updateDatas])
 
     const [pagesCnt, setPagesCnt] = useState(1)
 
     useEffect(()=> {
         if(updateDatas.length>15){
             setViewerDatas(
-                updateDatas.slice().reverse().filter((_, idx) => {
+                updateDatas.slice().filter((_, idx) => {
                     return (pagesCnt-1) * 15 < idx+1 && idx+1 <= pagesCnt * 15
                 })
             )
-        }else{
-            setViewerDatas((prev) => prev = updateDatas.reverse())
         }
     },[pagesCnt, updateDatas])
 
@@ -44,7 +42,7 @@ function UpdateInfo ({updateDatas}) {
                     </tr>
                 </thead>
                 <tbody>
-                    {updateDatas.length>0 && viewerDatas.map((data, idx) => {
+                    {viewerDatas.length>0 && viewerDatas.reverse().map((data, idx) => {
                         const {title, date, auth, file} = data
                         return <tr key={idx}>
                             <td>{updateDatas.length - idx - (pagesCnt-1) * 15}</td>
