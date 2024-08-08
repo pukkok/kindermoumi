@@ -35,3 +35,18 @@ export const scoresAtom = atom({
     key: 'scores',
     default : ['네가있어행복해']
 })
+
+export const selectedNotesAtom = atom({
+    key: 'selectedNotes',
+    default : []
+})
+
+export const startSelectedNoteAtom = atom({
+    key: 'startSelectedNote',
+    default : 'C1'
+})
+
+export const endSelectedNoteAtom = atom({
+    key: 'endSelectedNote',
+    default : 'C7'
+})

@@ -3,8 +3,8 @@ import Soundfont from 'soundfont-player'
 import AudioContext from 'audio-context'
 import classNames from 'classnames'
 import { notes, defaultShorcut } from '../../../Datas/musicData'
-import { useRecoilValue } from 'recoil'
-import { isChangeModeAtom, pianoVolumeAtom } from '../../../Recoil/CommonAtom'
+import { useRecoilState, useRecoilValue } from 'recoil'
+import { endSelectedNoteAtom, isChangeModeAtom, pianoVolumeAtom, selectedNotesAtom, startSelectedNoteAtom } from '../../../Recoil/CommonAtom'
 import PianoController from './PianoController'
 
 const PianoPlayer = () => {
@@ -18,6 +18,28 @@ const PianoPlayer = () => {
   const [activeButtons, setActiveButtons] = useState([])
   const [shortcut, setShorcut] = useState(defaultShorcut)
   const volume = useRecoilValue(pianoVolumeAtom)  // 기본 볼륨 설정
+  const [selectedNotes, setSelectedNotes] = useRecoilState(selectedNotesAtom)
+  const startSelectedNote = useRecoilValue(startSelectedNoteAtom)
+  const endSelectedNote = useRecoilValue(endSelectedNoteAtom)
+
+  useEffect(()=>{
+    let isStart = false
+    let isEnd = false
+    let x = notes.filter(note => {
+      if(note === startSelectedNote){
+        isStart = true
+      }
+      if (isStart && !isEnd) {
+        if (note === endSelectedNote) {
+          isEnd = true;
+        }
+        return true;
+      }
+      return false;
+    })
+    setSelectedNotes([...x])
+
+  },[startSelectedNote, endSelectedNote])
 
   useEffect(() => {
     // AudioContext 및 GainNode 생성
@@ -91,38 +113,35 @@ const PianoPlayer = () => {
   }
 
   return (
-    <div className="piano-container">
-      
-      <div className="piano">
+    <div className="piano">
         <PianoController/>
         <div className='notes'>
-        {notes.map((note, idx) => (
-          <button key={idx}
+        {selectedNotes.map((note, idx) => (
+        <button key={idx}
             className={classNames({ sharp: note.includes('#'), active: activeButtons.includes(note) })}
             onClick={() => {
-              if (isChangeMode) {
+            if (isChangeMode) {
                 window.addEventListener('keydown', (e) => changeShortcut(e, note), { once: true })
-              }
+            }
             }}
             onMouseDown={() => {
-              setMouseDown(true)
-              playNote(note)
+            setMouseDown(true)
+            playNote(note)
             }}
             onMouseEnter={() => mouseDown && playNote(note)}
             onMouseLeave={() => {
-              mouseDown && stopNote(note)
+            mouseDown && stopNote(note)
             }}
             onMouseUp={() => {
-              stopNote(note)
-              setMouseDown(false)
+            stopNote(note)
+            setMouseDown(false)
             }}>
             {shortcut[note]}
-          </button>
+        </button>
         ))}
         </div>
-      </div>
     </div>
-  )
+    )
 }
 
 export default PianoPlayer

@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useRecoilState } from "recoil";
-import { isChangeModeAtom, isScrollModeAtom, pianoVolumeAtom, scoresAtom } from "../../../Recoil/CommonAtom";
+import { endSelectedNoteAtom, isChangeModeAtom, isScrollModeAtom, pianoVolumeAtom, scoresAtom, startSelectedNoteAtom } from "../../../Recoil/CommonAtom";
 import classNames from "classnames";
 import { scoreTitles } from "../../../Datas/musicData";
+import { notes } from "../../../Datas/musicData";
+import SelectOption from "../../../Custom/SelectOption";
 
 function PianoController () {
 
@@ -48,6 +50,9 @@ function PianoController () {
         ])
     }
 
+    const [startSelectedNote, setStartSelectedNote] = useRecoilState(startSelectedNoteAtom)
+    const [endSelectedNote, setEndSelectedNote] = useRecoilState(endSelectedNoteAtom)
+
     return(
         <div className="piano-controller">
             <div className='control-volume'>
@@ -64,6 +69,10 @@ function PianoController () {
             </div>
             <div>
                 키보드 조절
+                <p>시작</p>
+                <SelectOption list={notes.filter(note => !note.includes('#'))} selectedItem={startSelectedNote} setSelectedItem={setStartSelectedNote}/>
+                <p>마지막</p>
+                <SelectOption list={notes.filter(note => !note.includes('#'))} selectedItem={endSelectedNote} setSelectedItem={setEndSelectedNote}/>
             </div>
             <div>
                 악보선택
