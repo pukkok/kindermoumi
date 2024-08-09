@@ -56,7 +56,7 @@ function PianoController () {
     return(
         <div className="piano-controller">
             <div className='control-volume'>
-            <p>볼륨</p>
+            <h4>볼륨</h4>
             <input 
             type="range" 
             min="0" 
@@ -68,14 +68,21 @@ function PianoController () {
             />
             </div>
             <div>
-                키보드 조절
-                <p>시작</p>
-                <SelectOption list={notes.filter(note => !note.includes('#'))} selectedItem={startSelectedNote} setSelectedItem={setStartSelectedNote}/>
-                <p>마지막</p>
-                <SelectOption list={notes.filter(note => !note.includes('#'))} selectedItem={endSelectedNote} setSelectedItem={setEndSelectedNote}/>
+                <h4>키보드</h4>
+                <div className="note-selector">
+                    <div>
+                        <p>시작</p>
+                        <SelectOption list={notes.filter(note => !note.includes('#'))} selectedItem={startSelectedNote} setSelectedItem={setStartSelectedNote}/>
+                    </div>
+                    <div>
+                        <p>마지막</p>
+                        <SelectOption list={notes.filter(note => !note.includes('#'))} selectedItem={endSelectedNote} setSelectedItem={setEndSelectedNote}/>
+                    </div>
+                </div>
             </div>
             <div>
-                악보선택
+                악보
+                <select></select>
                 <ul>
                     {titles.length>0 && titles.map((title, idx) => {
                         return <li key={idx}
