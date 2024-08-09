@@ -82,7 +82,6 @@ function PianoController () {
             </div>
             <div>
                 악보
-                <select></select>
                 <ul>
                     {titles.length>0 && titles.map((title, idx) => {
                         return <li key={idx}
