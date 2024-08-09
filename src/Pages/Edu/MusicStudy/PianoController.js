@@ -2,8 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useRecoilState } from "recoil";
 import { endSelectedNoteAtom, isChangeModeAtom, isScrollModeAtom, pianoVolumeAtom, scoresAtom, startSelectedNoteAtom } from "../../../Recoil/CommonAtom";
 import classNames from "classnames";
-import { scoreTitles } from "../../../Datas/musicData";
-import { notes } from "../../../Datas/musicData";
+import { notes, scoreTitles } from "../../../Datas/musicData";
 import SelectOption from "../../../Custom/SelectOption";
 
 function PianoController () {
