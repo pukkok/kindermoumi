@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import Soundfont from 'soundfont-player'
 import AudioContext from 'audio-context'
 import classNames from 'classnames'
-import { notes, defaultShorcut } from '../../../Datas/musicData'
+import { notes, defaultShorcut } from "../../../Datas/musicData"
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { endSelectedNoteAtom, isChangeModeAtom, pianoVolumeAtom, selectedNotesAtom, startSelectedNoteAtom } from '../../../Recoil/CommonAtom'
 import PianoController from './PianoController'
