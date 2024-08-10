@@ -51,6 +51,144 @@ const allInstruments = [
     "violin", "voice_oohs", "whistle", "woodblock", "xylophone"
 ]
 
+const songScores = [
+    // 1 : 온음표 h : 2분음표, q : 4분음표, 8 : 8분음표, 16 : 16분음표, 
+    // d: 점, r: 쉼표[b/4]
+    {
+        title : '네가있어행복해',
+        key : 'A',
+        time : '4/4',
+        clef : 'treble',
+        blocks : [
+            {
+                isFirst : true,
+                width : 250,
+                notes: [
+                    {keys: ['c/4'], duration: 'h'},
+                    {keys: ['d/4'], duration: 'q'},
+                    {keys: ['e/4'], duration: 'q'},
+                ]
+            },
+            {
+                width : 200,
+                tieIndexes : [{start: 2, end: 3}], 
+                notes: [
+                    {keys: ['c/4'], duration: 'q'},
+                    {keys: ['f/4'], duration: '8d'},
+                    {keys: ['e/4'], duration: '16'},
+                    {keys: ['e/4'], duration: 'q' },
+                    {keys: ['b/4'], duration: 'qr'}, 
+                ]
+            },
+            {
+                width : 200,
+                tieIndexes : [{start: 2, end: 3}], 
+                notes: [
+                    {keys: ['f/4'], duration: 'q'},
+                    {keys: ['g/4'], duration: '8d' ,accident : 'n'},
+                    {keys: ['f/4'], duration: '16'},
+                    {keys: ['f/4'], duration: '8d'},
+                    {keys: ['e/4'], duration: '16'},
+                    {keys: ['c/4'], duration: 'q'},
+                ]
+            },
+            {
+                width : 100, 
+                notes: [
+                    {keys: ['d/4'], duration: '1'}
+                ]
+            },
+            {
+                width : 200,
+                tieIndexes : [{start: 1, end: 2}],
+                notes: [
+                    {keys: ['b/4'], duration: '8dr'},
+                    {keys: ['d/4'], duration: '16'},
+                    {keys: ['d/4'], duration: '8d'},
+                    {keys: ['e/4'], duration: '16'},
+                    {keys: ['f/4'], duration: 'q', accident : 'n'},
+                    {keys: ['d/4'], duration: 'q'},
+                ]
+            },
+            {
+                width : 200,
+                tieIndexes : [{start: 3, end: 4}],
+                isRepeat : true,
+                notes: [
+                    {keys: ['c/4'], duration: '8d'},
+                    {keys: ['d/4'], duration: '16'},
+                    {keys: ['e/4'], duration: '8d'},
+                    {keys: ['a/4'], duration: '16'},
+                    {keys: ['a/4'], duration: 'q'},
+                    {keys: ['b/4'], duration: 'qr'},
+                ]
+            },
+            { // 2번째 줄
+                isFirst : true,
+                width : 350,
+                notes: [
+                    {keys: ['b/4'], duration: '8d'},
+                    {keys: ['a/4'], duration: '16'},
+                    {keys: ['g/4'], duration: '8d'},
+                    {keys: ['a/4'], duration: '16'},
+                    {keys: ['b/4'], duration: '8d'},
+                    {keys: ['a/4'], duration: '16'},
+                    {keys: ['g/4'], duration: '8d'},
+                    {keys: ['f/4'], duration: '16'},
+                ]
+            },
+            {
+                width: 200,
+                tieIndexes:[{start: 2, end: 3}],
+                notes: [
+                    {keys: ['e/4'], duration: 'q'},
+                    {keys: ['d/4'], duration: '8d', accident : '#'},
+                    {keys: ['e/4'], duration: '16'},
+                    {keys: ['e/4'], duration: 'q'},
+                    {keys: ['b/4'], duration: 'qr'}
+                ]
+            },
+            {
+                width: 200,
+                notes: [
+                    {keys: ['c/4'], duration: 'h'},
+                    {keys: ['d/4'], duration: 'q'},
+                    {keys: ['e/4'], duration: 'q'}
+                ]
+            },
+            {
+                width: 200,
+                tieIndexes:[{start: 2, end: 3}],
+                notes: [
+                    {keys: ['c/4'], duration: 'q'},
+                    {keys: ['f/4'], duration: '8d'},
+                    {keys: ['e/4'], duration: '16'},
+                    {keys: ['e/4'], duration: 'q'},
+                    {keys: ['b/4'], duration: 'qr'}
+                ]
+            },
+            {
+                width: 200,
+                tieIndexes:[{start: 2, end: 3}],
+                notes: [
+                    {keys: ['f/4'], duration: 'q'},
+                    {keys: ['g/4'], duration: '8d', accident : 'n'},
+                    {keys: ['f/4'], duration: '16'},
+                    {keys: ['f/4'], duration: '8d'},
+                    {keys: ['e/4'], duration: '16'},
+                    {keys: ['c/4'], duration: 'q'}
+                ]
+            },
+            {
+                width: 100,
+                notes: [
+                    {keys: ['d/4'], duration: '1'}
+                ]
+            }
+        ],
+    }
+]
+
 export {
-    notes, defaultShorcut, scoreTitles, allInstruments
+    notes, defaultShorcut, scoreTitles, allInstruments, songScores
 }

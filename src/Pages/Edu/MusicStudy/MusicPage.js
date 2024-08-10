@@ -5,6 +5,7 @@ import Container from '../../../Components/Container'
 import ImgBox from '../../../Components/ImgBox'
 import { useRecoilValue } from "recoil";
 import { isScrollModeAtom, scoresAtom } from "../../../Recoil/CommonAtom";
+import ScoreMaker from "./ScoreMaker";
 
 function MusicPage() {
 
@@ -28,6 +29,7 @@ function MusicPage() {
         <section className="edu-music" 
         ref={noneSelectRef} tabIndex={!isScrollMode ? 0 : -1}>
         <Container>
+            <ScoreMaker/>
             <div className="score-container">
                 <div className="score" 
                 ref={scoreSelectRef} tabIndex={isScrollMode ? 0 : -1}>

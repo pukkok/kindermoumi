@@ -43,10 +43,10 @@ export const selectedNotesAtom = atom({
 
 export const startSelectedNoteAtom = atom({
     key: 'startSelectedNote',
-    default : 'C1'
+    default : 'C2'
 })
 
 export const endSelectedNoteAtom = atom({
     key: 'endSelectedNote',
-    default : 'C7'
+    default : 'C5'
 })
