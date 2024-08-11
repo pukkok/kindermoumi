@@ -1,108 +1,194 @@
 import React, { useEffect } from 'react'
-import { Vex, StaveHairpin, Dot, StaveTie, Accidental, Formatter } from 'vexflow'
+import { Vex, StaveHairpin, Dot, StaveTie, Accidental, Annotation, BarlineType } from 'vexflow'
 import { songScores } from '../../../Datas/musicStudyData'
 
 function MusicSheet() {
 
     useEffect(() => {
-        console.dir(Vex)
-        const vf = new Vex.Flow.Factory({renderer: {elementId : 'output', width: 1200, height: 1000}})
+        const vf = new Vex.Flow.Factory({renderer: {elementId : 'output', width: 1240, height: 3000}})
 
         const context = vf.getContext()
         context.setFont('Bravura', 'Academico')
         const selectedSong = songScores.find(song => song.title === '네가있어행복해')
         const {blocks, clef, key, time} = selectedSong
-        let currentX = 0
+        let currentX = 20
         let currentY = 0
         let ties = []
+        let lowNotes = []
+        let prevNotes = []
+        let prevTieStart
+        let prevLowNotes = []
+        let prevLowTieStart
+        let isFirstLowNote = false
+        
 
         blocks.forEach((block, idx) => {
-            // 새로운 줄 시작 여부 확인
-            if (block.isFirst) {
-                currentX = 0; // X 좌표를 리셋하여 새로운 줄로 시작
-                currentY += 150
-            }
+            if (block.isFirst && idx !== 0) {
+                currentX = 20
+                currentY += 160
+                if(isFirstLowNote){
+                    currentY += 150
+                }
 
-            const system = vf.System({ autoWidth:true, x:currentX, y : currentY })
+                if(block.lowNotes){
+                    isFirstLowNote = true
+                }
+            }
             
+            const system = vf.System({ width: block.width, x: currentX, y: currentY })
             currentX += block.width
 
             const notes = block.notes.map(note => {
                 let currentNote = vf.StaveNote({
-                    keys : note.keys,
-                    duration : note.duration,
+                    keys: note.keys,
+                    duration: note.duration,
                     auto_stem: true,
                 })
-                if(note.isRepeat){
-                    currentNote = vf.RepeatNote({
-                        keys : note.keys,
-                        duration : note.duration,
-                        auto_stem: true,
-                    })
-                }
-                
-                if(note.accident){
-                    currentNote = currentNote
-                    .addModifier(new Accidental(note.accident))
-                }
-                
-                if(note.duration.includes('d')){
-                    let prev = currentNote
-                    currentNote = dotted(
-                        prev, 0
-                    )
 
+                if (note.accident) {
+                    currentNote = currentNote.addModifier(new Accidental(note.accident))
+                }
+
+                if (note.duration.includes('d')) {
+                    Dot.buildAndAttach([currentNote], { index: 0, right_shift: -5 })
+                }
+
+                if (note.lyrics) {
+                    note.lyrics.forEach((lyric) => {
+                        currentNote = currentNote.addModifier(
+                            new Annotation(lyric)
+                                .setFont("Arial", 12, "")
+                                .setVerticalJustification(Annotation.VerticalJustify.BOTTOM)
+                        )
+                    })
                 }
 
                 return currentNote
             })
 
-            const voice = vf.Voice(notes, ).addTickables(notes)
-
-            let defaultSystem = system.addStave({voices: [voice]})
+            if(block.lowNotes){
+                lowNotes = block.lowNotes.map(note => {
+                    let currentNote = vf.StaveNote({
+                        keys: note.keys,
+                        duration: note.duration,
+                        auto_stem: true,
+                    })
+    
+                    if (note.accident) {
+                        currentNote = currentNote.addModifier(new Accidental(note.accident))
+                    }
+    
+                    if (note.duration.includes('d')) {
+                        Dot.buildAndAttach([currentNote], { index: 0, right_shift: -5 })
+                    }
+    
+                    if (note.lyrics) {
+                        note.lyrics.forEach((lyric) => {
+                            currentNote = currentNote.addModifier(
+                                new Annotation(lyric)
+                                    .setFont("Arial", 12, "")
+                                    .setVerticalJustification(Annotation.VerticalJustify.BOTTOM)
+                            )
+                        })
+                    }
+    
+                    return currentNote
+                })
+            }
+            
+            const defaultSystem = system.addStave({ voices: [vf.Voice().addTickables(notes)] })
+            let multipleLowSystem = null
+            if(block.lowNotes){
+                multipleLowSystem = system.addStave({ voices : [vf.Voice().addTickables(lowNotes)], options: {y_shift : 50} })
+                if(block.isFirst) system.addConnector()
+            }
 
             if (block.isFirst) {
                 defaultSystem
                 .addClef(clef)
                 .addKeySignature(key)
-                if(idx === 0){
-                    defaultSystem
-                    .addTimeSignature(time)
+                if (idx === 0) {
+                    defaultSystem.addTimeSignature(time)
+                }
+
+                if(multipleLowSystem){
+                    multipleLowSystem
+                    .addClef(clef)
+                    .addKeySignature(key)
+                    if (idx === 0) {
+                    multipleLowSystem.addTimeSignature(time)
+                }
                 }
             }
+
+            // 도돌이표 시작 처리
+            if (block.isRepeatStart) {
+                defaultSystem.setBegBarType(BarlineType.REPEAT_BEGIN)
+            }
+
+            // 도돌이표 끝 처리
+            if (block.isRepeatEnd) {
+                defaultSystem.setEndBarType(BarlineType.REPEAT_END)
+            }
+            
             vf.draw()
 
-        // 타이 인덱스에 기반한 타이 생성
-            if (block.tieIndexes) {
-                block.tieIndexes.forEach(({ start, end }) => {
-                    const tie = new StaveTie({
-                        first_note: notes[start],
-                        last_note: notes[end],
-                        first_indices: [0],
-                        last_indices: [0]
-                    })
-                    ties.push(tie)
+            function tieMaker (arr, currentNotes, check=1) {
+                arr.forEach(({ start, end }) => {
+                    if(end === 'next'){
+                        if(check === 1){
+                            prevNotes = currentNotes
+                            prevTieStart = start
+                        }
+                        if(check === 2){
+                            prevLowNotes = currentNotes
+                            prevLowTieStart = start
+                        }
+                    }
+                    if (start === 'prev'){
+                        const tie = new StaveTie({
+                            first_note: check === 1 ? prevNotes[prevTieStart] : prevLowNotes[prevLowTieStart],
+                            last_note: currentNotes[end],
+                            first_indices: [0],
+                            last_indices: [0]
+                        })
+                        ties.push(tie)
+                    } 
+                    if (start !=='prev' && end !=='next'){
+                        const tie = new StaveTie({
+                            first_note: currentNotes[start],
+                            last_note: currentNotes[end],
+                            first_indices: [0],
+                            last_indices: [0]
+                        })
+                        ties.push(tie)
+                    }
                 })
             }
+
+            if (block.tieIndexes) {
+                tieMaker(block.tieIndexes, notes)
+            }
+
+            if (block.lowTieIndexes) {
+                tieMaker(block.lowTieIndexes, lowNotes, 2)
+                // block.lowTieIndexes.forEach(({ start, end }) => {
+                //     const tie = new StaveTie({
+                //         first_note: lowNotes[start],
+                //         last_note: lowNotes[end],
+                //         first_indices: [0],
+                //         last_indices: [0]
+                //     })
+                //     ties.push(tie)
+                // })
+            }
         })
-        // 생성된 타이 그리기
+
         ties.forEach((t) => {
             t.setContext(context).draw()
         })
 
-        function dotted(staveNote, noteIndex = -1) {
-             
-            if (noteIndex < 0) {
-                Dot.buildAndAttach([staveNote], {
-                    all: true
-                })
-            } else {
-                Dot.buildAndAttach([staveNote], {
-                    index: noteIndex,
-                })
-            }
-            return staveNote
-        }
+
 
     }, [])
 

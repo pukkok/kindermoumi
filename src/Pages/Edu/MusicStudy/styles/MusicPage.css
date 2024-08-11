@@ -24,7 +24,6 @@
 .score-container {
     position: relative;
     width: 100%;
-    max-width: 1000px;
     margin: 0 auto;
     background-color: #6f6f6f;
     overflow: hidden;
@@ -34,6 +33,7 @@
 #output{
     border: solid 1px red;
     overflow: scroll;
+    overflow-x: hidden;
 }
 
 .score {
@@ -41,6 +41,7 @@
     width: 100%;
     height: 30vh;
     overflow-y: scroll;
+    background-color: #fff;
 }
 
 .score::-webkit-scrollbar {

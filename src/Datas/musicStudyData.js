@@ -9,15 +9,15 @@ const notes = [
 ]
 
 const defaultShorcut = {
-    'C3' : 'A', 'C#3' : 'W', //도
-    'D3' : 'S', 'D#3' : 'E', //레
-    'E3' : 'D', //미
-    'F3' : 'F', 'F#3' : 'T', //파
-    'G3' : 'G', 'G#3' : 'Y', //솔 
-    'A3' : 'H', 'A#3' : 'U', //라
-    'B3' : 'J', //시
-    'C4' : 'K', 'C#4' : 'O', //도
-    'D4' : 'L', 'D#4' : 'P' //레
+    'C4' : 'A', 'C#4' : 'W', //도
+    'D4' : 'S', 'D#4' : 'E', //레
+    'E4' : 'D', //미
+    'F4' : 'F', 'F#4' : 'T', //파
+    'G4' : 'G', 'G#4' : 'Y', //솔 
+    'A4' : 'H', 'A#4' : 'U', //라
+    'B4' : 'J', //시
+    'C5' : 'K', 'C#5' : 'O', //도
+    'D5' : 'L', 'D#5' : 'P' //레
 }
 
 const scoreTitles = [
@@ -54,6 +54,7 @@ const allInstruments = [
 const songScores = [
     // 1 : 온음표 h : 2분음표, q : 4분음표, 8 : 8분음표, 16 : 16분음표, 
     // d: 점, r: 쉼표[b/4]
+    // 가사 : —–
     {
         title : '네가있어행복해',
         key : 'A',
@@ -64,19 +65,19 @@ const songScores = [
                 isFirst : true,
                 width : 250,
                 notes: [
-                    {keys: ['c/4'], duration: 'h'},
-                    {keys: ['d/4'], duration: 'q'},
-                    {keys: ['e/4'], duration: 'q'},
+                    {keys: ['c/4'], duration: 'h', lyrics: ['구']},
+                    {keys: ['d/4'], duration: 'q', lyrics: ['름']},
+                    {keys: ['e/4'], duration: 'q', lyrics: ['은']},
                 ]
             },
             {
                 width : 200,
                 tieIndexes : [{start: 2, end: 3}], 
                 notes: [
-                    {keys: ['c/4'], duration: 'q'},
-                    {keys: ['f/4'], duration: '8d'},
-                    {keys: ['e/4'], duration: '16'},
-                    {keys: ['e/4'], duration: 'q' },
+                    {keys: ['c/4'], duration: 'q', lyrics: ['마']},
+                    {keys: ['f/4'], duration: '8d', lyrics: ['음']},
+                    {keys: ['e/4'], duration: '16', lyrics: ['껏']},
+                    {keys: ['e/4'], duration: 'q' , lyrics: ['–']},
                     {keys: ['b/4'], duration: 'qr'}, 
                 ]
             },
@@ -84,18 +85,18 @@ const songScores = [
                 width : 200,
                 tieIndexes : [{start: 2, end: 3}], 
                 notes: [
-                    {keys: ['f/4'], duration: 'q'},
-                    {keys: ['g/4'], duration: '8d' ,accident : 'n'},
-                    {keys: ['f/4'], duration: '16'},
-                    {keys: ['f/4'], duration: '8d'},
-                    {keys: ['e/4'], duration: '16'},
-                    {keys: ['c/4'], duration: 'q'},
+                    {keys: ['f/4'], duration: 'q', lyrics: ['두']},
+                    {keys: ['g/4'], duration: '8d', lyrics: ['둥'] ,accident : 'n'},
+                    {keys: ['f/4'], duration: '16', lyrics: ['실']},
+                    {keys: ['f/4'], duration: '8d', lyrics: ['–']},
+                    {keys: ['e/4'], duration: '16', lyrics: ['두']},
+                    {keys: ['c/4'], duration: 'q', lyrics: ['둥']},
                 ]
             },
             {
                 width : 100, 
                 notes: [
-                    {keys: ['d/4'], duration: '1'}
+                    {keys: ['d/4'], duration: '1', lyrics: ['실']}
                 ]
             },
             {
@@ -103,23 +104,22 @@ const songScores = [
                 tieIndexes : [{start: 1, end: 2}],
                 notes: [
                     {keys: ['b/4'], duration: '8dr'},
-                    {keys: ['d/4'], duration: '16'},
-                    {keys: ['d/4'], duration: '8d'},
-                    {keys: ['e/4'], duration: '16'},
-                    {keys: ['f/4'], duration: 'q', accident : 'n'},
-                    {keys: ['d/4'], duration: 'q'},
+                    {keys: ['d/4'], duration: '16', lyrics: ['자']},
+                    {keys: ['d/4'], duration: '8d', lyrics: ['–']},
+                    {keys: ['e/4'], duration: '16', lyrics: ['유']},
+                    {keys: ['f/4'], duration: 'q', lyrics: ['롭'], accident : 'n'},
+                    {keys: ['d/4'], duration: 'q', lyrics: ['게']},
                 ]
             },
             {
-                width : 200,
+                width : 250,
                 tieIndexes : [{start: 3, end: 4}],
-                isRepeat : true,
                 notes: [
-                    {keys: ['c/4'], duration: '8d'},
-                    {keys: ['d/4'], duration: '16'},
-                    {keys: ['e/4'], duration: '8d'},
-                    {keys: ['a/4'], duration: '16'},
-                    {keys: ['a/4'], duration: 'q'},
+                    {keys: ['c/4'], duration: '8d', lyrics: ['날']},
+                    {keys: ['d/4'], duration: '16', lyrics: ['수']},
+                    {keys: ['e/4'], duration: '8d', lyrics: ['있']},
+                    {keys: ['a/4'], duration: '16', lyrics: ['는']},
+                    {keys: ['a/4'], duration: 'q', lyrics: ['–']},
                     {keys: ['b/4'], duration: 'qr'},
                 ]
             },
@@ -127,64 +127,249 @@ const songScores = [
                 isFirst : true,
                 width : 350,
                 notes: [
-                    {keys: ['b/4'], duration: '8d'},
-                    {keys: ['a/4'], duration: '16'},
-                    {keys: ['g/4'], duration: '8d'},
-                    {keys: ['a/4'], duration: '16'},
-                    {keys: ['b/4'], duration: '8d'},
-                    {keys: ['a/4'], duration: '16'},
-                    {keys: ['g/4'], duration: '8d'},
-                    {keys: ['f/4'], duration: '16'},
+                    {keys: ['b/4'], duration: '8d', lyrics: ['하']},
+                    {keys: ['a/4'], duration: '16', lyrics: ['늘']},
+                    {keys: ['g/4'], duration: '8d', lyrics: ['운']},
+                    {keys: ['a/4'], duration: '16', lyrics: ['동']},
+                    {keys: ['b/4'], duration: '8d', lyrics: ['장']},
+                    {keys: ['a/4'], duration: '16', lyrics: ['이']},
+                    {keys: ['g/4'], duration: '8d', lyrics: ['있']},
+                    {keys: ['f/4'], duration: '16', lyrics: ['어']},
                 ]
             },
             {
                 width: 200,
                 tieIndexes:[{start: 2, end: 3}],
                 notes: [
-                    {keys: ['e/4'], duration: 'q'},
-                    {keys: ['d/4'], duration: '8d', accident : '#'},
-                    {keys: ['e/4'], duration: '16'},
-                    {keys: ['e/4'], duration: 'q'},
+                    {keys: ['e/4'], duration: 'q', lyrics: ['행']},
+                    {keys: ['d/4'], duration: '8d', lyrics: ['복'], accident : '#'},
+                    {keys: ['e/4'], duration: '16', lyrics: ['해']},
+                    {keys: ['e/4'], duration: 'q', lyrics: ['–']},
+                    {keys: ['b/4'], duration: 'qr'}
+                ]
+            },
+            {
+                width: 150,
+                notes: [
+                    {keys: ['c/4'], duration: 'h', lyrics: ['풀']},
+                    {keys: ['d/4'], duration: 'q', lyrics: ['밭']},
+                    {keys: ['e/4'], duration: 'q', lyrics: ['속']}
+                ]
+            },
+            {
+                width: 200,
+                tieIndexes:[{start: 2, end: 3}],
+                notes: [
+                    {keys: ['c/4'], duration: 'q', lyrics: ['한']},
+                    {keys: ['f/4'], duration: '8d', lyrics: ['켠']},
+                    {keys: ['e/4'], duration: '16', lyrics: ['에']},
+                    {keys: ['e/4'], duration: 'q', lyrics: ['–']},
                     {keys: ['b/4'], duration: 'qr'}
                 ]
             },
             {
                 width: 200,
-                notes: [
-                    {keys: ['c/4'], duration: 'h'},
-                    {keys: ['d/4'], duration: 'q'},
-                    {keys: ['e/4'], duration: 'q'}
-                ]
-            },
-            {
-                width: 200,
                 tieIndexes:[{start: 2, end: 3}],
                 notes: [
-                    {keys: ['c/4'], duration: 'q'},
-                    {keys: ['f/4'], duration: '8d'},
-                    {keys: ['e/4'], duration: '16'},
-                    {keys: ['e/4'], duration: 'q'},
-                    {keys: ['b/4'], duration: 'qr'}
-                ]
-            },
-            {
-                width: 200,
-                tieIndexes:[{start: 2, end: 3}],
-                notes: [
-                    {keys: ['f/4'], duration: 'q'},
-                    {keys: ['g/4'], duration: '8d', accident : 'n'},
-                    {keys: ['f/4'], duration: '16'},
-                    {keys: ['f/4'], duration: '8d'},
-                    {keys: ['e/4'], duration: '16'},
-                    {keys: ['c/4'], duration: 'q'}
+                    {keys: ['f/4'], duration: 'q', lyrics: ['피']},
+                    {keys: ['g/4'], duration: '8d', lyrics: ['어'], accident : 'n'},
+                    {keys: ['f/4'], duration: '16', lyrics: ['난']},
+                    {keys: ['f/4'], duration: '8d', lyrics: ['–']},
+                    {keys: ['e/4'], duration: '16', lyrics: ['꽃']},
+                    {keys: ['c/4'], duration: 'q', lyrics: ['송']}
                 ]
             },
             {
                 width: 100,
                 notes: [
-                    {keys: ['d/4'], duration: '1'}
+                    {keys: ['d/4'], duration: '1', lyrics: ['이']}
                 ]
-            }
+            },
+            { // 3번째 줄
+                isFirst : true,
+                width : 350,
+                tieIndexes:[{start: 1, end: 2}],
+                notes: [
+                    {keys: ['b/4'], duration: '8dr'},
+                    {keys: ['d/4'], duration: '16', lyrics: ['매']},
+                    {keys: ['d/4'], duration: '8d', lyrics: ['–']},
+                    {keys: ['e/4'], duration: '16', lyrics: ['일']},
+                    {keys: ['f/4'], duration: 'q', lyrics: ['매'], accident:'n'},
+                    {keys: ['d/4'], duration: 'q', lyrics: ['일']},
+                ]
+            },
+            {
+                width : 350,
+                tieIndexes:[{start: 3, end: 4}],
+                notes: [
+                    {keys: ['c/4'], duration: '8d', lyrics: ['놀']},
+                    {keys: ['d/4'], duration: '16', lyrics: ['러']},
+                    {keys: ['e/4'], duration: '8d', lyrics: ['오']},
+                    {keys: ['a/4'], duration: '16', lyrics: ['는']},
+                    {keys: ['a/4'], duration: 'q', lyrics: ['–']},
+                    {keys: ['f/4'], duration: '8d', lyrics: ['개']},
+                    {keys: ['g/4'], duration: '16', lyrics: ['미']},
+                ]
+            },
+            {
+                width : 350,
+                notes: [
+                    {keys: ['a/4'], duration: '8d', lyrics: ['친']},
+                    {keys: ['b/4'], duration: '16', lyrics: ['구']},
+                    {keys: ['f/4'], duration: '8d', lyrics: ['있']},
+                    {keys: ['g/4'], duration: '16', lyrics: ['어']},
+                    {keys: ['a/4'], duration: 'q', lyrics: ['행']},
+                    {keys: ['g/4'], duration: 'q', lyrics: ['복']}
+                ]
+            },
+            {
+                width : 150,
+                // isRepeatEnd : true,
+                notes: [
+                    {keys: ['a/4'], duration: '2d', lyrics: ['해']},
+                    {keys: ['b/4'], duration: 'qr'},
+                ]
+            },
+            { // 4번째 줄
+                isFirst : true,
+                width : 250,
+                notes: [
+                    {keys: ['f/4'], duration: '2d', lyrics: ['쭉']},
+                    {keys: ['a/4'], duration: 'q', lyrics: ['쭉']},
+                ],
+                lowTieIndexes: [{start: 1, end: 2}],
+                lowNotes : [
+                    {keys: ['b/4'], duration: 'qr'},
+                    {keys: ['f/4'], duration: 'q', lyrics: ['쭉']},
+                    {keys: ['f/4'], duration: '8d', lyrics: ['–']},
+                    {keys: ['d/4'], duration: '16', lyrics: ['쭉']},
+                    {keys: ['f/4'], duration: '8d', lyrics: ['쭉']},
+                    {keys: ['a/4'], duration: '16', lyrics: ['–']},
+                ]
+            },
+            {
+                width : 200,
+                tieIndexes: [{start: 2, end: 3}],
+                notes: [
+                    {keys: ['g/4'], duration: 'q', lyrics: ['자'] },
+                    {keys: ['a/4'], duration: '8d', lyrics: ['라']},
+                    {keys: ['g/4'], duration: '16', lyrics: ['고']},
+                    {keys: ['g/4'], duration: 'q', lyrics: ['–']},
+                    {keys: ['g/4'], duration: '8d', lyrics: ['싶']},
+                    {keys: ['f/4'], duration: '16', lyrics: ['은']},
+                ],
+                lowTieIndexes: [{start: 2, end: 3}],
+                lowNotes: [
+                    {keys: ['g/4'], duration: 'q', lyrics: ['자'] },
+                    {keys: ['a/4'], duration: '8d', lyrics: ['라']},
+                    {keys: ['g/4'], duration: '16', lyrics: ['고']},
+                    {keys: ['g/4'], duration: 'q', lyrics: ['–']},
+                    {keys: ['g/4'], duration: '8d', lyrics: ['싶']},
+                    {keys: ['f/4'], duration: '16', lyrics: ['은']},
+                ],
+            },
+            {
+                width : 200,
+                tieIndexes: [{start: 4, end: 'next'}],
+                notes: [
+                    {keys: ['e/4'], duration: 'q', lyrics: ['나']},
+                    {keys: ['c/4'], duration: 'q', lyrics: ['무']},
+                    {keys: ['e/4'], duration: 'q', lyrics: ['잎']},
+                    {keys: ['g/4'], duration: '8d', lyrics: ['사']},
+                    {keys: ['f/4'], duration: '16', lyrics: ['귀']},
+                ],
+                lowNotes: [
+                    {keys: ['e/4'], duration: 'q', lyrics: ['나']},
+                    {keys: ['c/4'], duration: 'q', lyrics: ['무']},
+                    {keys: ['e/4'], duration: 'q', lyrics: ['잎']},
+                    {keys: ['g/4'], duration: '8d', lyrics: ['사']},
+                    {keys: ['f/4'], duration: '16', lyrics: ['귀']},
+                ]
+            },
+            {
+                width : 150,
+                tieIndexes: [{start: 'prev', end: 0}],
+                notes: [
+                    {keys: ['f/4'], duration: '2d', lyrics: ['–']},
+                    {keys: ['b/4'], duration: 'qr'},
+                ],
+                lowNotes: [
+                    {keys: ['b/4'], duration: 'qr'},
+                    {keys: ['b/4'], duration: 'q', lyrics: ['잎']},
+                    {keys: ['g/4'], duration: 'q', lyrics: ['사']},
+                    {keys: ['e/4'], duration: 'q', lyrics: ['귀']},
+                ]
+            },
+            {
+                width : 200,
+                tieIndexes: [{start: 0, end: 1}],
+                notes: [
+                    {keys: ['d/4'], duration: '2', lyrics: ['햇']},
+                    {keys: ['d/4'], duration: '8d', lyrics: ['–']},
+                    {keys: ['c/4'], duration: '16', lyrics: ['살']},
+                    {keys: ['d/4'], duration: '8d', lyrics: ['가']},
+                    {keys: ['f/4'], duration: '16', lyrics: ['득']},
+                ],
+                lowTieIndexes: [{start: 0, end: 1}],
+                lowNotes: [
+                    {keys: ['d/4'], duration: '2', lyrics: ['햇']},
+                    {keys: ['d/4'], duration: '8d', lyrics: ['–']},
+                    {keys: ['c/4'], duration: '16', lyrics: ['살']},
+                    {keys: ['d/4'], duration: '8d', lyrics: ['가']},
+                    {keys: ['f/4'], duration: '16', lyrics: ['득']},
+                ]
+            },
+            {
+                width : 200,
+                notes: [
+                    {keys: ['e/4'], duration: 'q', lyrics: ['선']},
+                    {keys: ['b/4'], duration: 'q', lyrics: ['물']},
+                    {keys: ['a/4'], duration: 'q', lyrics: ['한']},
+                    {keys: ['b/4'], duration: '8d', lyrics: ['해']},
+                    {keys: ['c/5'], duration: '16', lyrics: ['님']},
+                ],
+                lowNotes: [
+                    {keys: ['e/4'], duration: 'q', lyrics: ['선']},
+                    {keys: ['g/4'], duration: 'q', lyrics: ['물']},
+                    {keys: ['a/4'], duration: 'q', lyrics: ['한']},
+                    {keys: ['b/4'], duration: '8d', lyrics: ['해']},
+                    {keys: ['c/5'], duration: '16', lyrics: ['님']},
+                ],
+            },
+            { // 5번째 줄
+                isFirst: true,
+                width : 250,
+                tieIndexes: [{start: 4, end: 'next'}],
+                notes: [
+                    {keys: ['d/5'], duration: 'q', lyrics: ['있']},
+                    {keys: ['f/4'], duration: 'q', lyrics: ['어']},
+                    {keys: ['a/4'], duration: 'q', lyrics: ['행']},
+                    {keys: ['c/5'], duration: '8d', lyrics: ['복']},
+                    {keys: ['b/4'], duration: '16', lyrics: ['해']},
+                ],
+                lowTieIndexes: [{start: 4, end: 'next'}],
+                lowNotes: [
+                    {keys: ['d/5'], duration: 'q', lyrics: ['있']},
+                    {keys: ['d/4'], duration: 'q', lyrics: ['어']},
+                    {keys: ['f/4'], duration: 'q', lyrics: ['행']},
+                    {keys: ['a/5'], duration: '8d', lyrics: ['복']},
+                    {keys: ['g/4'], duration: '16', lyrics: ['해']},
+                ]
+            },
+            { 
+                width : 150,
+                tieIndexes: [{start: 'prev', end: 0}],
+                notes: [
+                    {keys: ['b/4'], duration: '2d', lyrics: ['–']},
+                    {keys: ['b/4'], duration: 'qr'}
+                ],
+                lowTieIndexes: [{start: 'prev', end: 0}],
+                lowNotes: [
+                    {keys: ['g/4'], duration: '2d', lyrics: ['–']},
+                    {keys: ['b/4'], duration: 'qr'},
+                ]
+            },
+            
         ],
     }
 ]
