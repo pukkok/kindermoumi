@@ -79,36 +79,42 @@ function MusicSheet() {
                 }
             }
 
-            
-
-            block.lyrics.forEach((lyric, idx) => {
-                const inner = new Annotation(lyric)
-                    .setFont('Arial', 12, '')
-                    .setVerticalJustification(Annotation.VerticalJustify.BOTTOM)
-                notes[idx].addModifier(inner)
-            })
-
-            if(block.lowLyrics){
-                block.lowLyrics.forEach((lyric, idx) => {
+            // 가사 제작
+            function lyricsMaker(arr, notes) {
+                arr.forEach((lyric, idx) => {
                     const inner = new Annotation(lyric)
                         .setFont('Arial', 12, '')
                         .setVerticalJustification(Annotation.VerticalJustify.BOTTOM)
-                        .setYShift({y : 150})
-                    lowNotes[idx].addModifier(inner)
+                    notes[idx].addModifier(inner)
                 })
+            }            
+            if(block.lyrics){
+                lyricsMaker(block.lyrics, notes)
+            }
+            if(block.lowLyrics){
+                lyricsMaker(block.lowLyrics, lowNotes)
             }
 
             // 스타카토
-            if(block.staccatoIndexes){
-                block.staccatoIndexes.forEach(idx => {
-                    notes[idx].addModifier(new Articulation('a.').setPosition(3))
+            function staccatoMaker(arr, notes) {
+                arr.forEach(idx => {
+                    const articulation = new Articulation('a.');
+                    // 스템의 방향에 따라 위치를 결정
+                    if (notes[idx].getStemDirection() === Vex.Flow.Stem.UP) {
+                        articulation.setPosition(Vex.Flow.Modifier.Position.BELOW);
+                    } else {
+                        articulation.setPosition(Vex.Flow.Modifier.Position.ABOVE);
+                    }
+                    notes[idx].addModifier(articulation);
                 })
+            }
+            if(block.staccatoIndexes){
+                staccatoMaker(block.staccatoIndexes, notes)
             }
             if(block.lowStaccatoIndexes){
-                block.lowStaccatoIndexes.forEach(idx => {
-                    lowNotes[idx].addModifier(new Articulation('a.').setPosition(3))
-                })
+                staccatoMaker(block.lowStaccatoIndexes, lowNotes)
             }
+
 
             if(block.breathMarkIndexes){
                 block.breathMarkIndexes.forEach(idx => {
