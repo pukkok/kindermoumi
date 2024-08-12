@@ -94,9 +94,11 @@ const PianoPlayer = () => {
 
   const playNote = (note) => {
     if (player.current) {
-      const noteObject = player.current.play(note, audioContext.current.currentTime, { gain: gainNode.current })
-      activeNotes.current[note] = noteObject
-      setActiveButtons(prev => [...prev, note])
+      if(!activeButtons.includes(note)){
+        const noteObject = player.current.play(note, audioContext.current.currentTime, { gain: gainNode.current })
+        activeNotes.current[note] = noteObject
+        setActiveButtons(prev => [...prev, note])
+      }
     }
   }
 

@@ -33,10 +33,6 @@ function MusicPage() {
                 <div className="score" 
                 ref={scoreSelectRef} tabIndex={isScrollMode ? 0 : -1}>
                     <ScoreMaker/>
-                    {/* {scores.map((score, idx) => {
-                        const encodedScore = encodeURIComponent(score)
-                        return <ImgBox key={idx} src={`${origin}/edu/${encodedScore}.jpg`}/>
-                    })} */}
                 </div>
             </div>
         </Container>
