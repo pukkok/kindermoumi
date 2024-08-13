@@ -193,15 +193,8 @@
 <br><br><br>
 ## 8. 문제점 및 해결방법
 
-<BlockQuote>api 불러오기</BlockQuote>
-
-문제점 : http에서 https에 요청을 하니 cors오류가 있었다. <br>
-해결법 : process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0을 이용하여 인증서 유효성 검증을 넘어갔다.
-
-<BlockQuote>배포 후 카카오맵 문제</BlockQuote>
-
-문제점 : localhost로 작업할 땐 문제없이 작동하던 카카오맵이 vercel 배포후 작동을 안했다. <br>
-해결법 : 간단한 문제였다! 카카오맵 api 받아오는 사이트 도메인 설정을 vercel로 배포한 사이트로 변경했다.
+<BlockQuote>업데이트 내용 참조</BlockQuote>
+https://kindermoumi-browser.vercel.app/notice/update
 
 <br><br><br>
 ## 9. 업데이트 계획
