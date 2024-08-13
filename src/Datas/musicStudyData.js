@@ -246,7 +246,7 @@ const songScores = [
                 lowLyrics : ['함','께','있','어'],
                 lowNotes : ['D4/q', 'B4/q', 'A4/q', 'A4/q']
             },
-            {
+            { // 6번째 줄
                 isFirst : true, 
                 width : 250,
                 tieIndexes : [{start: 2, end: 3}],
@@ -295,7 +295,53 @@ const songScores = [
                 lowLyrics : ['해'],
                 lowNotes: [ 'C4/2.', 'B4/q/r' ],
             },
-            
+            { // 7번째 줄
+                width : 300,
+                isFirst : true,
+                turnNum: 2,
+                lyrics : ['해', '네', '가'],
+                notes: [ 'A4/2', 'B4/q', 'C5/q' ],
+
+                lowLyrics : ['해', '네', '가'],
+                lowNotes: [ 'C4/2', 'B4/q', 'D5/q' ],
+            },
+            {
+                width : 200,
+                lyrics : ['있', '어'],
+                notes: [ 'D5/2', 'F4/2' ],
+
+                lowLyrics : ['있', '어'],
+                lowNotes: [ 'D5/2', 'F4/2' ],
+            },
+            {
+                width : 300,
+                lyrics : ['정', '말', '행', '복'],
+                notes: [ 'A4/q', 'G4/q', 'F4/q', 'G4/q' ],
+                
+                lowLyrics : ['정', '말', '행', '복'],
+                lowNotes: [ 'F4/q', 'E4/q', 'D4/q', 'D4/q'],
+            },
+            {
+                width : 200,
+                tieIndexes : [{start: 0, end: 'next'}],
+                lyrics : ['해'],
+                notes: [ 'A4/1',],
+
+                lowTieIndexes : [{start: 0, end: 'next'}],
+                lowLyrics : ['해'],
+                lowNotes: [ 'C4/1' ],
+            },
+            {
+                width : 200,
+                isEnd : true,
+                tieIndexes : [{start: 'prev', end: 0}],
+                lyrics : ['–'],
+                notes: [ 'A4/2.', 'B4/q/r' ],
+
+                lowTieIndexes : [{start: 'prev', end: 0}],
+                lowLyrics : ['–'],
+                lowNotes: [ 'C4/2.', 'B4/q/r'],
+            },
         ],
     }
 ]

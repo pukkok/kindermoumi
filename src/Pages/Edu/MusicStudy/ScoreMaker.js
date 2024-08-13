@@ -1,14 +1,24 @@
 import React, { useEffect } from 'react'
-import { Vex, BarlineType, StaveTie, TextNote, Annotation, Articulation, Volta } from 'vexflow'
+import { Vex, BarlineType, StaveTie, Annotation, Articulation, Volta, StaveModifier } from 'vexflow'
 import { songScores } from '../../../Datas/musicStudyData'
 
 function MusicSheet() {
     useEffect(() => {
-        const vf = new Vex.Flow.Factory({renderer: {elementId : 'output', width: 1240, height: 3000}})
-        const score = vf.EasyScore()
-        const context = vf.getContext()
         const selectedSong = songScores.find(song => song.title === '네가있어행복해')
         const {blocks, clef, key, time} = selectedSong
+        let fullHeight = 0
+        blocks.forEach(block => {
+            if(block.isFirst){
+                fullHeight += 160
+            }
+            if(block.lowNotes && block.isFirst){
+                fullHeight += 150
+            }
+        })
+
+        const vf = new Vex.Flow.Factory({renderer: {elementId : 'output', width: 1240, height: fullHeight}})
+        const score = vf.EasyScore()
+        const context = vf.getContext()
         let currentX = 20
         let currentY = 0
 
@@ -73,9 +83,17 @@ function MusicSheet() {
             
             // 도돌이표 끝 처리
             if (block.isRepeatEnd) {
-                defaultSystem.setEndBarType(BarlineType.REPEAT_END);
+                defaultSystem.setEndBarType(BarlineType.REPEAT_END)
                 if(multipleLowSystem){
                     multipleLowSystem.setEndBarType(BarlineType.REPEAT_END);
+                }
+            }
+
+            // 음악 끝
+            if (block.isEnd) {
+                defaultSystem.setEndBarType(BarlineType.END)
+                if(multipleLowSystem){
+                    multipleLowSystem.setEndBarType(BarlineType.END)
                 }
             }
 
@@ -114,23 +132,32 @@ function MusicSheet() {
             if(block.lowStaccatoIndexes){
                 staccatoMaker(block.lowStaccatoIndexes, lowNotes)
             }
+            
 
-
-            if(block.breathMarkIndexes){
+            // 숨표 파트
+            if (block.breathMarkIndexes) {
                 block.breathMarkIndexes.forEach(idx => {
-                    notes[idx].addModifier(new Articulation('a,').setPosition(3))
-                })
-            }
-            if(block.lowBreathMarkIndexes){
-                block.lowBreathMarkIndexes.forEach(idx => {
-                    lowNotes[idx].addModifier(new Articulation('a,').setPosition(3))
-                    
+                    const note = notes[idx]
+                    const a =  new StaveModifier()
+                    note.addModifier(new Articulation('a,').setPosition(3))
+                    .setCenterXShift(2)
+                    console.dir(note)
+
+                    console.dir()
                 })
             }
 
             vf.draw()
 
-            // 볼타
+            // if(block.lowBreathMarkIndexes){
+            //     block.lowBreathMarkIndexes.forEach(idx => {
+            //         lowNotes[idx].addModifier(new Articulation('a,').setPosition(3))
+            //     })
+            // }
+
+            
+
+            // 볼타 : 도돌이표 상단 표시
             if (block.turnNum) {
                 defaultSystem.setVoltaType(Volta.type.BEGIN, block.turnNum, 30)
                 .draw()
