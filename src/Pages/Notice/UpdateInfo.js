@@ -7,7 +7,7 @@ function UpdateInfo ({updateDatas}) {
 
     const href = useHref()
 
-    const [viewerDatas, setViewerDatas] = useState([...updateDatas])
+    const [viewerDatas, setViewerDatas] = useState(updateDatas)
 
     const [pagesCnt, setPagesCnt] = useState(1)
 
@@ -19,7 +19,7 @@ function UpdateInfo ({updateDatas}) {
                 })
             )
         }
-    },[pagesCnt, updateDatas])
+    },[pagesCnt])
 
     return(
         <section className="update-info">

@@ -148,6 +148,8 @@ function Header ({userName, admin, token}) {
                             <ul className="depth2">
                                 <li><Link to={'/edu/music'}>음악교실</Link></li>
                                 <li><Link to={'/edu/art'}>미술교실</Link></li>
+                                <li><Link to={'/edu/art'}>수학교실</Link></li>
+                                <li><Link to={'/edu/art'}>영어교실</Link></li>
                             </ul>
                         </li>
                         <li><Link>교사채용</Link>
