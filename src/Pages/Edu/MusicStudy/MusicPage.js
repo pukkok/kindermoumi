@@ -2,7 +2,6 @@ import React, { useEffect, useRef } from "react";
 import './styles/MusicPage.css'
 import PianoPlayer from "./PianoPlayer";
 import Container from '../../../Components/Container'
-import ImgBox from '../../../Components/ImgBox'
 import { useRecoilValue } from "recoil";
 import { isScrollModeAtom, scoresAtom } from "../../../Recoil/CommonAtom";
 import ScoreMaker from "./ScoreMaker";
@@ -28,14 +27,13 @@ function MusicPage() {
     return(
         <section className="edu-music" 
         ref={noneSelectRef} tabIndex={!isScrollMode ? 0 : -1}>
-        <Container>
-            <div className="score-container">
-                <div className="score" 
-                ref={scoreSelectRef} tabIndex={isScrollMode ? 0 : -1}>
-                    <ScoreMaker/>
-                </div>
+
+        <div className="score-container" 
+        ref={scoreSelectRef} tabIndex={isScrollMode ? 0 : -1}>
+            <div className="score" >
+                <ScoreMaker/>
             </div>
-        </Container>
+        </div>
             <PianoPlayer/>
         </section>
     )

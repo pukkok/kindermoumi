@@ -28,12 +28,12 @@ export const isChangeModeAtom = atom({
 
 export const pianoVolumeAtom = atom({
     key: 'volume',
-    default : 0.5
+    default : 0.8
 })
 
 export const scoresAtom = atom({
     key: 'scores',
-    default : ['네가있어행복해']
+    default : '네가있어행복해'
 })
 
 export const selectedNotesAtom = atom({
@@ -49,4 +49,9 @@ export const startSelectedNoteAtom = atom({
 export const endSelectedNoteAtom = atom({
     key: 'endSelectedNote',
     default : 'C6'
+})
+
+export const selectedInstrumentAtom = atom({
+    key : 'selectedInstrument',
+    default : 'acoustic_grand_piano'
 })

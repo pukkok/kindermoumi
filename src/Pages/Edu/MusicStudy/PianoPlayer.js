@@ -4,7 +4,7 @@ import AudioContext from 'audio-context'
 import classNames from 'classnames'
 import { notes, defaultShorcut } from "../../../Datas/musicStudyData"
 import { useRecoilState, useRecoilValue } from 'recoil'
-import { endSelectedNoteAtom, isChangeModeAtom, pianoVolumeAtom, selectedNotesAtom, startSelectedNoteAtom } from '../../../Recoil/CommonAtom'
+import { endSelectedNoteAtom, isChangeModeAtom, pianoVolumeAtom, selectedInstrumentAtom, selectedNotesAtom, startSelectedNoteAtom } from '../../../Recoil/CommonAtom'
 import PianoController from './PianoController'
 
 const PianoPlayer = () => {
@@ -21,21 +21,23 @@ const PianoPlayer = () => {
   const [selectedNotes, setSelectedNotes] = useRecoilState(selectedNotesAtom)
   const startSelectedNote = useRecoilValue(startSelectedNoteAtom)
   const endSelectedNote = useRecoilValue(endSelectedNoteAtom)
+  const selectedInstrument = useRecoilValue(selectedInstrumentAtom)
 
   useEffect(()=>{
+    // 노트 만들기
     let isStart = false
     let isEnd = false
     let x = notes.filter(note => {
-      if(note === startSelectedNote){
+      if(note === startSelectedNote){ // 처음 음
         isStart = true
       }
       if (isStart && !isEnd) {
-        if (note === endSelectedNote) {
-          isEnd = true;
+        if (note === endSelectedNote) { // 마지막음
+          isEnd = true
         }
-        return true;
+        return true
       }
-      return false;
+      return false
     })
     setSelectedNotes([...x])
 
@@ -50,19 +52,20 @@ const PianoPlayer = () => {
     // 초기 볼륨 설정
     gainNode.current.gain.setValueAtTime(volume, audioContext.current.currentTime)
 
-    Soundfont.instrument(audioContext.current, 'acoustic_grand_piano').then((piano) => {
+    Soundfont.instrument(audioContext.current, selectedInstrument).then((piano) => {
       player.current = piano
     })
-  }, [])
+  }, [selectedInstrument])
 
   useEffect(() => {
     // 볼륨 변경시 GainNode의 gain 값을 업데이트
     if (gainNode.current) {
       gainNode.current.gain.setValueAtTime(volume, audioContext.current.currentTime)
     }
+    console.log(volume)
   }, [volume])
 
-  useEffect(() => {
+  useEffect(() => { // 단축키 클릭시 피아노 소리
     const handleKeyDown = (e) => {
       if (!pressedKeys.includes(e.key.toUpperCase())) {
         setPressedKeys(prev => ([...prev, e.key.toUpperCase()]))
@@ -73,8 +76,8 @@ const PianoPlayer = () => {
       setPressedKeys(prev => prev.filter(key => key !== e.key.toUpperCase()))
     }
 
-    window.addEventListener('keydown', handleKeyDown)
-    window.addEventListener('keyup', handleKeyUp)
+    window.addEventListener('keydown', handleKeyDown) // 누르는 중
+    window.addEventListener('keyup', handleKeyUp) // 그만
 
     notes.forEach(key => {
       if (shortcut[key]) {
@@ -110,7 +113,7 @@ const PianoPlayer = () => {
     }
   }
 
-  const changeShortcut = (e, note) => {
+  const changeShortcut = (e, note) => { // 단축키 변경
     setShorcut({...shortcut, [note] : e.key.toUpperCase()})
   }
 

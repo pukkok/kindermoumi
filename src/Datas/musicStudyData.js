@@ -22,7 +22,7 @@ const defaultShorcut = {
 
 const scoreTitles = [
     '네가있어행복해', 
-    '달팽이의하루-01', '달팽이의하루-02',
+    '달팽이의하루',
     '나무의노래'
 ]
 
