@@ -1,10 +1,15 @@
 import React, { useEffect } from 'react'
-import { Vex, BarlineType, StaveTie, Annotation, Articulation, Volta, StaveModifier } from 'vexflow'
+import { Vex, BarlineType, StaveTie, Voice, Annotation, Articulation, Volta, StaveModifier } from 'vexflow'
 import { songScores } from '../../../Datas/musicStudyData'
+import { useRecoilValue } from 'recoil'
+import { scoresAtom } from '../../../Recoil/CommonAtom'
 
 function MusicSheet() {
+    const scores = useRecoilValue(scoresAtom)
     useEffect(() => {
-        const selectedSong = songScores.find(song => song.title === '네가있어행복해')
+        // const selectedSong = songScores.find(song => song.title === scores)
+        const selectedSong = songScores.find(song => song.title === '나무의노래')
+
         const {blocks, clef, key, time} = selectedSong
         let fullHeight = 0
         blocks.forEach(block => {
@@ -30,6 +35,7 @@ function MusicSheet() {
         let prevTieStart
         let prevLowNotes = []
         let prevLowTieStart
+        let beam
 
         blocks.forEach((block, idx) => {
             if (block.isFirst && idx !== 0) {
@@ -48,13 +54,18 @@ function MusicSheet() {
 
             // 음표
             const notesString = block.notes.map(note => note).join(', ')
+            
             const notes = score.notes(notesString, {stem: 'auto'})
-
+            block.notes.forEach((note) => {
+                if(typeof note === 'object'){
+                    console.log('배열있다')
+                }
+            })
             const lowNotesString = block.lowNotes ? block.lowNotes.map(note => note).join(', ') : ''
 
             const lowNotes = lowNotesString ? score.notes(lowNotesString, {stem: 'auto'}) : null
 
-            const defaultSystem = system.addStave({ voices: [vf.Voice().addTickables(notes)], options : {bottom_text_position : -50} })
+            const defaultSystem = system.addStave({ voices: [vf.Voice().setMode({mode: 2}).addTickables(notes)] })
             let multipleLowSystem = null
             if(block.lowNotes){
                 multipleLowSystem = system.addStave({ voices : [vf.Voice().addTickables(lowNotes)], options :{bottom_text_position: 30} })
@@ -107,10 +118,10 @@ function MusicSheet() {
                 })
             }            
             if(block.lyrics){
-                lyricsMaker(block.lyrics, notes)
+                lyricsMaker(block.lyrics.split(''), notes)
             }
             if(block.lowLyrics){
-                lyricsMaker(block.lowLyrics, lowNotes)
+                lyricsMaker(block.lowLyrics.split(''), lowNotes)
             }
 
             // 스타카토
@@ -149,11 +160,11 @@ function MusicSheet() {
 
             vf.draw()
 
-            // if(block.lowBreathMarkIndexes){
-            //     block.lowBreathMarkIndexes.forEach(idx => {
-            //         lowNotes[idx].addModifier(new Articulation('a,').setPosition(3))
-            //     })
-            // }
+            if(block.lowBreathMarkIndexes){
+                block.lowBreathMarkIndexes.forEach(idx => {
+                    lowNotes[idx].addModifier(new Articulation('a,').setPosition(3))
+                })
+            }
 
             
 
@@ -212,7 +223,7 @@ function MusicSheet() {
             })
         })
 
-    }, [])
+    }, [scores])
 
     return (
         <>
