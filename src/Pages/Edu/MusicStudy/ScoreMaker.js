@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { Vex, BarlineType, StaveTie, Voice, Annotation, Articulation, Volta, StaveModifier } from 'vexflow'
 import { songScores } from '../../../Datas/musicStudyData'
 import { useRecoilValue } from 'recoil'
@@ -6,22 +6,25 @@ import { scoresAtom } from '../../../Recoil/CommonAtom'
 
 function MusicSheet() {
     const scores = useRecoilValue(scoresAtom)
+    const scoreRef = useRef(null)
     useEffect(() => {
-        // const selectedSong = songScores.find(song => song.title === scores)
-        const selectedSong = songScores.find(song => song.title === '나무의노래')
+        scoreRef.current.innerHTML = ''
+        const selectedSong = songScores.find(song => song.title === scores)
+        // const selectedSong = songScores.find(song => song.title === '나무의노래')
+        if(!selectedSong) return console.log('등록된 악보 없음')
 
         const {blocks, clef, key, time} = selectedSong
         let fullHeight = 0
         blocks.forEach(block => {
-            if(block.isFirst){
+            if(block.isFirstLine){
                 fullHeight += 160
             }
-            if(block.lowNotes && block.isFirst){
+            if(block.lowNotes && block.isFirstLine){
                 fullHeight += 150
             }
         })
 
-        const vf = new Vex.Flow.Factory({renderer: {elementId : 'output', width: 1240, height: fullHeight}})
+        const vf = new Vex.Flow.Factory({renderer: {elementId : scoreRef.current, width: 1240, height: fullHeight}})
         const score = vf.EasyScore()
         const context = vf.getContext()
         let currentX = 20
@@ -35,10 +38,11 @@ function MusicSheet() {
         let prevTieStart
         let prevLowNotes = []
         let prevLowTieStart
+
         let beam
 
         blocks.forEach((block, idx) => {
-            if (block.isFirst && idx !== 0) {
+            if (block.isFirstLine && idx !== 0) {
                 currentX = 20
                 currentY += 160
                 if(isFirstLowNote){
@@ -52,27 +56,24 @@ function MusicSheet() {
             const system = vf.System({ width: block.width, x: currentX, y: currentY })
             currentX += block.width
 
-            // 음표
+            // 음표 
             const notesString = block.notes.map(note => note).join(', ')
             
             const notes = score.notes(notesString, {stem: 'auto'})
-            block.notes.forEach((note) => {
-                if(typeof note === 'object'){
-                    console.log('배열있다')
-                }
-            })
+            
             const lowNotesString = block.lowNotes ? block.lowNotes.map(note => note).join(', ') : ''
 
             const lowNotes = lowNotesString ? score.notes(lowNotesString, {stem: 'auto'}) : null
 
-            const defaultSystem = system.addStave({ voices: [vf.Voice().setMode({mode: 2}).addTickables(notes)] })
+            const defaultSystem = system.addStave({ 
+                voices: [ vf.Voice().setMode(2).addTickables(notes) ]})
             let multipleLowSystem = null
             if(block.lowNotes){
                 multipleLowSystem = system.addStave({ voices : [vf.Voice().addTickables(lowNotes)], options :{bottom_text_position: 30} })
-                if(block.isFirst) system.addConnector()
+                if(block.isFirstLine) system.addConnector()
             }
 
-            if (block.isFirst) {
+            if (block.isFirstLine) {
                 defaultSystem.addClef(clef).addKeySignature(key)
                 if (idx === 0) {
                     defaultSystem.addTimeSignature(time)
@@ -83,6 +84,8 @@ function MusicSheet() {
                     if (idx === 0) multipleLowSystem.addTimeSignature(time)
                 }
             }
+
+            
 
             // 도돌이표 시작 처리
             if (block.isRepeatStart) {
@@ -152,21 +155,29 @@ function MusicSheet() {
                     const a =  new StaveModifier()
                     note.addModifier(new Articulation('a,').setPosition(3))
                     .setCenterXShift(2)
-                    console.dir(note)
-
-                    console.dir()
                 })
             }
 
-            vf.draw()
+            if(block.beamIndexes){
+                block.beamIndexes.forEach(({start, end}) => {
+                    const notesForBeam = notes.slice(start, end + 1)
+                    notesForBeam.forEach(note => {
+                        note.setStemDirection(null)  // 음표의 꼬리 제거
+                    })
+                    beam = new Vex.Flow.Beam(notesForBeam)    
+                })
+                vf.draw()
+                beam.setContext(context).draw()
+            }else{
+                vf.draw()
+            }
+            
 
             if(block.lowBreathMarkIndexes){
                 block.lowBreathMarkIndexes.forEach(idx => {
                     lowNotes[idx].addModifier(new Articulation('a,').setPosition(3))
                 })
             }
-
-            
 
             // 볼타 : 도돌이표 상단 표시
             if (block.turnNum) {
@@ -180,6 +191,7 @@ function MusicSheet() {
             
             // 타이
             function tieMaker (arr, currentNotes, check=1) {
+
                 arr.forEach(({ start, end }) => {
                     if(end === 'next'){
                         if(check === 1){
@@ -192,13 +204,27 @@ function MusicSheet() {
                         }
                     }
                     if (start === 'prev'){
-                        const tie = new StaveTie({
-                            first_note: check === 1 ? prevNotes[prevTieStart] : prevLowNotes[prevLowTieStart],
-                            last_note: currentNotes[end],
-                            first_indices: [0],
-                            last_indices: [0]
-                        })
-                        ties.push(tie)
+                        if(block.tieDirection){
+                            block.tieDirection.forEach((d, idx)=> {
+                                const tie = new StaveTie({
+                                    first_note: check === 1 ? prevNotes[prevTieStart] : prevLowNotes[prevLowTieStart],
+                                    last_note: currentNotes[end],
+                                    first_indices: [idx],
+                                    last_indices: [idx]
+                                })
+                                tie.setDirection(d)
+                                ties.push(tie)
+                            })
+                        }else{
+                            const tie = new StaveTie({
+                                first_note: check === 1 ? prevNotes[prevTieStart] : prevLowNotes[prevLowTieStart],
+                                last_note: currentNotes[end],
+                                first_indices: [0],
+                                last_indices: [0]
+                            })
+                            ties.push(tie)
+                        }
+                        
                     } 
                     if (start !=='prev' && end !=='next'){
                         const tie = new StaveTie({
@@ -227,7 +253,7 @@ function MusicSheet() {
 
     return (
         <>
-            <div id='output'></div>
+            <div id='output' ref={scoreRef}></div>
         </>
     )
 }
