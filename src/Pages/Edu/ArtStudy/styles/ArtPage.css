@@ -1,0 +1,24 @@
+.art-page{
+    width: 100%;
+    height: calc(100vh - 60px);
+    position: relative;
+}
+
+.art-page .tools{
+    position: absolute;
+    top: 0;
+    width: 100%;
+    padding: 10px;
+    height: 50px;
+
+    display: flex;
+    gap: 10px;
+
+    background-color: pink;
+    border-bottom: 1px solid black;
+}
+
+.art-page .tool-canvas{
+    position: absolute;
+    top: 0;
+}

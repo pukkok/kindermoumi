@@ -73,7 +73,7 @@ function PianoController () {
                 <button
                 title="화면 스크롤을 고정시켜 악보를 움직일 수 있습니다."
                 className={classNames('scroll-fix', {on : isScrollMode})} 
-                onClick={()=>setIsScrollMode(prev => !prev)}>{!isScrollMode ? '화면' : '악보'} 스크롤
+                onClick={()=>setIsScrollMode(prev => !prev)}>악보 스크롤
                     <span></span>
                 </button>
                 <button 

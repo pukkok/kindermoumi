@@ -15,6 +15,7 @@ import { useRecoilValue } from 'recoil';
 import { headerPaddingTopAtom } from './Recoil/CommonAtom';
 import NoticePage from './Pages/Notice/NoticePage';
 import MusicPage from './Pages/Edu/MusicStudy/MusicPage';
+import ArtPage from './Pages/Edu/ArtStudy/ArtPage';
 
 function App() {
 
@@ -47,7 +48,10 @@ function App() {
                     <Route exact path='/service/*' element={<ServicePage/>}/>
                     <Route exact path='/notice/*' element={<NoticePage/>}/>
                     <Route exact path='/search/:serviceName' element={<SearchPage allData={allData}/>}/>
-                    <Route exact path='/edu/:study' element={<MusicPage />}/>
+                    <Route exact path='/edu'>
+                        <Route exact path='music' element={<MusicPage />}/>
+                        <Route exact path='art' element={<ArtPage />}/>
+                    </Route>
                     <Route path='/kinder/:kinderUrl/*' element={<PlatformPage/>}/>
                 </Route>
                 <Route path='user'>

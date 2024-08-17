@@ -62,7 +62,6 @@ const PianoPlayer = () => {
     if (gainNode.current) {
       gainNode.current.gain.setValueAtTime(volume, audioContext.current.currentTime)
     }
-    console.log(volume)
   }, [volume])
 
   useEffect(() => { // 단축키 클릭시 피아노 소리

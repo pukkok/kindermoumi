@@ -22,8 +22,8 @@ const defaultShorcut = {
 
 const scoreTitles = [
     '네가있어행복해', 
+    '나무의노래',
     '달팽이의하루',
-    '나무의노래'
 ]
 
 const allInstruments = [
