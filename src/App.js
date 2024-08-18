@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { Routes, Route, Outlet, useLocation } from 'react-router-dom';
+import { Routes, Route, Outlet, useLocation, useHref } from 'react-router-dom';
 import { JoinPage, LoginPage, MainPage, NotFoundPage, SearchPage } from './Pages'
 import './App.css'
 import PlatformPage from './Pages/Platform/PlatformPage';
@@ -27,15 +27,17 @@ function App() {
     const token = JSON.parse(localStorage.getItem('token'))
     
     useEffect(()=>{ // 초기 랜더링
-        // axiosKinderAllData(sggData, setAllData) // 전체 데이터 불러오기
+        axiosKinderAllData(sggData, setAllData) // 전체 데이터 불러오기
     },[])
 
+    const href = useHref()
+    
     const UseCommon = ({userName, admin, token}) => {
         return(
             <>
                 <Header userName={userName} admin={admin} token={token}/>
                 <Outlet/>
-                <Footer/>
+                {!href.includes('edu') && <Footer/>}
             </>
         )
     }
