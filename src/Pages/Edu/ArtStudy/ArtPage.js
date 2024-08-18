@@ -8,9 +8,14 @@ function ArtPage() {
     const toolRef = useRef(null) // 
     const toolCtx = useRef(null)
 
-    const [drawTools, setDrawTools] = useState([])
-    const [drawings, setDrawings] = useState([])
-    const [reDrawings, setReDrawings] = useState([])
+    const [drawTools, setDrawTools] = useState([]) // 그리는 동안 툴
+    const [drawings, setDrawings] = useState([]) // 전체 그리기
+
+    // 되돌리기
+    const [reDrawings, setReDrawings] = useState([]) 
+    const [reDrawTools, setReDrawTools] = useState([])
+
+    // 현재 툴
     const [tool, setTool] = useState('pen')
     const [eraserSize, setEraserSize] = useState(15)
 
@@ -36,10 +41,12 @@ function ArtPage() {
 
     useEffect(()=> {
         const canvas = toolRef.current
+        // 툴이 바뀌면 리셋시키기
+        toolCtx.current.clearRect(0, 0, fullWidth, fullHeight)
 
         let isDown = false
         let moves = []
-        toolCtx.current.clearRect(0, 0, fullWidth, fullHeight)
+
         const penDown = (e) => {
             if(e.which === 3) return // 마우스 우클릭 방지
             isDown = true
@@ -63,6 +70,8 @@ function ArtPage() {
                 moves.length>0 &&
                 setDrawings(prev => [...prev, moves])
                 setDrawTools(prev => [...prev, 'pen'])
+                setReDrawings([])
+                setReDrawTools([])
             }else{
                 moves=[]
             }
@@ -74,11 +83,11 @@ function ArtPage() {
             canvas.addEventListener('mouseup', penUp)
         }
 
+        // 지우개 작업
         function eraserDown (e) {
             isDown = true
             moves = [{x: e.offsetX, y: e.offsetY}]
         }
-
         function eraserMove (e) {
             toolCtx.current.clearRect(0, 0, fullWidth, fullHeight)
             toolCtx.current.beginPath()
@@ -97,11 +106,12 @@ function ArtPage() {
                 ctx.current.fill()
             }
         }
-
         function eraserUp () {
             isDown = false
             setDrawings(prev => [...prev, moves])
             setDrawTools(prev => [...prev, 'eraser'])
+            setReDrawings([])
+            setReDrawTools([])
         }
 
         if(tool === 'eraser'){
@@ -124,9 +134,26 @@ function ArtPage() {
     },[tool])
 
     const undo = () => { // 마지막 작업 삭제
-        setDrawings((prev) => prev.slice(0, -1))
+        if(drawings.length === 0) return
+        // 좌표 변경
+        setReDrawings(prev => [...prev, drawings[drawings.length - 1]])
+        setDrawings(prev => prev.filter((_, idx) => idx !== drawings.length - 1))
+        // 툴 변경
+        setReDrawTools(prev => [...prev, drawTools[drawTools.length - 1]])
+        setDrawTools(prev => prev.filter((_, idx) => idx !== drawings.length - 1))
     }
 
+    const redo = () => {
+        if(reDrawings.length === 0) return
+        // 좌표 변경
+        setDrawings(prev => [...prev, reDrawings[reDrawings.length - 1]])
+        setReDrawings(prev => prev.filter((_, idx) => idx !== reDrawings.length - 1))
+        // 툴 변경
+        setDrawTools(prev => [...prev, reDrawTools[reDrawTools.length - 1]])
+        setReDrawTools(prev => prev.filter((_, idx) => idx !== reDrawTools.length - 1))
+    }
+
+    // 좌표 데이터로 그리기
     useEffect(()=>{
         function drawBoard () {
             ctx.current.clearRect(0, 0, fullWidth, fullHeight)
@@ -165,8 +192,8 @@ function ArtPage() {
             <div className="tools">
                 <button onClick={() => setTool('pen')}>펜</button>
                 <button onClick={() => setTool('eraser')}>지우개</button>
-                <button onClick={undo}>실행취소</button>
-                <button onClick={undo}>되돌리기</button>
+                <button disabled={drawTools.length===0} onClick={undo}>실행취소</button>
+                <button disabled={reDrawTools.length===0} onClick={redo}>되돌리기</button>
             </div>
         </section>
     )

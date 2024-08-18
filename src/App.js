@@ -27,7 +27,7 @@ function App() {
     const token = JSON.parse(localStorage.getItem('token'))
     
     useEffect(()=>{ // 초기 랜더링
-        axiosKinderAllData(sggData, setAllData) // 전체 데이터 불러오기
+        // axiosKinderAllData(sggData, setAllData) // 전체 데이터 불러오기
     },[])
 
     const UseCommon = ({userName, admin, token}) => {

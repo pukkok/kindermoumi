@@ -18,6 +18,13 @@
     border-bottom: 1px solid black;
 }
 
+.art-page .tools button{
+    font-weight: bold;
+}
+.art-page .tools button:disabled{
+    color: red;
+}
+
 .art-page .tool-canvas{
     position: absolute;
     top: 0;
