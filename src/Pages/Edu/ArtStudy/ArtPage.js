@@ -22,8 +22,6 @@ function ArtPage() {
     const fullWidth = window.innerWidth
     const fullHeight = window.innerHeight - 60
 
-    
-
     useEffect(() => { // 초기 랜더링
         const canvas = canvasRef.current
         ctx.current = canvas.getContext('2d')
@@ -42,10 +40,22 @@ function ArtPage() {
     useEffect(()=> {
         const canvas = toolRef.current
         // 툴이 바뀌면 리셋시키기
-        toolCtx.current.clearRect(0, 0, fullWidth, fullHeight)
+        function clearTool () {
+            toolCtx.current.clearRect(0, 0, fullWidth, fullHeight)
+            toolCtx.current.setLineDash([]) // 점선 초기화
+        }
+
+        clearTool()
 
         let isDown = false
         let moves = []
+
+        function finish () {
+            setDrawings(prev => [...prev, moves])
+            setDrawTools(prev => [...prev, tool])
+            setReDrawings([])
+            setReDrawTools([])
+        }
 
         const penDown = (e) => {
             if(e.which === 3) return // 마우스 우클릭 방지
@@ -65,22 +75,65 @@ function ArtPage() {
         }
         const penUp = (e) => {
             isDown = false
-            toolCtx.current.clearRect(0,0,fullWidth,fullHeight)
+            clearTool()
             if(e.which === 1){
                 moves.length>0 &&
-                setDrawings(prev => [...prev, moves])
-                setDrawTools(prev => [...prev, 'pen'])
-                setReDrawings([])
-                setReDrawTools([])
+                finish()
+            }else{
+                moves=[]
+            }
+        }
+        
+
+        // 사각형 그리기
+        function squareDown (e) {
+            isDown = true
+            moves = [{x: e.offsetX, y: e.offsetY}]
+        }
+        function squareMove (e) {
+            if(!isDown) return
+            clearTool()
+            const {x, y} = moves[0]
+            const width = e.offsetX - x
+            const height = e.offsetY - y
+            if(tool === 'select') toolCtx.current.setLineDash([1, 2])
+            toolCtx.current.strokeRect(x, y, width, height)
+        }
+        function squareUp (e) {
+            isDown = false
+            clearTool()
+            if(e.which === 1){
+                if(moves.length === 0) return
+                moves = [...moves, {x: e.offsetX, y: e.offsetY}]
+                finish()
             }else{
                 moves=[]
             }
         }
 
-        if(tool === 'pen'){
-            canvas.addEventListener('mousedown', penDown)
-            canvas.addEventListener('mousemove', penMove)
-            canvas.addEventListener('mouseup', penUp)
+        // 원 중심에서 부터 그려지기 (alt일때 사용할 것)
+        // 원 찍은 점부터 구하기 (기본)
+        function circleDown (e) {
+            isDown = true
+            toolCtx.current.beginPath()
+            toolCtx.current.setLineDash([1, 2])
+            toolCtx.current.arc(e.offsetX, e.offsetY, 1, Math.PI * 2, 0)
+            toolCtx.current.stroke()
+            moves = [{x: e.offsetX, y: e.offsetY}]
+        }
+        function circleMove (e) {
+            if(!isDown) return
+            clearTool()
+            const {x, y} = moves[0]
+            const dx = e.offsetX - x
+            const dy = e.offsetY - y
+            const distance = Math.sqrt(dx* dx + dy* dy)
+            toolCtx.current.beginPath()
+            toolCtx.current.arc(moves[0].x, moves[0].y, distance, Math.PI * 2, 0)
+            toolCtx.current.stroke()
+        }
+        function circleUp(e) {
+            isDown = false
         }
 
         // 지우개 작업
@@ -89,7 +142,7 @@ function ArtPage() {
             moves = [{x: e.offsetX, y: e.offsetY}]
         }
         function eraserMove (e) {
-            toolCtx.current.clearRect(0, 0, fullWidth, fullHeight)
+            clearTool()
             toolCtx.current.beginPath()
             toolCtx.current.arc(e.offsetX, e.offsetY, eraserSize, Math.PI*2, 0)
             toolCtx.current.fillStyle = 'white'
@@ -108,28 +161,50 @@ function ArtPage() {
         }
         function eraserUp () {
             isDown = false
-            setDrawings(prev => [...prev, moves])
-            setDrawTools(prev => [...prev, 'eraser'])
-            setReDrawings([])
-            setReDrawTools([])
+            finish()
         }
 
+        if(tool === 'pen'){
+            canvas.addEventListener('mousedown', penDown)
+            canvas.addEventListener('mousemove', penMove)
+            canvas.addEventListener('mouseup', penUp)
+        }
+        if(tool === 'square' || tool === 'select'){
+            canvas.addEventListener('mousedown', squareDown)
+            canvas.addEventListener('mousemove', squareMove)
+            canvas.addEventListener('mouseup', squareUp)
+        }
+        if(tool === 'circle'){
+            canvas.addEventListener('mousedown', circleDown)
+            canvas.addEventListener('mousemove', circleMove)
+            canvas.addEventListener('mouseup', circleUp)
+        }
         if(tool === 'eraser'){
             canvas.addEventListener('mousedown', eraserDown)
             canvas.addEventListener('mousemove', eraserMove)
             canvas.addEventListener('mouseup', eraserUp)
         }
-
         canvas.addEventListener('contextmenu', e=>e.preventDefault())
         
         return () => {
+            // 펜툴
             canvas.removeEventListener('mousedown', penDown)
             canvas.removeEventListener('mousemove', penMove)
             canvas.removeEventListener('mouseup', penUp)
-            
+            // 지우개툴
             canvas.removeEventListener('mousedown', eraserDown)
             canvas.removeEventListener('mousemove', eraserMove)
             canvas.removeEventListener('mouseup', eraserUp)
+            // 사각형, 선택툴
+            canvas.removeEventListener('mousedown', squareDown)
+            canvas.removeEventListener('mousemove', squareMove)
+            canvas.removeEventListener('mouseup', squareUp)
+
+            // 원툴
+            canvas.removeEventListener('mousedown', circleDown)
+            canvas.removeEventListener('mousemove', circleMove)
+            canvas.removeEventListener('mouseup', circleUp)
+
         }
     },[tool])
 
@@ -157,8 +232,9 @@ function ArtPage() {
     useEffect(()=>{
         function drawBoard () {
             ctx.current.clearRect(0, 0, fullWidth, fullHeight)
-
+            
             drawings.forEach((moves, i) => {
+                ctx.current.setLineDash([])
                 if(drawTools[i] === 'pen'){
                     if(moves.length === 1){
                         ctx.current.beginPath()
@@ -180,6 +256,22 @@ function ArtPage() {
                         ctx.current.fill()
                     })
                 }
+                if(drawTools[i] === 'square'){
+                    const {x, y} = moves[0]
+                    const {x: x2, y : y2} = moves[1]
+                    const width = x2 - x
+                    const height = y2 - y
+                    ctx.current.strokeRect(x, y, width, height)
+                }
+                if(drawTools[i] === 'select'){
+                    const {x, y} = moves[0]
+                    const {x: x2, y : y2} = moves[1]
+                    const width = x2 - x
+                    const height = y2 - y
+                    ctx.current.setLineDash([1, 2])
+                    ctx.current.strokeRect(x, y, width, height)
+                }
+
             })
         }
         drawBoard()
@@ -190,8 +282,13 @@ function ArtPage() {
             <canvas className="tool-canvas" ref={toolRef} />
             <canvas ref={canvasRef} />
             <div className="tools">
+                
+                {/* <button onClick={() => setTool('select')}>선택(구현중)</button> */}
                 <button onClick={() => setTool('pen')}>펜</button>
+                <button onClick={() => setTool('circle')}>원</button>
+                <button onClick={() => setTool('square')}>사각형</button>
                 <button onClick={() => setTool('eraser')}>지우개</button>
+
                 <button disabled={drawTools.length===0} onClick={undo}>실행취소</button>
                 <button disabled={reDrawTools.length===0} onClick={redo}>되돌리기</button>
             </div>
