@@ -10,7 +10,6 @@ import AdminPage from './Pages/Admin/AdminPage';
 
 import { axiosKinderAllData } from './Components/axiosData'
 import sggData from './Datas/sggData';
-import Origami from './Pages/Edu/Origami';
 import { useRecoilValue } from 'recoil';
 import { headerPaddingTopAtom } from './Recoil/CommonAtom';
 import NoticePage from './Pages/Notice/NoticePage';
@@ -60,7 +59,6 @@ function App() {
                     <Route exact path='join' element={<JoinPage/>}/>
                 </Route>
                 <Route path='admin' element={<AdminPage/>}/>
-                <Route path='paper' element={<Origami/>}></Route>
                 <Route exact path='*' element={<NotFoundPage />}/>
             </Routes>
         </div>
