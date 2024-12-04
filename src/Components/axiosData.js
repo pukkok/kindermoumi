@@ -2,7 +2,7 @@ import axios from "axios";
 axios.defaults.baseURL = process.env.REACT_APP_RESTAPI_URL
 
 async function axiosKinderData (sidoCode, sggCode, setFunc) {
-    const { data } = await axios.post(`/api/kinder`, { sidoCode, sggCode })
+    const { data } = await axios.get(`/api/kinder`, { sidoCode, sggCode })
     return setFunc(data)
 }
 
@@ -20,10 +20,8 @@ async function axiosKinderAllData(allData, setFunc) {
     for (const chunk of chunks) {
         const results = await Promise.all(
             chunk.map(item => {
-                const { sidoCode, code } = item;
-                return axios.post('/api/kinder', {
-                    sidoCode, sggCode: code
-                })
+                const { sidoCode, code } = item
+                return axios.get(`/api/kinder?sidoCode=${sidoCode}&sggCode=${code}`)
             })
         );
 
