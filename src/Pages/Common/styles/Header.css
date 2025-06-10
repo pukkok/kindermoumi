@@ -2,13 +2,10 @@
 header.small {
     width: 100%;
     height: 40px;
-    border-bottom: 2px solid #5172df;
+    border-bottom: 1px solid #5172df;
     transition: height 0.3s ease;
 }
-
-header.small:hover {
-    height: 60px;
-}
+header.small:hover { height: 60px; }
 
 header.small nav {
     display: flex;
@@ -16,9 +13,18 @@ header.small nav {
     justify-content: center;
 }
 
+header.small nav .depth1,
+header.small nav .user-nav {
+    display: none;
+}
 header.small:hover nav .depth1,
 header.small:hover nav .user-nav {
     display: flex;
+}
+header.small nav .logo {
+    display: block;
+    width: 100px;
+    height: 40px;
 }
 
 /* 헤더 디자인 */
@@ -33,26 +39,9 @@ header {
     left: 0;
     z-index: 100;
 }
-
 header.header--hidden {
     transform: translateY(-100%);
     transition: transform 0.3s ease;
-}
-
-header nav .depth1 > li,
-header nav .user-nav > li {
-    padding: 10px;
-}
-
-header.small nav .depth1,
-header.small nav .user-nav {
-    display: none;
-}
-
-header.small nav .logo {
-    display: block;
-    width: 100px;
-    height: 40px;
 }
 
 header nav {
@@ -65,9 +54,7 @@ header nav {
     overflow: hidden;
     font-weight: bold;
 }
-header nav:hover{
-    overflow:unset;
-}
+header nav:hover { overflow: unset; }
 
 header nav .logo {
     width: 130px;
@@ -75,7 +62,6 @@ header nav .logo {
     align-items: center;
     justify-content: center;
 }
-
 header nav .logo img {
     width: 100%;
     height: auto;
@@ -87,7 +73,6 @@ header nav .depth1 {
     justify-content: center;
     align-items: center;
 }
-
 header nav .user-nav {
     display: flex;
     gap: 5px;
@@ -95,24 +80,33 @@ header nav .user-nav {
     align-items: center;
 }
 
-header nav .depth1 > li {
+header nav .depth1 > li,
+header nav .user-nav > li {
+    padding: 4px 6px;
     position: relative;
     height: 100%;
 }
 
-header nav .depth1 > li > a {
+/* 공통 스타일: a 또는 span 모두에 적용 */
+header nav .depth1 > li > a,
+header nav .depth1 > li > span,
+header nav .depth1 > li .depth2 li a,
+header nav .depth1 > li .depth2 li span {
     display: flex;
     align-items: center;
     height: 100%;
     padding: 5px;
     transition: color 0.3s ease, background-color 0.3s ease;
+    text-decoration: none;
+    color: inherit;
 }
 
-header nav .depth1 > li:hover > a {
+/* hover 효과 공통 */
+header nav .depth1 > li:hover > a,
+header nav .depth1 > li:hover > span {
     font-weight: bold;
     color: #004898;
     background-color: rgba(0, 73, 152, 0.1);
-    padding: 5px;
     border-radius: 5px;
     cursor: pointer;
 }
@@ -128,26 +122,41 @@ header nav .depth1 > li .depth2 {
     overflow: hidden;
     z-index: 10;
 }
-
 header nav .depth1 > li:hover .depth2 {
     display: block;
 }
 
-header nav .depth1 > li .depth2 li a {
+header nav .depth1 > li .depth2 li a,
+header nav .depth1 > li .depth2 li span {
     display: block;
     min-width: 150px;
     padding: 10px;
     border-bottom: 1px solid #e5e5e5;
     transition: background-color 0.1s ease, color 0.1s ease;
 }
-
-header nav .depth1 > li .depth2 li:nth-last-child(1) a {
+header nav .depth1 > li .depth2 li:last-child a,
+header nav .depth1 > li .depth2 li:last-child span {
     border-bottom: none;
 }
-
-header nav .depth1 > li .depth2 li:hover a {
+header nav .depth1 > li .depth2 li:hover a,
+header nav .depth1 > li .depth2 li:hover span {
     background-color: #004898;
     color: #fff;
+}
+
+/* disabled 처리 */
+header nav .depth1 > li.disabled > span,
+header nav .depth1 > li .depth2 li.disabled > span {
+    color: #ccc;
+    cursor: not-allowed;
+    background-color: transparent;
+    font-weight: normal;
+}
+header nav .depth1 > li.disabled:hover > span,
+header nav .depth1 > li .depth2 li.disabled:hover > span {
+    background-color: transparent;
+    color: #ccc;
+    cursor: not-allowed;
 }
 
 /* 관리자페이지 인풋 모달 */
@@ -181,18 +190,15 @@ header nav .depth1 > li .depth2 li:hover a {
     flex-direction: column;
     gap: 5px;
 }
-
 .input-modal p {
     font-size: 16px;
     font-weight: bold;
     margin: 0;
 }
-
 .input-modal span {
     font-size: 14px;
     color: #666;
 }
-
 .input-modal span.red {
     color: red;
 }
@@ -202,14 +208,12 @@ header nav .depth1 > li .depth2 li:hover a {
     gap: 10px;
     margin-top: auto;
 }
-
 .input-modal .input-box input {
     flex: 1;
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 5px;
 }
-
 .input-modal .input-box button {
     padding: 10px 20px;
     background-color: #004898;
@@ -219,7 +223,6 @@ header nav .depth1 > li .depth2 li:hover a {
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
-
 .input-modal .input-box button:hover {
     background-color: #003070;
 }

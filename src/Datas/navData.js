@@ -23,8 +23,8 @@ const navData = {
         sub: '유치원 모으미의 정보 및 공지사항을 확인해보세요.',
         list : [
             {active : 'update', link: '/notice/update', description: '업데이트'},
-            {active : 'event', link: '/notice/event', description: '이벤트'},
-            {active : 'qna', link: '/notice/qna', description: 'QnA'},
+            {active : 'event', link: '', description: '이벤트'},
+            {active : 'qna', link: '', description: 'QnA'},
         ]
     }
 
